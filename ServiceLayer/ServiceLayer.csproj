@@ -14,4 +14,9 @@
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Council\Interfaces\" />
+    <Folder Include="Council\Services\" />
+  </ItemGroup>
+
 </Project>

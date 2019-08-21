@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseLayer.Migrations
 {
-    [DbContext(typeof(OrhegeContext))]
+    [DbContext(typeof(OrhedgeContext))]
     [Migration("20190804185731_Initial")]
     partial class Initial
     {

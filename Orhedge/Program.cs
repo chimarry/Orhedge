@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using NLog.Web;
 using Microsoft.Extensions.Logging;
-
 namespace Orhedge
 {
     public class Program
@@ -18,7 +13,9 @@ namespace Orhedge
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args).ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+            }).UseNLog().UseStartup<Startup>().ConfigureServices(services => services.AddAutofac());
     }
 }

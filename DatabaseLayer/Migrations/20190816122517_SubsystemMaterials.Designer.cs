@@ -4,14 +4,16 @@ using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(OrhedgeContext))]
-    partial class OrhegeContextModelSnapshot : ModelSnapshot
+    [Migration("20190816122517_SubsystemMaterials")]
+    partial class SubsystemMaterials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,7 @@ namespace DatabaseLayer.Migrations
 
                     b.Property<int>("CourseId");
 
-                    b.Property<bool>("Deleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -47,9 +47,7 @@ namespace DatabaseLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Deleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -69,9 +67,7 @@ namespace DatabaseLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Deleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
+                    b.Property<bool>("Deleted");
 
                     b.Property<string>("Description");
 
@@ -98,9 +94,6 @@ namespace DatabaseLayer.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("Username")
-                        .IsUnique();
-
                     b.ToTable("Students");
                 });
 
@@ -111,10 +104,6 @@ namespace DatabaseLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId");
-
-                    b.Property<bool>("Deleted")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -147,6 +136,8 @@ namespace DatabaseLayer.Migrations
 
                     b.HasKey("StudentId", "StudyMaterialId");
 
+                    b.HasIndex("AuthorId");
+
                     b.HasIndex("StudyMaterialId");
 
                     b.ToTable("StudyMaterialRatings");
@@ -175,6 +166,11 @@ namespace DatabaseLayer.Migrations
 
             modelBuilder.Entity("DatabaseLayer.Entity.StudyMaterialRating", b =>
                 {
+                    b.HasOne("DatabaseLayer.Entity.Student", "Author")
+                        .WithMany("StudyMaterialRatingsAuthors")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DatabaseLayer.Entity.Student", "Student")
                         .WithMany("StudyMaterialRatingsStudents")
                         .HasForeignKey("StudentId")
