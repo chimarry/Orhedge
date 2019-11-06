@@ -1,13 +1,9 @@
-﻿using ServiceLayer.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace ServiceLayer.ErrorHandling
 {
     public interface IErrorHandler
     {
-        Task<DbStatus> HandleException(Exception exception);
+        void Handle(Exception exception);
     }
 }

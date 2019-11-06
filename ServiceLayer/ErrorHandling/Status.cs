@@ -4,7 +4,8 @@ using System.Text;
 
 namespace ServiceLayer.ErrorHandling
 {
-    public class NotFoundException : Exception
+    public enum Status
     {
+        DATABASE_ERROR, NOT_FOUND, ALREADY_EXISTS, SUCCESS
     }
 }

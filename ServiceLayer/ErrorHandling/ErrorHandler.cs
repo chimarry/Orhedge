@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using ServiceLayer.Enum;
+﻿using Microsoft.Extensions.Logging;
+using System;
 
 namespace ServiceLayer.ErrorHandling
 {
@@ -21,17 +17,15 @@ namespace ServiceLayer.ErrorHandling
         private static readonly string TABLE_NOT_LOCKED_FOR_WRITE = "The specified table was locked with a READ lock, and can't be updated.";
         private static readonly string WRONG_TABLE_NAME = "he specified table name is incorrect.";
         private static readonly string BAD_FIELD_NAME = "The specified columns is unknown.";
+
         public ErrorHandler(ILogger<ErrorHandler> logger)
         {
             _logger = logger;
         }
-        public Task<DbStatus> HandleException(Exception exception)
+
+        public void Handle(Exception exception)
         {
-            //TODO: Add logic to this error handler so that it logs details of thrown exception for the programmer in 
-            //log file corresponding log level, and than return one of the DbStatus codes to the Application layer or other
-            // project referencing this library, so that user gets appropriate message. For example, he needs to know that there has been
-            // a server error for couple of messages EF Core will return in that case ( OUT_OF_RESOURCES,NO_SORT_MEMORY...)
-            throw new NotImplementedException();
+            _logger.Log(LogLevel.Error, exception.Message);
         }
     }
 }
