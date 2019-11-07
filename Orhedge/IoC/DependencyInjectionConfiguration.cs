@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using DatabaseLayer;
-using DatabaseLayer.Entity;
 using Microsoft.Extensions.DependencyInjection;
-using ServiceLayer.DTO;
+using Orhedge.AutoMapper;
+using ServiceLayer.Common.Interfaces;
+using ServiceLayer.Common.Services;
 using ServiceLayer.Students.Helpers;
 using ServiceLayer.Students.Interfaces;
 using ServiceLayer.Students.Services;
@@ -18,16 +18,20 @@ namespace Orhedge.IoC
             var builder = new ContainerBuilder();
             builder.Populate(services);
 
-            builder.RegisterType<OrhedgeContext>();
-
-            builder.RegisterType<StudentService>().As<IStudentService>();
-            builder.RegisterType<StudyMaterialService>().As<IStudyMaterialService>();
-            builder.RegisterType<CourseService>().As<ICourseService>();
-            builder.RegisterType<CategoryService>().As<ICategoryService>();
-            builder.RegisterType<ServiceLayer.ErrorHandling.ErrorHandler>().As<ServiceLayer.ErrorHandling.IErrorHandler>();
-            builder.RegisterGeneric(typeof(ServiceExecutor<,>)).As(typeof(IServicesExecutor<,>));
-            var conteiner = builder.Build();
-            return conteiner.Resolve<IServiceProvider>();
+            builder.RegisterType<StudentService>().InstancePerLifetimeScope().As<IStudentService>();
+            builder.RegisterType<StudyMaterialService>().InstancePerLifetimeScope().As<IStudyMaterialService>();
+            builder.RegisterType<CourseService>().InstancePerLifetimeScope().As<ICourseService>();
+            builder.RegisterType<CategoryService>().InstancePerLifetimeScope().As<ICategoryService>();
+            builder.RegisterType<ServiceLayer.ErrorHandling.ErrorHandler>().InstancePerLifetimeScope().As<ServiceLayer.ErrorHandling.IErrorHandler>();
+            builder.RegisterGeneric(typeof(ServiceExecutor<,>)).InstancePerLifetimeScope().As(typeof(IServicesExecutor<,>));
+            builder.RegisterType<RegistrationService>().InstancePerLifetimeScope().As<IRegistrationService>();
+            builder.RegisterType<EmailSenderService>().InstancePerLifetimeScope().As<IEmailSenderService>();
+            builder.RegisterType<StudentManagmentService>().InstancePerLifetimeScope().As<IStudentManagmentService>();
+            builder.RegisterType<AuthenticationService>().InstancePerLifetimeScope().As<IAuthenticationService>();
+            // IMapper is thread safe, hence we register it as singleton
+            builder.Register(ctx => MappingConfiguration.CreateMapping());
+            IContainer container = builder.Build();
+            return container.Resolve<IServiceProvider>();
         }
     }
 }

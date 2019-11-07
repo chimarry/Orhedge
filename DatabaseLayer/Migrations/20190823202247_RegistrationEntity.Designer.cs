@@ -4,14 +4,16 @@ using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(OrhedgeContext))]
-    partial class OrhegeContextModelSnapshot : ModelSnapshot
+    [Migration("20190823202247_RegistrationEntity")]
+    partial class RegistrationEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,17 +116,11 @@ namespace DatabaseLayer.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired();
-
                     b.Property<string>("Photo");
 
                     b.Property<int>("Privilege");
 
                     b.Property<double>("Rating");
-
-                    b.Property<string>("Salt")
-                        .IsRequired();
 
                     b.Property<string>("Username")
                         .IsRequired();

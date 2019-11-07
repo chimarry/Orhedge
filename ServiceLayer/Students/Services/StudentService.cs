@@ -1,8 +1,10 @@
 ﻿using DatabaseLayer.Entity;
+using ServiceLayer.AutoMapper;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Helpers;
 using ServiceLayer.Students.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -50,5 +52,10 @@ namespace ServiceLayer.Students.Services
         {
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);
         }
+
+        public async Task<StudentDTO> GetOne(Predicate<StudentDTO> condition)
+            => await _servicesExecutor.GetOne(
+                    student => condition(Mapping.Mapper.Map<StudentDTO>(student)));
+
     }
 }

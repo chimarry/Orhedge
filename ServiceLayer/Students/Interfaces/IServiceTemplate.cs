@@ -1,4 +1,5 @@
 ﻿using ServiceLayer.ErrorHandling;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,6 @@ namespace ServiceLayer.Students.Interfaces
         Task<T> GetById(int id);
         Task<List<T>> GetAll();
         Task<List<T>> GetRange(int startPosition, int numberOfItems);
-        
+        Task<T> GetOne(Predicate<T> condition);
     }
 }

@@ -12,15 +12,16 @@ namespace DatabaseLayer
         public DbSet<StudyMaterial> StudyMaterials { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Registration> Registrations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration<Student>(new StudentConfiguration());
-            modelBuilder.ApplyConfiguration<StudyMaterial>(new StudyMaterialConfiguration());
-            modelBuilder.ApplyConfiguration<StudyMaterialRating>(new StudyMaterialRatingConfiguration());
-            modelBuilder.ApplyConfiguration<Category>(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration<Course>(new CourseConfiguration());
-
+            modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new StudyMaterialConfiguration());
+            modelBuilder.ApplyConfiguration(new StudyMaterialRatingConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseConfiguration());
+            modelBuilder.ApplyConfiguration(new RegistrationConfiguration());
         }
     }
 }

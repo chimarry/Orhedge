@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DatabaseLayer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +35,17 @@ namespace Orhedge
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Database"));
             });
+
+            services
+                .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opts =>
+                {
+                    opts.Cookie.IsEssential = true;
+                    opts.LoginPath = "/Authentication/Login";
+                    opts.SlidingExpiration = true;
+                    opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddControllersAsServices();
             return DependencyInjectionConfiguration.Configure(services);
         }

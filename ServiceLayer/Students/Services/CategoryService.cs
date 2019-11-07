@@ -45,6 +45,11 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetOne(x => x.CategoryId == id && x.Deleted == false);
         }
 
+        public Task<CategoryDTO> GetOne(Predicate<CategoryDTO> condition)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<CategoryDTO>> GetRange(int startPosition, int numberOfItems)
         {
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);

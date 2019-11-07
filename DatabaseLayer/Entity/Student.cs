@@ -18,6 +18,8 @@ namespace DatabaseLayer.Entity
         public double Rating { get; set; }
         public int Privilege { get; set; }
         public bool Deleted { get; set; }
+        public string PasswordHash { get; set; }
+        public string Salt { get; set; }
 
         #region NavigationProperties
         public virtual ICollection<StudyMaterial> StudyMaterials { get; set; }

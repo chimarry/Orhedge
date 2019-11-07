@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ServiceLayer.DTO
+﻿namespace ServiceLayer.DTO
 {
     public class StudentDTO
     {
@@ -17,5 +13,7 @@ namespace ServiceLayer.DTO
         public double Rating { get; set; }
         public int Privilege { get; set; }
         public bool Deleted { get; set; }
+        public string PasswordHash { get; set; }
+        public string Salt { get; set; }
     }
 }

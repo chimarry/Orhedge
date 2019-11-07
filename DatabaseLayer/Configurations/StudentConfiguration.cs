@@ -19,6 +19,8 @@ namespace DatabaseLayer.Configurations
             builder.Property(x => x.Rating).IsRequired();
             builder.Property(x => x.Privilege).IsRequired();
             builder.Property(x => x.Index).IsRequired();
+            builder.Property(x => x.PasswordHash).IsRequired();
+            builder.Property(x => x.Salt).IsRequired();
 
         }
     }

@@ -3,6 +3,7 @@ using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Helpers;
 using ServiceLayer.Students.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -38,6 +39,11 @@ namespace ServiceLayer.Students.Services
         public async Task<StudyMaterialDTO> GetById(int id)
         {
             return await _servicesExecutor.GetOne(x => x.StudyMaterialId == id && x.Deleted == false);
+        }
+
+        public Task<StudyMaterialDTO> GetOne(Predicate<StudyMaterialDTO> condition)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<StudyMaterialDTO>> GetRange(int startPosition, int numberOfItems)
