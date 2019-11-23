@@ -28,7 +28,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<Status> Delete(int id)
         {
-            Student dbStudent = await _servicesExecutor.GetSingleOrDefault(x => x.StudentId == id && x.Deleted == false);
+            Student dbStudent = await _servicesExecutor.GetOne(x => x.StudentId == id && x.Deleted == false);
             dbStudent.Deleted = true;
             return await _servicesExecutor.Delete(dbStudent);
         }
@@ -45,7 +45,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<StudentDTO> GetById(int id)
         {
-            return await _servicesExecutor.GetOne(x => x.StudentId == id && x.Deleted == false);
+            return await _servicesExecutor.GetSingleOrDefault(x => x.StudentId == id && x.Deleted == false);
         }
 
         public async Task<List<StudentDTO>> GetRange(int startPosition, int numberOfItems)
@@ -53,9 +53,18 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);
         }
 
-        public async Task<StudentDTO> GetOne(Predicate<StudentDTO> condition)
-            => await _servicesExecutor.GetOne(
-                    student => condition(Mapping.Mapper.Map<StudentDTO>(student)));
+        public async Task<StudentDTO> GetSingleOrDefault(Predicate<StudentDTO> condition)
+            => await _servicesExecutor.GetSingleOrDefault(condition);
 
+        public async Task<List<StudentDTO>> GetAll<TKey>(Func<StudentDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetAll<TKey>(x => x.Deleted == false, sortKeySelector, asc);
+        }
+
+        public async Task<List<StudentDTO>> GetRange<TKey>(int offset, int num, Func<StudentDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetRange<TKey>(offset, num, x => x.Deleted == false, sortKeySelector, asc);
+        }
     }
 }
+

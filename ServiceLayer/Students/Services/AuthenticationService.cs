@@ -24,7 +24,7 @@ namespace ServiceLayer.Students.Services
         /// <returns>null if credentials are not valid, otherwise a instance of LoginResponse</returns>
         public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
-            StudentDTO student = await _studentService.GetOne(st => st.Username == loginRequest.Username);
+            StudentDTO student = await _studentService.GetSingleOrDefault(st => st.Username == loginRequest.Username);
             if (student == null)
                 return null;
 

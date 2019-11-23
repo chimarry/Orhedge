@@ -72,11 +72,11 @@ namespace ServiceLayer.Students.Helpers
         }
 
 
-        public async Task<TDto> GetOne(Predicate<TEntity> condition)
+        public async Task<TDto> GetSingleOrDefault(Predicate<TDto> condition)
         {
             try
             {
-                return await TryGetOne(condition);
+                return await TryGetOne(x => condition(Mapping.Mapper.Map<TDto>(x)));
             }
             catch (Exception ex)
             {
@@ -98,9 +98,19 @@ namespace ServiceLayer.Students.Helpers
             }
         }
 
-        public async Task<TEntity> GetSingleOrDefault(Predicate<TEntity> condition)
+        public async Task<TEntity> GetOne(Predicate<TEntity> condition)
         {
-            return await _context.Set<TEntity>().Where(x => condition(x)).SingleOrDefaultAsync();
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => condition(x));
+        }
+
+        public async Task<List<TDto>> GetAll<TKey>(Predicate<TEntity> condition, Func<TDto, TKey> sortKeySelector, bool asc = true)
+        {
+            return await TryGetAll<TKey>(condition, sortKeySelector, asc);
+        }
+
+        public async Task<List<TDto>> GetRange<TKey>(int offset, int num, Predicate<TEntity> filter, Func<TDto, TKey> sortKeySelector, bool asc = true)
+        {
+            return await TryGetRange<TKey>(offset, num, filter, sortKeySelector, asc);
         }
 
 
@@ -108,7 +118,7 @@ namespace ServiceLayer.Students.Helpers
 
         private async Task<Status> TryAdd(TDto dto, Predicate<TEntity> condition)
         {
-            TEntity dbEntity = await GetSingleOrDefault(condition);
+            TEntity dbEntity = await GetOne(condition);
             if (dbEntity != null)
             {
                 return Status.ALREADY_EXISTS;
@@ -134,20 +144,19 @@ namespace ServiceLayer.Students.Helpers
         private async Task<List<TDto>> TryGetRange(int offset, int noItems, Predicate<TEntity> condition)
         {
             return await _context.Set<TEntity>().Where(x => condition(x)).Skip(offset).Take(noItems).Select(x => Mapping.Mapper.Map<TDto>(x)).ToListAsync();
-
         }
 
         private async Task<TDto> TryGetOne(Predicate<TEntity> condition)
         {
 
-            TEntity entity = await GetSingleOrDefault(condition);
+            TEntity entity = await GetOne(condition);
             return Mapping.Mapper.Map<TDto>(entity);
         }
 
         private async Task<Status> TryUpdate(TDto dto, Predicate<TEntity> condition)
         {
 
-            TEntity dbEntity = await GetSingleOrDefault(condition);
+            TEntity dbEntity = await GetOne(condition);
             if (dbEntity == null)
             {
                 return Status.NOT_FOUND;
@@ -155,6 +164,35 @@ namespace ServiceLayer.Students.Helpers
             Mapping.Mapper.Map<TDto, TEntity>(dto, dbEntity);
             await _context.SaveChangesAsync();
             return Status.SUCCESS;
+        }
+
+        private async Task<List<TDto>> TryGetAll<TKey>(Predicate<TEntity> filter, Func<TDto, TKey> sortKeySelector, bool asc = true)
+        {
+            IQueryable<TEntity> stream = _context.Set<TEntity>().Where(x => filter(x));
+            if (asc)
+            {
+                stream = stream.OrderBy(x => sortKeySelector(Mapping.Mapper.Map<TDto>(x)));
+            }
+            else
+            {
+                stream = stream.OrderByDescending(x => sortKeySelector(Mapping.Mapper.Map<TDto>(x)));
+            }
+            return await stream.Select(x => Mapping.Mapper.Map<TDto>(x)).ToListAsync();
+        }
+
+        private async Task<List<TDto>> TryGetRange<TKey>(int offset, int noItems, Predicate<TEntity> filter, Func<TDto, TKey> sortKeySelector, bool asc = true)
+        {
+            IQueryable<TEntity> stream = _context.Set<TEntity>().Where(x => filter(x));
+            if (asc)
+            {
+                stream = stream.OrderBy(x => sortKeySelector(Mapping.Mapper.Map<TDto>(x)));
+            }
+            else
+            {
+                stream = stream.OrderByDescending(x => sortKeySelector(Mapping.Mapper.Map<TDto>(x)));
+            }
+            stream = stream.Skip(offset).Take(noItems);
+            return await stream.Select(x => Mapping.Mapper.Map<TDto>(x)).ToListAsync();
         }
 
         #endregion

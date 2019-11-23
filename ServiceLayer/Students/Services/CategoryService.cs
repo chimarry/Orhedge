@@ -27,7 +27,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<Status> Delete(int id)
         {
-            Category dbCategory = await _servicesExecutor.GetSingleOrDefault((x => x.CategoryId == id && x.Deleted == false));
+            Category dbCategory = await _servicesExecutor.GetOne((x => x.CategoryId == id && x.Deleted == false));
             dbCategory.Deleted = true;
             return await _servicesExecutor.Delete(dbCategory);
 
@@ -42,12 +42,12 @@ namespace ServiceLayer.Students.Services
 
         public async Task<CategoryDTO> GetById(int id)
         {
-            return await _servicesExecutor.GetOne(x => x.CategoryId == id && x.Deleted == false);
+            return await _servicesExecutor.GetSingleOrDefault(x => x.CategoryId == id && x.Deleted == false);
         }
 
-        public Task<CategoryDTO> GetOne(Predicate<CategoryDTO> condition)
+        public async Task<CategoryDTO> GetSingleOrDefault(Predicate<CategoryDTO> condition)
         {
-            throw new NotImplementedException();
+            return await _servicesExecutor.GetSingleOrDefault(condition);
         }
 
         public async Task<List<CategoryDTO>> GetRange(int startPosition, int numberOfItems)
@@ -55,11 +55,21 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);
         }
 
+
         public async Task<Status> Update(CategoryDTO categoryDTO)
         {
             return await _servicesExecutor.Update(categoryDTO, x => x.CategoryId == categoryDTO.CategoryId && x.Deleted == false);
 
         }
 
+        public async Task<List<CategoryDTO>> GetAll<TKey>(Func<CategoryDTO, TKey> sortKeySelector, bool asc)
+        {
+            return await _servicesExecutor.GetAll(x => x.Deleted == false, sortKeySelector, asc);
+        }
+
+        public async Task<List<CategoryDTO>> GetRange<TKey>(int offset, int num, Func<CategoryDTO, TKey> sortKeySelector, bool asc)
+        {
+            return await _servicesExecutor.GetRange(offset, num, x => x.Deleted == false, sortKeySelector, asc);
+        }
     }
 }

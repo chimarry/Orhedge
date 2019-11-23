@@ -68,7 +68,7 @@ namespace ServiceLayer.Students.Services
             => new Uri(_baseUrl, $"{_emailLinkEndpoint}?code={Uri.EscapeDataString(code)}").AbsoluteUri;
         
         public async Task<bool> IsStudentRegistered(string email)
-            => await _studentService.GetOne(student => student.Email == email) != null;
+            => await _studentService.GetSingleOrDefault(student => student.Email == email) != null;
 
 
         private string GenerateRegistrationCode()
@@ -84,7 +84,7 @@ namespace ServiceLayer.Students.Services
         public async Task<bool> ValidateRegistrationCode(string code)
         {
             RegistrationDTO registration = 
-                await _registrationService.GetOne(reg => reg.RegistrationCode == code && !reg.Used);
+                await _registrationService.GetSingleOrDefault(reg => reg.RegistrationCode == code && !reg.Used);
 
             return registration != null && !await IsStudentRegistered(registration.Email);      
         }
@@ -99,7 +99,7 @@ namespace ServiceLayer.Students.Services
 
             StudentDTO student = Mapping.Mapper.Map<StudentDTO>(registerData);
 
-            RegistrationDTO registration = await _registrationService.GetOne(
+            RegistrationDTO registration = await _registrationService.GetSingleOrDefault(
                 reg => reg.RegistrationCode == registerData.RegistrationCode);
 
             student.Email = registration.Email;

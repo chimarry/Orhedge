@@ -25,7 +25,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<Status> Delete(int id)
         {
-            StudyMaterial dbStudyMaterial = await _servicesExecutor.GetSingleOrDefault((x => x.StudyMaterialId == id && x.Deleted == false));
+            StudyMaterial dbStudyMaterial = await _servicesExecutor.GetOne((x => x.StudyMaterialId == id && x.Deleted == false));
             dbStudyMaterial.Deleted = true;
             return await _servicesExecutor.Delete(dbStudyMaterial);
         }
@@ -35,20 +35,29 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetAll(x => x.Deleted == false);
         }
 
+        public async Task<List<StudyMaterialDTO>> GetAll<TKey>(Func<StudyMaterialDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetAll<TKey>(x => x.Deleted == false, sortKeySelector, asc);
+        }
 
         public async Task<StudyMaterialDTO> GetById(int id)
         {
-            return await _servicesExecutor.GetOne(x => x.StudyMaterialId == id && x.Deleted == false);
+            return await GetSingleOrDefault(x => x.StudyMaterialId == id && x.Deleted == false);
         }
 
-        public Task<StudyMaterialDTO> GetOne(Predicate<StudyMaterialDTO> condition)
+        public async Task<StudyMaterialDTO> GetSingleOrDefault(Predicate<StudyMaterialDTO> condition)
         {
-            throw new NotImplementedException();
+            return await _servicesExecutor.GetSingleOrDefault(condition);
         }
 
         public async Task<List<StudyMaterialDTO>> GetRange(int startPosition, int numberOfItems)
         {
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);
+        }
+
+        public async Task<List<StudyMaterialDTO>> GetRange<TKey>(int offset, int num, Func<StudyMaterialDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetRange<TKey>(offset, num, x => x.Deleted == false, sortKeySelector, asc);
         }
 
         public async Task<Status> Update(StudyMaterialDTO studyMaterialDTO)

@@ -26,7 +26,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<Status> Delete(int id)
         {
-            Course dbCourse = await _servicesExecutor.GetSingleOrDefault((x => x.CourseId == id && x.Deleted == false));
+            Course dbCourse = await _servicesExecutor.GetOne((x => x.CourseId == id && x.Deleted == false));
             dbCourse.Deleted = true;
             return await _servicesExecutor.Delete(dbCourse);
         }
@@ -36,15 +36,19 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetAll(x => x.Deleted == false);
         }
 
+        public async Task<List<CourseDTO>> GetAll<TKey>(Func<CourseDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetAll<TKey>(x => x.Deleted == false, sortKeySelector, asc);
+        }
 
         public async Task<CourseDTO> GetById(int id)
         {
-            return await _servicesExecutor.GetOne(x => x.CourseId == id && x.Deleted == false);
+            return await _servicesExecutor.GetSingleOrDefault(x => x.CourseId == id && x.Deleted == false);
         }
 
-        public Task<CourseDTO> GetOne(Predicate<CourseDTO> condition)
+        public async Task<CourseDTO> GetSingleOrDefault(Predicate<CourseDTO> condition)
         {
-            throw new NotImplementedException();
+            return await _servicesExecutor.GetSingleOrDefault(condition);
         }
 
         public async Task<List<CourseDTO>> GetRange(int startPosition, int numberOfItems)
@@ -52,10 +56,16 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetRange(startPosition, numberOfItems, x => x.Deleted == false);
         }
 
+        public async Task<List<CourseDTO>> GetRange<TKey>(int offset, int num, Func<CourseDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            return await _servicesExecutor.GetRange<TKey>(offset, num, x => x.Deleted == false, sortKeySelector, asc);
+        }
+
         public async Task<Status> Update(CourseDTO courseDTO)
         {
             return await _servicesExecutor.Update(courseDTO, x => x.CourseId == courseDTO.CourseId && x.Deleted == false);
         }
+
     }
 }
 
