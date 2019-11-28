@@ -2,7 +2,7 @@
 
 namespace ServiceLayer.Students.Interfaces
 {
-    public interface IRegistrationService : IServiceTemplate<RegistrationDTO>
+    public interface IRegistrationService : ICRUDServiceTemplate<RegistrationDTO>
     {
     }
 }

@@ -12,15 +12,14 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class RegistrationService : ICRUDServiceTemplate<RegistrationDTO>
+    public class RegistrationService : IRegistrationService
     {
 
         private readonly IServicesExecutor<RegistrationDTO, Registration> _servicesExecutor;
 
         public RegistrationService(
             IServicesExecutor<RegistrationDTO, Registration> servicesExecutor)
-            =>
-            (_servicesExecutor) = (servicesExecutor);
+            => _servicesExecutor = servicesExecutor;
 
 
         public async Task<Status> Add(RegistrationDTO registrationDTO)
@@ -33,7 +32,6 @@ namespace ServiceLayer.Students.Services
 
         public async Task<RegistrationDTO> GetById(int id)
             => await _servicesExecutor.GetSingleOrDefault(x => x.RegistrationId == id);
-
 
         public async Task<RegistrationDTO> GetSingleOrDefault(Predicate<RegistrationDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(
