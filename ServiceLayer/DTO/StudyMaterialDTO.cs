@@ -19,5 +19,16 @@ namespace ServiceLayer.DTO
         public int CategoryId { get; set; }
 
         public bool Deleted { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StudyMaterialDTO dTO &&
+                   Uri == dTO.Uri;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Uri);
+        }
     }
 }

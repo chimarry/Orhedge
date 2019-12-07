@@ -10,6 +10,7 @@ namespace DatabaseLayer.Configurations
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Course> builder)
         {
+            builder.HasIndex(x => new { x.Name, x.Semester, x.StudyYear }).IsUnique();
             builder.Property(x => x.Deleted).HasDefaultValue(false);
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Semester).IsRequired();

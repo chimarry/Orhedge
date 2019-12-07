@@ -100,7 +100,7 @@ namespace ServiceLayer.Students.Helpers
 
         public async Task<TEntity> GetOne(Predicate<TEntity> condition)
         {
-            return await _context.Set<TEntity>().FirstOrDefaultAsync(x => condition(x));
+            return await _context.Set<TEntity>().SingleOrDefaultAsync(x => condition(x));
         }
 
         public async Task<List<TDto>> GetAll<TKey>(Predicate<TEntity> condition, Func<TDto, TKey> sortKeySelector, bool asc = true)

@@ -11,6 +11,8 @@ namespace DatabaseLayer.Configurations
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Student> builder)
         {
             builder.HasIndex(x => x.Username).IsUnique();
+            builder.HasIndex(x => x.Email).IsUnique();
+            builder.HasIndex(x => x.Index).IsUnique();
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.LastName).IsRequired();
             builder.Property(x => x.Username).IsRequired();
