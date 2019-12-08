@@ -16,7 +16,9 @@ namespace UnitTests.Common
         {
             DbContextOptionsBuilder<OrhedgeContext> ctxOpts = new DbContextOptionsBuilder<OrhedgeContext>();
             ctxOpts.UseInMemoryDatabase(Guid.NewGuid().ToString());
-            return new OrhedgeContext(ctxOpts.Options);
+            var context = new OrhedgeContext(ctxOpts.Options);
+            DataGenerator.Initialize(context);
+            return context;
         }
     }
 }
