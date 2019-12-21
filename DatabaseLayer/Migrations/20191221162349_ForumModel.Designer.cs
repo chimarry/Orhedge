@@ -4,14 +4,16 @@ using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(OrhedgeContext))]
-    partial class OrhegeContextModelSnapshot : ModelSnapshot
+    [Migration("20191221162349_ForumModel")]
+    partial class ForumModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,8 +89,7 @@ namespace DatabaseLayer.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.HasIndex("CourseId", "Name")
-                        .IsUnique();
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Categories");
                 });
@@ -143,9 +144,6 @@ namespace DatabaseLayer.Migrations
                     b.Property<int>("StudyYear");
 
                     b.HasKey("CourseId");
-
-                    b.HasIndex("Name", "Semester", "StudyYear")
-                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
@@ -269,12 +267,6 @@ namespace DatabaseLayer.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Index")
-                        .IsUnique();
-
                     b.HasIndex("Username")
                         .IsUnique();
 
@@ -308,9 +300,6 @@ namespace DatabaseLayer.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("Uri")
-                        .IsUnique();
 
                     b.ToTable("StudyMaterials");
                 });

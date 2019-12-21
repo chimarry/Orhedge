@@ -28,6 +28,15 @@ namespace Orhedge.IoC
             builder.RegisterType<EmailSenderService>().InstancePerLifetimeScope().As<IEmailSenderService>();
             builder.RegisterType<StudentManagmentService>().InstancePerLifetimeScope().As<IStudentManagmentService>();
             builder.RegisterType<AuthenticationService>().InstancePerLifetimeScope().As<IAuthenticationService>();
+            builder.RegisterType<AnswerRatingService>().InstancePerLifetimeScope().As<IAnswerRatingService>();
+            builder.RegisterType<AnswerService>().InstancePerLifetimeScope().As<IAnswerService>();
+            builder.RegisterType<CommentService>().InstancePerLifetimeScope().As<ICommentService>();
+            builder.RegisterType<DiscussionPostService>().InstancePerLifetimeScope().As<IDiscussionPostService>();
+            builder.RegisterType<ForumCategoryService>().InstancePerLifetimeScope().As<IForumCategoryService>();
+            builder.RegisterType<QuestionService>().InstancePerLifetimeScope().As<IQuestionService>();
+            builder.RegisterType<TopicRatingService>().InstancePerLifetimeScope().As<ITopicRatingService>();
+            builder.RegisterType<TopicService>().InstancePerLifetimeScope().As<ITopicService>();
+
             // IMapper is thread safe, hence we register it as singleton
             builder.Register(ctx => MappingConfiguration.CreateMapping());
             IContainer container = builder.Build();

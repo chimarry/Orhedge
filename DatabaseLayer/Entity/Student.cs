@@ -25,6 +25,12 @@ namespace DatabaseLayer.Entity
         public virtual ICollection<StudyMaterial> StudyMaterials { get; set; }
         [InverseProperty("Student")]
         public virtual ICollection<StudyMaterialRating> StudyMaterialRatingsStudents { get; set; }
+        public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<TopicRating> TopicRatings { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<AnswerRating> AnswerRatings { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<DiscussionPost> DiscussionPosts { get; set; }
         #endregion
     }
 }

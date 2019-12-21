@@ -24,6 +24,15 @@ namespace DatabaseLayer.Configurations
             builder.Property(x => x.PasswordHash).IsRequired();
             builder.Property(x => x.Salt).IsRequired();
 
+            // If student is deleted, child entities are not deleted
+            // This is not a problem since student can not be deleted
+            builder.HasMany(x => x.Topics).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.TopicRatings).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.Answers).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.AnswerRatings).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.Comments).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(x => x.DiscussionPosts).WithOne(x => x.Student).OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

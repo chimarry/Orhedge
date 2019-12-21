@@ -7,6 +7,24 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190820000346_AlternatingEntities.cs" />
     <Compile Remove="Migrations\20190823193314_RegistrationEntity.cs" />
+    <Compile Remove="Migrations\20191221122723_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221122723_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221131331_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221131331_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221134328_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221134328_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221141010_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221141010_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221145850_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221145850_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221152535_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221152535_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221153512_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221153512_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221154002_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221154002_ForumModel.Designer.cs" />
+    <Compile Remove="Migrations\20191221161209_ForumModel.cs" />
+    <Compile Remove="Migrations\20191221161209_ForumModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
