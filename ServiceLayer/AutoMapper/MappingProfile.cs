@@ -31,6 +31,14 @@ namespace ServiceLayer.AutoMapper
             CreateMap<StudyMaterial, StudyMaterialDTO>();
             CreateMap<StudyMaterialRating, StudyMaterialRatingDTO>();
             CreateMap<Registration, RegistrationDTO>();
+            CreateMap<Answer, AnswerDTO>();
+            CreateMap<AnswerRating, AnswerRatingDTO>();
+            CreateMap<Discussion, DiscussionDTO>();
+            CreateMap<DiscussionPost, DiscussionPostDTO>();
+            CreateMap<ForumCategory, ForumCategoryDTO>();
+            CreateMap<Question, QuestionDTO>();
+            CreateMap<Topic, TopicDTO>();
+            CreateMap<TopicRating, TopicRatingDTO>();
         }
         private void MapToEntity()
         {
@@ -40,6 +48,14 @@ namespace ServiceLayer.AutoMapper
             CreateMap<StudyMaterialRatingDTO, StudyMaterialRating>();
             CreateMap<CourseDTO, Course>();
             CreateMap<RegistrationDTO, Registration>();
+            CreateMap<AnswerDTO, Answer>();
+            CreateMap<AnswerRatingDTO, AnswerRating>();
+            CreateMap<DiscussionDTO, Discussion>();
+            CreateMap<DiscussionPostDTO, DiscussionPost>();
+            CreateMap<ForumCategoryDTO, ForumCategory>();
+            CreateMap<QuestionDTO, Question>();
+            CreateMap<TopicDTO, Topic>();
+            CreateMap<TopicRatingDTO, TopicRating>();
         }
     }
 }
