@@ -45,5 +45,12 @@ namespace ServiceLayer.Students.Interfaces
         /// <returns>Found or empty list</returns>
         Task<List<T>> GetRange<TKey>(int offset, int num, Func<T, TKey> sortKeySelector, bool asc = true);
 
+        /// <summary>
+        /// Get number of elements in storage
+        /// </summary>
+        /// <returns>Number of elements</returns>
+        Task<int> Count();
+
+        Task<int> Count(Predicate<T> filter);
     }
 }

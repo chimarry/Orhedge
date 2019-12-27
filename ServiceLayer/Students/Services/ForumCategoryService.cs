@@ -10,14 +10,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class ForumCategoryService : IForumCategoryService
+    public class ForumCategoryService : BaseService<ForumCategoryDTO, ForumCategory>, IForumCategoryService
     {
-        private readonly IServicesExecutor<ForumCategoryDTO, ForumCategory> _servicesExecutor;
-
         public ForumCategoryService(IServicesExecutor<ForumCategoryDTO, ForumCategory> servicesExecutor)
-        {
-            _servicesExecutor = servicesExecutor;
-        }
+            : base(servicesExecutor) { }
 
         public async Task<Status> Add(ForumCategoryDTO forumCategoryDTO)
         {
@@ -68,5 +64,8 @@ namespace ServiceLayer.Students.Services
         {
             return await _servicesExecutor.Update(forumCategoryDTO, x => x.ForumCategoryId == forumCategoryDTO.ForumCategoryId);
         }
+
+        public async Task<int> Count()
+            => await _servicesExecutor.Count();
     }
 }

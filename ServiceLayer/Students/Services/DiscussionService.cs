@@ -10,12 +10,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class DiscussionService : IDiscussionService
+    public class DiscussionService : BaseService<DiscussionDTO, Discussion>, IDiscussionService
     {
-        private readonly IServicesExecutor<DiscussionDTO, Discussion> _servicesExecutor;
-
         public DiscussionService(IServicesExecutor<DiscussionDTO, Discussion> servicesExecutor)
-            => _servicesExecutor = servicesExecutor;
+            : base(servicesExecutor) { }
 
         public async Task<Status> Add(DiscussionDTO topic)
             => await _servicesExecutor.Add(topic, x => false);
@@ -54,5 +52,6 @@ namespace ServiceLayer.Students.Services
 
         public Task<Status> Update(DiscussionDTO discussion)
             => _servicesExecutor.Update(discussion, x => x.TopicId == discussion.TopicId && !x.Deleted);
+
     }
 }

@@ -24,14 +24,13 @@ namespace UnitTests.ServiceTests
 
             using (OrhedgeContext context = DbUtilities.CreateNewContext())
             {
-                int correctId = 3;
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
-                StudentDTO student = await executor.GetSingleOrDefault(x => x.StudentId == correctId);
+                List<StudentDTO> students = await executor.GetAll(s => true);
+                StudentDTO student = await executor.GetSingleOrDefault(x => x.Username == "light");
                 Assert.AreNotEqual(student, null);
 
-                int wrongId = 0;
-                StudentDTO noStudent = await executor.GetSingleOrDefault(x => x.StudentId == wrongId);
+                StudentDTO noStudent = await executor.GetSingleOrDefault(x => x.Username == "nonexistent");
                 Assert.AreEqual(noStudent, null);
 
                 // Make sure ErrorHandler.Handle method was not called
@@ -81,25 +80,24 @@ namespace UnitTests.ServiceTests
         [TestMethod]
         public async Task Update()
         {
-            StudentDTO correctUpdatedStudent = new StudentDTO()
-            {
-                StudentId = 1,
-                Index = "1161/16",
-                Name = "Marija",
-                Privilege = 0,
-                Username = "light",
-                Description = "Volim programiranje.",
-                Rating = 4
-            };
+
             using (OrhedgeContext context = DbUtilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
-                Status status = await executor.Update(correctUpdatedStudent, x => x.StudentId == correctUpdatedStudent.StudentId);
+                StudentDTO correctUpdatedStudent = await executor.GetSingleOrDefault(x => x.Username == "light");
+                correctUpdatedStudent.Name = "Milica";
+                correctUpdatedStudent.Rating = 3;
+                correctUpdatedStudent.Username = "mica";
+                correctUpdatedStudent.Privilege = 3;
+                correctUpdatedStudent.Description = "Pesimist";
+                Assert.IsNotNull(correctUpdatedStudent, "Student to update not found");
+
+                Status status = await executor.Update(correctUpdatedStudent, x => x.Username == "light");
                 // Check status of operation
                 Assert.AreEqual(status, Status.SUCCESS);
-
-                StudentDTO updatedStudent = await executor.GetSingleOrDefault(x => x.StudentId == correctUpdatedStudent.StudentId);
+                List<StudentDTO> students = await executor.GetAll(s => true);
+                StudentDTO updatedStudent = await executor.GetSingleOrDefault(x => x.Username == "mica");
                 Assert.AreNotEqual(updatedStudent, null, "Not found");
 
                 // Check if inserted record exists with valid data
@@ -134,6 +132,22 @@ namespace UnitTests.ServiceTests
                 errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
             }
 
+        }
+
+        [TestMethod]
+        public async Task Count()
+        {
+            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            {
+                var errHandlerMock = new Mock<IErrorHandler>();
+
+                IServicesExecutor<StudentDTO, Student> executor 
+                    = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
+
+                Assert.AreEqual(3, await executor.Count());
+                Assert.AreEqual(1, await executor.Count(s => s.Username == "light"));
+                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+            }
         }
     }
 }

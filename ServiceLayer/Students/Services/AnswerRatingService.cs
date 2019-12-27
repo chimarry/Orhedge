@@ -10,14 +10,11 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class AnswerRatingService : IAnswerRatingService
+    public class AnswerRatingService : BaseService<AnswerRatingDTO, AnswerRating>, IAnswerRatingService
     {
-        private readonly IServicesExecutor<AnswerRatingDTO, AnswerRating> _servicesExecutor;
 
         public AnswerRatingService(IServicesExecutor<AnswerRatingDTO, AnswerRating> servicesExecutor)
-        {
-            _servicesExecutor = servicesExecutor;
-        }
+            : base(servicesExecutor) { }
 
         public async Task<Status> Add(AnswerRatingDTO answerRatingDTO)
         {

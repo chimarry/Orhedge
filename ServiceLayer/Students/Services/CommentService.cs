@@ -10,14 +10,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class CommentService : ICommentService
+    public class CommentService : BaseService<CommentDTO, Comment>, ICommentService
     {
-        private readonly IServicesExecutor<CommentDTO, Comment> _servicesExecutor;
-
         public CommentService(IServicesExecutor<CommentDTO, Comment> servicesExecutor)
-        {
-            _servicesExecutor = servicesExecutor;
-        }
+            : base(servicesExecutor) { }
 
         public async Task<Status> Add(CommentDTO commentDTO)
         {

@@ -9,14 +9,10 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class StudyMaterialService : IStudyMaterialService
+    public class StudyMaterialService : BaseService<StudyMaterialDTO, StudyMaterial>, IStudyMaterialService
     {
-
-        private readonly IServicesExecutor<StudyMaterialDTO, StudyMaterial> _servicesExecutor;
         public StudyMaterialService(IServicesExecutor<StudyMaterialDTO, StudyMaterial> servicesExecutor)
-        {
-            _servicesExecutor = servicesExecutor;
-        }
+            : base(servicesExecutor) { }
 
         public async Task<Status> Add(StudyMaterialDTO studyMaterialDTO)
         {

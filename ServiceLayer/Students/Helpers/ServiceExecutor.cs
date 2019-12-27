@@ -195,6 +195,12 @@ namespace ServiceLayer.Students.Helpers
             return await stream.Select(x => Mapping.Mapper.Map<TDto>(x)).ToListAsync();
         }
 
+        public async Task<int> Count()
+            => await _context.Set<TEntity>().CountAsync();
+
+        public async Task<int> Count(Predicate<TEntity> filter)
+            => await _context.Set<TEntity>().Where(x => filter(x)).CountAsync();
+        
         #endregion
     }
 }

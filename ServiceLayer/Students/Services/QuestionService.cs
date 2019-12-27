@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public class QuestionService : IQuestionService
+    public class QuestionService : BaseService<QuestionDTO, Question>, IQuestionService
     {
 
-        private readonly IServicesExecutor<QuestionDTO, Question> _servicesExecutor;
-
         public QuestionService(IServicesExecutor<QuestionDTO, Question> servicesExecutor)
-            => _servicesExecutor = servicesExecutor;
+            : base(servicesExecutor) { }
         public Task<Status> Add(QuestionDTO question)
             => _servicesExecutor.Add(question, x => false);
 

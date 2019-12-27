@@ -87,5 +87,12 @@ namespace ServiceLayer.Students.Helpers
         /// <param name="asc">Indicates direction of sorting. Default is ascending</param>
         /// <returns>Found or empty list</returns>
         Task<List<TDto>> GetRange<TKey>(int offset, int num, Predicate<TEntity> filter, Func<TDto, TKey> sortKeySelector, bool asc = true);
+
+        /// <summary>
+        /// Get number of elements of specified type in storage
+        /// </summary>
+        /// <returns>Number of elements</returns>
+        Task<int> Count();
+        Task<int> Count(Predicate<TEntity> filter);
     }
 }

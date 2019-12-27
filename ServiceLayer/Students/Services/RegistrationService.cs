@@ -40,5 +40,7 @@ namespace ServiceLayer.Students.Services
         public async Task<Status> Update(RegistrationDTO registrationDTO)
             => await _servicesExecutor.Update(registrationDTO, reg => reg.RegistrationId == registrationDTO.RegistrationId);
 
+        public async Task<int> Count()
+            => await _servicesExecutor.Count();
     }
 }
