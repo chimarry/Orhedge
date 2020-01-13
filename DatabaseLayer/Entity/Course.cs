@@ -8,12 +8,13 @@ namespace DatabaseLayer.Entity
     {
         public int CourseId { get; set; }
         public string Name { get; set; }
-        public int StudyYear { get; set; }
-        public int Semester { get; set; }
+        public string Semester { get; set; }
         public bool Deleted { get; set; }
 
         #region NavigationProperties
-        public virtual ICollection<Category> Categories { get; set; } 
+        public virtual ICollection<Category> Categories { get; set; }
+
+        public virtual ICollection<CourseStudyProgram> CourseStudyPrograms { get; set; }
         #endregion
     }
 }

@@ -17,7 +17,7 @@ namespace ServiceLayer.Students.Services
 
         public async Task<Status> Add(CourseDTO courseDTO)
         {
-            await _servicesExecutor.Add(courseDTO, x => x.Name == courseDTO.Name && courseDTO.Semester == x.Semester && courseDTO.StudyYear == x.StudyYear && x.Deleted == false);
+            await _servicesExecutor.Add(courseDTO, x => x.Name != courseDTO.Name && x.Deleted == false);
             return Status.SUCCESS;
         }
 

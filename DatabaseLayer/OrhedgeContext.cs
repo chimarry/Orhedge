@@ -7,21 +7,40 @@ namespace DatabaseLayer
     public class OrhedgeContext : DbContext
     {
         public OrhedgeContext(DbContextOptions<OrhedgeContext> dbContextOptions) : base(dbContextOptions) { }
+
         public DbSet<Student> Students { get; set; }
+
         public DbSet<StudyMaterialRating> StudyMaterialRatings { get; set; }
+
         public DbSet<StudyMaterial> StudyMaterials { get; set; }
+
         public DbSet<Course> Courses { get; set; }
+
         public DbSet<Category> Categories { get; set; }
+
         public DbSet<Registration> Registrations { get; set; }
+
         public DbSet<Topic> Topics { get; set; }
+
         public DbSet<DiscussionPost> DiscussionPosts { get; set; }
+
         public DbSet<Answer> Answers { get; set; }
+
         public DbSet<Comment> Comments { get; set; }
+
         public DbSet<ForumCategory> ForumCategories { get; set; }
+
         public DbSet<TopicRating> TopicRatings { get; set; }
+
         public DbSet<AnswerRating> AnswerRatings { get; set; }
+
         public DbSet<Question> Questions { get; set; }
+
         public DbSet<Discussion> Discussions { get; set; }
+
+        public DbSet<StudyProgram> StudyPrograms { get; set; }
+
+        public DbSet<CourseStudyProgram> CourseStudyPrograms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,7 +57,8 @@ namespace DatabaseLayer
             modelBuilder.ApplyConfiguration(new ForumCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new TopicRatingConfiguration());
             modelBuilder.ApplyConfiguration(new AnswerRatingConfiguration());
-
+            modelBuilder.ApplyConfiguration(new StudyProgramConfiguration());
+            modelBuilder.ApplyConfiguration(new CourseStudyProgramConfiguration());
         }
     }
 }
