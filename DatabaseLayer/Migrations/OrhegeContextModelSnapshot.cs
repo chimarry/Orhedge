@@ -143,9 +143,6 @@ namespace DatabaseLayer.Migrations
 
                     b.HasKey("CourseId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.ToTable("Courses");
                 });
 

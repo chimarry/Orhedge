@@ -59,12 +59,6 @@ namespace DatabaseLayer.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_Name_Semester_StudyYear",
-                table: "Courses",
-                columns: new[] { "Name", "Semester", "StudyYear" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Categories_CourseId_Name",
                 table: "Categories",
                 columns: new[] { "CourseId", "Name" },
@@ -84,10 +78,6 @@ namespace DatabaseLayer.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_Students_Index",
                 table: "Students");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Courses_Name_Semester_StudyYear",
-                table: "Courses");
 
             migrationBuilder.DropIndex(
                 name: "IX_Categories_CourseId_Name",

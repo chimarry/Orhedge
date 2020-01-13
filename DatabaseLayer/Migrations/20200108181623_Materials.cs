@@ -7,10 +7,6 @@ namespace DatabaseLayer.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Courses_Name_Semester_StudyYear",
-                table: "Courses");
-
             migrationBuilder.DropColumn(
                 name: "StudyYear",
                 table: "Courses");
@@ -59,12 +55,6 @@ namespace DatabaseLayer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_Name",
-                table: "Courses",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CourseStudyPrograms_CourseId",
                 table: "CourseStudyPrograms",
                 column: "CourseId");
@@ -78,10 +68,6 @@ namespace DatabaseLayer.Migrations
             migrationBuilder.DropTable(
                 name: "StudyPrograms");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Courses_Name",
-                table: "Courses");
-
             migrationBuilder.AlterColumn<int>(
                 name: "Semester",
                 table: "Courses",
@@ -93,12 +79,6 @@ namespace DatabaseLayer.Migrations
                 table: "Courses",
                 nullable: false,
                 defaultValue: 0);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_Name_Semester_StudyYear",
-                table: "Courses",
-                columns: new[] { "Name", "Semester", "StudyYear" },
-                unique: true);
         }
     }
 }
