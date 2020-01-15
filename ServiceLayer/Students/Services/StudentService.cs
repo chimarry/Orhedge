@@ -60,6 +60,11 @@ namespace ServiceLayer.Students.Services
         {
             return await _servicesExecutor.GetRange<TKey>(offset, num, x => x.Deleted == false, sortKeySelector, asc);
         }
+
+        public Task<List<StudentDTO>> GetRange<TKey>(int offset, int num, Predicate<StudentDTO> filter, Func<StudentDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

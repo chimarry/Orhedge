@@ -1,12 +1,14 @@
 ﻿using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorHandling;
+using ServiceLayer.Students.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace UnitTests.Common
 {
-    static class DbUtilities
+    static class Utilities
     {
         /// <summary>
         /// Creates DBContext which refers to new empty database

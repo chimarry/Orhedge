@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer.Entity;
+using ServiceLayer.AutoMapper;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Helpers;
@@ -44,6 +45,8 @@ namespace ServiceLayer.Students.Services
         public async Task<List<QuestionDTO>> GetRange<TKey>(int offset, int num, Func<QuestionDTO, TKey> sortKeySelector, bool asc = true)
             => await _servicesExecutor.GetRange(offset, num, x => !x.Deleted, sortKeySelector, asc);
 
+        public async Task<List<QuestionDTO>> GetRange<TKey>(int offset, int num, Predicate<QuestionDTO> filter, Func<QuestionDTO, TKey> sortKeySelector, bool asc = true)
+            => await _servicesExecutor.GetRange(offset, num, x => filter(Mapping.Mapper.Map<QuestionDTO>(x)), sortKeySelector, asc);
 
         public async Task<QuestionDTO> GetSingleOrDefault(Predicate<QuestionDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);

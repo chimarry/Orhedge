@@ -63,6 +63,10 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.Update(courseDTO, x => x.CourseId == courseDTO.CourseId && x.Deleted == false);
         }
 
+        public Task<List<CourseDTO>> GetRange<TKey>(int offset, int num, Predicate<CourseDTO> filter, Func<CourseDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

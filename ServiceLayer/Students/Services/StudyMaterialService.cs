@@ -61,6 +61,11 @@ namespace ServiceLayer.Students.Services
             await _servicesExecutor.Update(studyMaterialDTO, x => x.StudyMaterialId == studyMaterialDTO.StudyMaterialId && x.Deleted == false);
             return Status.SUCCESS;
         }
+
+        public Task<List<StudyMaterialDTO>> GetRange<TKey>(int offset, int num, Predicate<StudyMaterialDTO> filter, Func<StudyMaterialDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

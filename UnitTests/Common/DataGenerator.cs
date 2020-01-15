@@ -2,7 +2,8 @@
 using DatabaseLayer.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace UnitTests.Common
 {
@@ -11,6 +12,56 @@ namespace UnitTests.Common
         public static void Initialize(OrhedgeContext context)
         {
             InitializeStudents(context);
+        }
+
+        public static async Task AddCategory(OrhedgeContext context, string name, int order)
+        {
+            ForumCategory forumCategory = new ForumCategory
+            {
+                Name = name,
+                Order = order
+            };
+
+            context.ForumCategories.Add(forumCategory);
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task AddDiscussions(OrhedgeContext context, string catName, int count)
+        {
+            // We expect to have a least one student
+            Student student = context.Students.First();
+            ForumCategory forumCategory = context.ForumCategories.First(cat => cat.Name == catName);
+            IEnumerable<Discussion> disc = Enumerable.Range(1, count).Select(n =>
+            new Discussion
+            {
+                Student = student,
+                ForumCategory = forumCategory,
+                Content = "Test",
+                Created = DateTime.UtcNow,
+                LastPost = DateTime.UtcNow,
+                Title = $"Title({n})"
+            });
+            await context.Discussions.AddRangeAsync(disc);
+            await context.SaveChangesAsync();
+        }
+
+        public static async Task AddQuestions(OrhedgeContext context, string catName, int count)
+        {
+            // We expect to have a least one student
+            Student student = context.Students.First();
+            ForumCategory forumCategory = context.ForumCategories.First(cat => cat.Name == catName);
+            IEnumerable<Question> questions = Enumerable.Range(1, count).Select(n =>
+            new Question
+            {
+                Student = student,
+                ForumCategory = forumCategory,
+                Content = "Test",
+                Created = DateTime.UtcNow,
+                LastPost = DateTime.UtcNow,
+                Title = $"Title({n})"
+            });
+            await context.Questions.AddRangeAsync(questions);
+            await context.SaveChangesAsync();
         }
 
         private static void InitializeStudents(OrhedgeContext context)

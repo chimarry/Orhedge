@@ -56,6 +56,11 @@ namespace ServiceLayer.Students.Services
             return await _servicesExecutor.GetRange(offset, num, x => x.Deleted == false, sortKeySelector, asc);
         }
 
+        public Task<List<AnswerDTO>> GetRange<TKey>(int offset, int num, Predicate<AnswerDTO> filter, Func<AnswerDTO, TKey> sortKeySelector, bool asc = true)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<AnswerDTO> GetSingleOrDefault(Predicate<AnswerDTO> condition)
         {
             return await _servicesExecutor.GetSingleOrDefault(condition);

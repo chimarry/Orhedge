@@ -22,7 +22,7 @@ namespace UnitTests.ServiceTests
         public async Task GetSingleOrDefault()
         {
 
-            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            using (OrhedgeContext context = Utilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
@@ -53,7 +53,7 @@ namespace UnitTests.ServiceTests
                 Salt = "90"
             };
 
-            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            using (OrhedgeContext context = Utilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
@@ -81,7 +81,7 @@ namespace UnitTests.ServiceTests
         public async Task Update()
         {
 
-            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            using (OrhedgeContext context = Utilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
@@ -116,7 +116,7 @@ namespace UnitTests.ServiceTests
         public async Task GetAll()
         {
             int numberOfElements = 3;
-            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            using (OrhedgeContext context = Utilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
@@ -137,7 +137,7 @@ namespace UnitTests.ServiceTests
         [TestMethod]
         public async Task Count()
         {
-            using (OrhedgeContext context = DbUtilities.CreateNewContext())
+            using (OrhedgeContext context = Utilities.CreateNewContext())
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
 
