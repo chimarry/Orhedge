@@ -1,6 +1,7 @@
 ﻿using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
+using ServiceLayer.Students.Exceptions;
 using ServiceLayer.Students.Interfaces;
 using ServiceLayer.Students.Interfaces.Forum;
 using System;
@@ -126,8 +127,13 @@ namespace ServiceLayer.Students.Services.Forum
             return catDTO == null ? orderedCategories.First().ForumCategoryId : catDTO.ForumCategoryId;
         }
 
-        public Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content)
+        public async Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content)
         {
+            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null) 
+            {
+                throw new ForumException("Category does not exist");
+            }
+
             DiscussionDTO newDiscussion = new DiscussionDTO
             {
                 ForumCategoryId = forumCategoryId,
@@ -138,8 +144,27 @@ namespace ServiceLayer.Students.Services.Forum
                 LastPost = DateTime.UtcNow
             };
 
-            return _discussionService.Add(newDiscussion);
+            return await _discussionService.Add(newDiscussion);
         }
 
+        public async Task<Status> AddQuestion(int forumCategoryId, int studentId, string title, string content)
+        {
+            if(await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
+            {
+                throw new ForumException("Category does not exist");
+            }
+
+            QuestionDTO newQuestion = new QuestionDTO
+            {
+                ForumCategoryId = forumCategoryId,
+                Title = title,
+                Content = content,
+                StudentId = studentId,
+                Created = DateTime.UtcNow,
+                LastPost = DateTime.UtcNow
+            };
+
+            return await _questionService.Add(newQuestion);
+        }
     }
 }

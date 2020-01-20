@@ -9,5 +9,7 @@ namespace ServiceLayer.Students.Interfaces.Forum
         Task<TopicListDTO> GetDiscussions(int categoryId, int page, int itemsPerPage);
         Task<TopicListDTO> GetQuestions(int categoryId, int page, int itemsPerPage);
         Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content);
+        Task<Status> AddQuestion(int forumCategoryId, int studentId, string title, string content);
+
     }
 }

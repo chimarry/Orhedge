@@ -44,5 +44,52 @@ namespace Orhedge.Controllers
             return View();
         }
 
+        public async Task<IActionResult> PostDiscussion(PostDiscussionViewModel discussion)
+        {
+            //TODO: Get StudentId from cookie
+            int studentId = 1;
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("CreateDiscussion");
+            }
+
+            Status result = await _forumService.AddDiscussion(discussion.ForumCategoryId, studentId, discussion.Title, discussion.Content);
+            if (result == Status.SUCCESS)
+            {
+                //Display page: posted discussion or index forum page
+                return RedirectToAction("Index");
+            }
+            else
+                //TODO: Show massage to user that posting was not success
+                return Content("Not successful");
+        }
+
+        public IActionResult CreateQuestion()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> PostQuestion(PostQuestionViewModel question)
+        {
+            //TODO: Get StudentId from cookie
+            int studentId = 1;
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("CreateQuestion");
+            }
+
+            Status result = await _forumService.AddQuestion(question.ForumCategoryId, studentId, question.Title, question.Content);
+            if (result == Status.SUCCESS)
+            {
+                //Display page: posted discussion or index forum page
+                return RedirectToAction("Index");
+            }
+            else
+                return Content("Not successful");
+
+        }
+
     }
 }
