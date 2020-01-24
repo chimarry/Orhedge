@@ -8,7 +8,6 @@ namespace DatabaseLayer.Entity
     {
         public int CourseId { get; set; }
         public string Name { get; set; }
-        public string Semester { get; set; }
         public bool Deleted { get; set; }
 
         #region NavigationProperties

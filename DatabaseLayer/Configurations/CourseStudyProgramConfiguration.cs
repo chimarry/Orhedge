@@ -11,6 +11,7 @@ namespace DatabaseLayer.Configurations
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<CourseStudyProgram> builder)
         {
             builder.HasKey(x => new { x.StudyProgramId, x.CourseId });
+            builder.Property(x => x.Semester).IsRequired();
         }
     }
 }

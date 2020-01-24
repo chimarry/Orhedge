@@ -10,6 +10,8 @@ namespace DatabaseLayer.Entity
 
         public int StudyProgramId { get; set; }
 
+        public string Semester { get; set; }
+
         #region NavigationProperties
         public virtual Course Course { get; set; }
 

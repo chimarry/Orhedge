@@ -12,8 +12,6 @@ namespace DatabaseLayer.Configurations
         {
             builder.Property(x => x.Deleted).HasDefaultValue(false);
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Semester).IsRequired();
-
         }
     }
 }
