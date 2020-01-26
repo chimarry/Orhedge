@@ -8,7 +8,9 @@ namespace DatabaseLayer.Entity
     {
         public int StudyProgramId { get; set; }
 
-        public int Name { get; set; }
+        public string Name { get; set; }
+
+        public int Rank { get; set; }
 
         #region NavigationProperties
         public virtual ICollection<CourseStudyProgram> CourseStudyPrograms { get; set; }

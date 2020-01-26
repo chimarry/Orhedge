@@ -11,6 +11,7 @@ namespace DatabaseLayer.Configurations
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<StudyProgram> builder)
         {
             builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Rank).IsRequired();
         }
     }
 }
