@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Orhedge.ViewModels.Forum;
+using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Interfaces.Forum;
@@ -89,6 +91,28 @@ namespace Orhedge.Controllers
             else
                 return Content("Not successful");
 
+        }
+
+        public async Task<IActionResult> ShowDiscussion(int discussionId)
+        {
+            DiscussionDTO discussion = await _forumService.GetDiscussion(discussionId);
+            if(discussion == null || discussion.Deleted)
+            {
+                return RedirectToAction("Index");
+            }
+            StudentDTO author = await _forumService.GetAuthor(discussion.StudentId);
+
+            DiscussionPostsDTO discussionPosts = await _forumService.GetDiscussionPosts(discussionId);
+            DiscussionViewModel discussionVM = new DiscussionViewModel
+            {
+                Title = discussion.Title,
+                Content = discussion.Content,
+                LastPost = discussion.LastPost,
+                Created = discussion.Created,
+                Author = _mapper.Map<StudentDTO, AuthorViewModel>(author),
+                DiscussionPosts = _mapper.Map<DiscussionPostsDTO, DiscussionPostViewModel[]>(discussionPosts)
+            };
+            return View(discussionVM);
         }
 
     }

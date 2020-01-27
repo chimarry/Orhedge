@@ -166,5 +166,33 @@ namespace ServiceLayer.Students.Services.Forum
 
             return await _questionService.Add(newQuestion);
         }
+
+        public async Task<DiscussionDTO> GetDiscussion(int discussionId)
+        {
+            return await _discussionService.GetById(discussionId);
+        }
+
+        public async Task<DiscussionPostsDTO> GetDiscussionPosts(int discussionId)
+        {
+            List<DiscussionPostDTO> discussionPostList = await _discussionPostService.GetAll<bool>(x => x.TopicId == discussionId && !x.Deleted);
+
+            List<StudentDTO> authors = new List<StudentDTO>();
+            foreach (DiscussionPostDTO discussionPost in discussionPostList)
+            {
+                StudentDTO student = await _studentService.GetById(discussionPost.StudentId);
+                authors.Add(student);
+            }
+
+            return new DiscussionPostsDTO
+            {
+                DiscussionPosts = discussionPostList.ToArray(),
+                Authors = authors.ToArray()
+            };
+        }
+
+        public async Task<StudentDTO> GetAuthor(int studentId)
+        {
+            return await _studentService.GetById(studentId);
+        }
     }
 }
