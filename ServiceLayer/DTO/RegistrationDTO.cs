@@ -7,8 +7,12 @@ namespace ServiceLayer.DTO
         public int RegistrationId { get; set; }
         public string RegistrationCode { get; set; }
         public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Index { get; set; }
+        public int Privilege { get; set; }
         /// <summary>
-        /// Registration date and time
+        /// Date and time when registration is created
         /// </summary>
         public DateTime Timestamp { get; set; }
 

@@ -3,9 +3,9 @@ using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
+using ServiceLayer.DTO.Registration;
 using ServiceLayer.Models;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Orhedge.AutoMapper
 {
@@ -13,7 +13,8 @@ namespace Orhedge.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<RegisterViewModel, RegisterData>();
+            CreateMap<RegisterFormViewModel, RegisterFormDTO>();
+            CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
         }
         public void MapForum()

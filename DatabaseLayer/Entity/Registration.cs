@@ -7,6 +7,10 @@ namespace DatabaseLayer.Entity
         public int RegistrationId { get; set; }
         public string RegistrationCode { get; set; }
         public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Index { get; set; }
+        public int Privilege { get; set; }
         public DateTime Timestamp { get; set; }
         public bool Used { get; set; }
     }

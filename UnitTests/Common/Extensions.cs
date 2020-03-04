@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using ServiceLayer.DTO;
+using ServiceLayer.DTO.Registration;
+
 namespace UnitTests.Common
 {
     public static class Extensions
@@ -20,5 +23,13 @@ namespace UnitTests.Common
             }
             return true;
         }
+
+        public static bool Compare(this RegistrationDTO regDTO, RegisterFormDTO regFormDTO)
+            => regDTO.Email == regFormDTO.Email
+                && regDTO.Privilege == regFormDTO.Privilege
+                && regDTO.FirstName == regFormDTO.FirstName
+                && regDTO.LastName == regFormDTO.LastName
+                && regDTO.Index == regFormDTO.Index;
+
     }
 }

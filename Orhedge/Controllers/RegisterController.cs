@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orhedge.ViewModels;
+using ServiceLayer.DTO.Registration;
 using ServiceLayer.Models;
 using ServiceLayer.Students.Interfaces;
 
@@ -23,7 +24,7 @@ namespace Orhedge.Controllers
         [ValidateAntiForgeryToken]
         // TODO: Uncomment this to allow only administrators to register new users
         //[Authorize(Roles = "0")]
-        public async Task<IActionResult> SendConfirmationEmail([FromForm]RegisterEmailViewModel registration)
+        public async Task<IActionResult> SendRegistrationEmail([FromForm]RegisterFormViewModel registration)
         {
             if(ModelState.IsValid)
             {
@@ -39,7 +40,8 @@ namespace Orhedge.Controllers
                 }
                 else
                 {
-                    await _studentManagmentService.GenerateRegistrationEmail(registration.Email);
+                    RegisterFormDTO registerFormDTO = _mapper.Map<RegisterFormDTO>(registration);
+                    await _studentManagmentService.GenerateRegistrationEmail(registerFormDTO);
                     // TODO: Display success page
                     return Content("Success");
                 }
@@ -77,7 +79,7 @@ namespace Orhedge.Controllers
                 if (!codeValid)
                     return RedirectToAction("Index", "Home");
 
-                RegisterData registerData = _mapper.Map<RegisterData>(registration);
+                RegisterUserDTO registerData = _mapper.Map<RegisterUserDTO>(registration);
 
                 await _studentManagmentService.RegisterStudent(registerData);
 

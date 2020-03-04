@@ -3,7 +3,9 @@ using ServiceLayer.AutoMapper;
 using ServiceLayer.Common;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Registration;
 using ServiceLayer.Models;
+using ServiceLayer.Students.Exceptions;
 using ServiceLayer.Students.Interfaces;
 using ServiceLayer.Utilities;
 using System;
@@ -41,15 +43,13 @@ namespace ServiceLayer.Students.Services
             _emailLinkEndpoint = config["RegisterEmail:LinkEndpoint"];
         }
 
-        public async Task GenerateRegistrationEmail(string email)
+        public async Task GenerateRegistrationEmail(RegisterFormDTO registerFormDTO)
         {
-            RegistrationDTO regDTO = new RegistrationDTO
-            {
-                Email = email,
-                RegistrationCode = GenerateRegistrationCode(),
-                Timestamp = DateTime.Now,
-                Used = false
-            };
+
+            RegistrationDTO regDTO = Mapping.Mapper.Map<RegistrationDTO>(registerFormDTO);
+            regDTO.RegistrationCode = GenerateRegistrationCode();
+            regDTO.Used = false;
+            regDTO.Timestamp = DateTime.Now;
 
             await _registrationService.Add(regDTO);
 
@@ -57,7 +57,7 @@ namespace ServiceLayer.Students.Services
                 new SendEmailData
                 {
                     From = _fromEmailAddress,
-                    To = email,
+                    To = registerFormDTO.Email,
                     ContentType = CONTENT_TYPE,
                     Message = GenerateRegistrationLink(regDTO.RegistrationCode),
                     Subject = _emailSubject
@@ -89,22 +89,16 @@ namespace ServiceLayer.Students.Services
             return registration != null && !await IsStudentRegistered(registration.Email);      
         }
 
-        // Make sure to check if registerData.Password == registerData.ConfirmPassword
-        public async Task RegisterStudent(RegisterData registerData)
+        public async Task RegisterStudent(RegisterUserDTO registerData)
         {
-
-            if (registerData.Password != registerData.ConfirmPassword)
-                throw new ArgumentException($"{nameof(registerData.Password)} " +
-                    $"and {registerData.ConfirmPassword} properties are not equal", nameof(registerData));
 
             StudentDTO student = Mapping.Mapper.Map<StudentDTO>(registerData);
 
             RegistrationDTO registration = await _registrationService.GetSingleOrDefault(
                 reg => reg.RegistrationCode == registerData.RegistrationCode);
 
-            student.Email = registration.Email;
-            student.Privilege = 3;
-            student.Rating = 0;
+            Mapping.Mapper.Map(registration, student);
+
             byte[] salt = Crypto.GenerateRandomBytes(SALT_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
             string hash = Convert.ToBase64String(Crypto.DeriveKey(registerData.Password, salt, 

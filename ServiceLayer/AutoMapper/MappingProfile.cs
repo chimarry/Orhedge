@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Registration;
 using ServiceLayer.Models;
 
 namespace ServiceLayer.AutoMapper
@@ -17,7 +18,9 @@ namespace ServiceLayer.AutoMapper
             MapToEntity();
             #endregion
 
-            CreateMap<RegisterData, StudentDTO>()
+            CreateMap<RegisterFormDTO, RegistrationDTO>();
+            CreateMap<RegisterUserDTO, StudentDTO>();
+            CreateMap<RegistrationDTO, StudentDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
 
             //CreateMap<Source,Destination>();

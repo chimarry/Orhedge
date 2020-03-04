@@ -3,12 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Registration;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Models;
 using ServiceLayer.Students.Interfaces;
 using ServiceLayer.Students.Services;
 using System;
 using System.Threading.Tasks;
+using UnitTests.Common;
 
 namespace UnitTests.ServiceTests
 {
@@ -52,7 +54,17 @@ namespace UnitTests.ServiceTests
             // Passing null here beacause GenerateRegistrationEmail does not use StudentService
             IStudentManagmentService studMng = new StudentManagmentService(
                 emailMock.Object, null, regMock.Object, _sharedConfigMock.Object);
-            await studMng.GenerateRegistrationEmail(EMAIL_TO);
+
+            RegisterFormDTO reg = new RegisterFormDTO
+            {
+                Email = EMAIL_TO,
+                FirstName = "FirstName",
+                LastName = "LastName",
+                Index = "1111/11",
+                Privilege = 3
+            };
+
+            await studMng.GenerateRegistrationEmail(reg);
 
             emailMock.Verify(emailService => emailService.SendEmailAsync
             (
@@ -60,7 +72,7 @@ namespace UnitTests.ServiceTests
             ), Times.Once);
 
             regMock.Verify(regService => regService.Add(
-                It.Is<RegistrationDTO>(regDTO => regDTO.Email == EMAIL_TO)), Times.Once);
+                It.Is<RegistrationDTO>(regDTO => regDTO.Compare(reg) && regDTO.Used == false)), Times.Once);
         }
 
         [TestMethod]
@@ -80,7 +92,17 @@ namespace UnitTests.ServiceTests
 
             IStudentManagmentService studMng = new StudentManagmentService
                 (new Mock<IEmailSenderService>().Object, studServiceMock.Object, regMock.Object, _sharedConfigMock.Object);
-            await studMng.GenerateRegistrationEmail(EMAIL_TO);
+
+            RegisterFormDTO reg = new RegisterFormDTO
+            {
+                Email = EMAIL_TO,
+                FirstName = "FirstName",
+                LastName = "LastName",
+                Index = "1111/11",
+                Privilege = 3
+            };
+
+            await studMng.GenerateRegistrationEmail(reg);
             
             // At this point registrationCode != null 
             RegistrationDTO regDTO = new RegistrationDTO
@@ -95,13 +117,9 @@ namespace UnitTests.ServiceTests
             regMock.Setup(regService => regService.GetSingleOrDefault(
                 It.IsAny<Predicate<RegistrationDTO>>())).ReturnsAsync(regDTO);
 
-            RegisterData regData = new RegisterData
+            RegisterUserDTO regData = new RegisterUserDTO
             {
-                FirstName = "Name",
-                LastName = "LastName",
                 Password = "Password",
-                ConfirmPassword = "Password",
-                Index = "1111/19",
                 Username = "username",
                 RegistrationCode = registrationCode
             };
@@ -109,11 +127,7 @@ namespace UnitTests.ServiceTests
             await studMng.RegisterStudent(regData);
 
             studServiceMock.Verify(service => service.Add(
-                It.Is<StudentDTO>(dto => dto.Email == EMAIL_TO
-                && dto.Privilege == 3 && dto.Rating == 0
-                && dto.Username == regData.Username && !dto.Deleted && 
-                dto.Index == regData.Index && dto.Name == regData.FirstName 
-                && dto.LastName == regData.LastName)));
+                It.Is<StudentDTO>(dto => dto.Username == regData.Username)));
 
             regMock.Verify(service => service.Update(
                 It.Is<RegistrationDTO>(dto => dto.Used == true)));
