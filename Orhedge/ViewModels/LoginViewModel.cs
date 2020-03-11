@@ -4,10 +4,11 @@ namespace Orhedge.ViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Korisničko ime nije uneseno")]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Lozinka nije unesena")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        public bool RememberMe { get; set; }
     }
 }

@@ -21,26 +21,35 @@ namespace Orhedge.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([FromForm] LoginViewModel login, [FromQuery] string returnUrl = "/")
+        public async Task<IActionResult> Login([FromForm] LoginViewModel login, [FromQuery] string returnUrl = "")
         {
             if (ModelState.IsValid)
             {
                 LoginResponse loginResponse = await _authService.Login(_mapper.Map<LoginRequest>(login));
                 if (loginResponse == null)
                 {
-                    // TODO: Display login page with message which says that credentials are not valid
-                    return Content("Invalid credentials");
+                    ViewData["invalidCred"] = true;
+                    ViewData["returnUrl"] = returnUrl;
+                    return View("Views/Home/Login.cshtml", login);
                 }
                 else
                 {
                     ClaimsPrincipal claimsPrincipal = GetClaimsPrincipal(loginResponse);
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal,
+                        new AuthenticationProperties
+                        {
+                            IsPersistent = login.RememberMe
+                        });
+
+                    // TODO: Redirect to main page
                     return Redirect(Url.IsLocalUrl(returnUrl) ? returnUrl : Url.Action("Index", "Home"));
                 }
             }
             else
-                // TODO: Display login page again with message about
-                return Content("Login view model invalid");
+            {
+                ViewData["returnUrl"] = returnUrl;
+                return View("Views/Home/Login.cshtml", login);
+            }
         }
 
         [Authorize]

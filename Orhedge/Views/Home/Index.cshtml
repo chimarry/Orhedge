@@ -1,94 +1,145 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ Layout = null;}
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Aleksandar Zrnic">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="~/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="~/js/javascript.js"></script>
+</head>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
+<body>
+    <div id="slides" class="carousel slide " data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#slides" data-slide-to="0" class="active"></li>
+            <li data-target="#slides" data-slide-to="1"></li>
+            <li data-target="#slides" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/images/slider0.jpg" class="d-block w-100" alt="">
+                <div class="carousel-caption welcome">
+                    <a href="@Url.Action("Login", "Home")" class="btn btn-lg btn-outline-primary" style="position: absolute; top: -60%; right: -100px;">Prijava</a>
+                    <h1 class="display-2">Dobro došli na naš sajt!</h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/slider1.png" class="d-block w-100" alt="">
+                <div class="carousel-caption welcome">
+                    <a href="@Url.Action("Login", "Home")" class="btn btn-lg btn-outline-primary" style="position: absolute; top: -60%; right: -100px;">Prijava</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/slider2.jpg" class="d-block w-100" alt="">
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
+    <!--Active members-->
+    <div class="container-fluid padding" style="background-color:#04001D; color: white;">
+        <div class="row text-center padding">
+            <div class="col-xs-12 col-sm-4">
+                <div class="counter">
+                    <i class="fas fa-users"></i>
+                    <h3>Članovi</h3>
+                    <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="counter">
+                    <i class="fas fa-book"></i>
+                    <h3>Materijali</h3>
+                    <h2 class="timer count-title count-number" data-to="300" data-speed="1500"></h2>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="counter">
+                    <i class="fas fa-question"></i>
+                    <h3>Pitanja</h3>
+                    <h2 class="timer count-title count-number" data-to="350" data-speed="1500"></h2>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
+    <!--Info about forum and material-->
+    <div class="container-fluid padding">
+        <div class="row text-center padding">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                <a href="materijal.html">
+                    <img src="~/images/materijali.jpg" alt="">
+                    <h4 class="display-4">Materijali</h4>
+                </a>
+                <p>
+                    Kolegijalnost je nešto što karakterizira ovaj dio rada organizacije i
+                    nastojat ćemo nastaviti s ovom idejom u budućnosti.
+                    Nadamo se da ćete kao novi članovi donijeti neke nove
+                    ideje za poboljšanje ovog segmenta organizacije.
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6  col-xl-4">
+                <a href="forum.html">
+                    <img width="350px" height="280px" src="~/images/Forum.jpg" alt="">
+                    <h4 class="display-4">Forum</h4>
+                </a>
+                <p>
+                    Forum mjesto namjenjeno za studente ,gdje mogu postavljati pitanja iz različitih oblasti. Iz društvenog aspekta
+                    pa sve do pitanja vezana za fakultet.
+                </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  col-xl-4">
+                <a href="#">
+                    <img width="350px" height="280px" src="~/images/grupnaspremanja.jpg" alt="">
+                    <h4 class="display-4">Grupna spremanja</h4>
+                </a>
+                <p style="width: 75%; margin: 0 auto;">
+                    <!--Da tekst bude oblikovan u novom redu-->
+                    Grupne pripreme su dobro posjećene, najčešće se održavaju u amfiteatrima ili u nekoj od slobodnih sala,
+                    a održavaju ih sjajni studenti iz same organizacije,
+                    kao i oni koji nisu članovi OrhEDGE-a
+                    ali uvijek su tu da nam izađu u susret, na čemu smo vrlo zahvalni.
+                </p>
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
+
+    <div class="container-fluid imagebackground">
+        <div class="container-fluid">
+            <div class="row welcome text-center">
+                <div class="col-12">
+                    <h1 class="display-4">Zasto postati član<span class="nobr"> OrhEDGE-a</span>?</h1>
+                </div>
+                <hr>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row text-center" style="padding-bottom: 70px; width: 75%; margin: 0 auto;">
+                <div class="col-12">
+                    <p class="lead">
+                        Na ovo pitanje postoji puno odgovora, ali prije svega je to pomaganje jedno drugom i  druženje. Sami osnivači OrhEDGE-a su pre nastanka organizacije
+                        bili, pre svega, dobri prijatelji i s ovom željom da se stvari na ETF-u promijene na bolje, sa ciljem da stvore sistema koji će biti od pomoći za studente tokom akademskog obrzovanja.
+                    </p>
+                </div>
+            </div>
+        </div>-------------------------------------------
     </div>
-</div>
+
+    <footer>
+        <div class="container-fluid padding">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h5>Copyright © 2019 ~ Studenstka organizacija OrhEDGE ~ Izrada: Aleksandar Zrnić </h5>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

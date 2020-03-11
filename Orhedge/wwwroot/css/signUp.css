@@ -1,0 +1,48 @@
+body {
+    margin-top: 45px;
+    background-image: url("images/library-books.jpg");
+    /* background-image: url("images/backgorundImg.jpg"); */
+    /* background-image: url("images/739385-download-smartphone-wallpapers-1080x1920.jpg"); */
+    /* background-image: url("images/library1.jpeg"); */
+    /* background-image: url("images/library2.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+    font-size: 16px;
+}
+
+form{
+    margin-top: 10px;
+    opacity: 1;
+}
+.blur {
+    margin-top: 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 35px;
+}
+
+.header{
+    /* color: rgba(116, 117, 50, 0.787); */
+    color: rgb(255, 255, 255); 
+    margin: 0;
+    width: 100%;
+    /* padding-top: 30px; */
+    line-height: 1.2rem;
+    text-align: center;
+  }
+
+  .logoOne{
+    letter-spacing: 0.4rem;
+    font-size: 70px;
+    font-weight: 900;
+  }
+
+  .logoTwo{
+    letter-spacing: -0.15rem;
+    font-size: 35px;
+    font-weight: 400;
+    margin-left: 2px;
+    text-decoration: underline;
+  }
