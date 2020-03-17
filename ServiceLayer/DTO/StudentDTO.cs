@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 
 namespace ServiceLayer.DTO
 {
@@ -23,7 +24,7 @@ namespace ServiceLayer.DTO
 
         public double Rating { get; set; }
 
-        public int Privilege { get; set; }
+        public StudentPrivilege Privilege { get; set; }
 
         public bool Deleted { get; set; }
 

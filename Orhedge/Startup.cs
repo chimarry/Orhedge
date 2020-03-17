@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using DatabaseLayer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +39,8 @@ namespace Orhedge
                 options.UseSqlServer(Configuration.GetConnectionString("Database"));
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(opts =>
@@ -46,7 +51,12 @@ namespace Orhedge
                     opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddControllersAsServices();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddControllersAsServices()
+                .AddViewLocalization()
+                .AddDataAnnotationsLocalization();
+
             return DependencyInjectionConfiguration.Configure(services);
         }
 
@@ -62,6 +72,18 @@ namespace Orhedge
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            List<CultureInfo> supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("sr")
+            };
+
+            app.UseRequestLocalization(opts =>
+            {
+                opts.DefaultRequestCulture = new RequestCulture("sr", "sr");
+                opts.SupportedCultures = supportedCultures;
+                opts.SupportedUICultures = supportedCultures;
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

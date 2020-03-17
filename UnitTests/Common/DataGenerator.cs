@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
+using DatabaseLayer.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +95,7 @@ namespace UnitTests.Common
                 Name = "Ivko",
                 LastName = "Lukic",
                 Email = "ivko@yahoo.com",
-                Privilege = 1,
+                Privilege = StudentPrivilege.Normal,
                 PasswordHash = "sooo...10p3",
                 Username = "blue",
                 Salt = "993"

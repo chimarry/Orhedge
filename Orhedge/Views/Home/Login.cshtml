@@ -4,6 +4,7 @@
 }
 
 @model LoginViewModel
+@inject IStringLocalizer<SharedResource> Localizer
 
 <!DOCTYPE html>
 <html>
@@ -30,17 +31,17 @@
         <div class="row align-self-center w-100">
             <canvas id="c"></canvas>
             <div class="col-xs-12 col-md-3 mx-auto login-sec">
-                <h2 class="text-center">Login Now</h2>
+                <h2 class="text-center">@Localizer["Login"]</h2>
                 <form asp-action="Login" asp-controller="Authentication" asp-route-returnurl="@ViewData["returnUrl"]" class="form-singin">
                     <div class="form-group">
-                        <label for="InputUsername1" class="text-uppercase">Korisničko ime</label>
+                        <label for="InputUsername1" class="text-uppercase">@Localizer["Username"]</label>
                         <input asp-for="Username" type="text" class="form-control" id="InputUsername1" placeholder="">
                         <div class="invalid-feedback" style="display:block;">
                             <span asp-validation-for="Username"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="InputPassword1" class="text-uppercase">Lozinka</label>
+                        <label for="InputPassword1" class="text-uppercase">@Localizer["Password"]</label>
                         <input asp-for="Password" type="password" class="form-control" id="InputPassword1" placeholder="">
                         <div class="invalid-feedback" style="display:block;">
                             <span asp-validation-for="Password"></span>
@@ -48,14 +49,14 @@
                     </div>
                     @if (ViewData.ContainsKey("invalidCred"))
                     {
-                        <p style="color: red;">Uneseno korisnicko ime ili lozinka nisu validni</p>
+                        <p style="color: red;">@Localizer["InvalidCredentials"]</p>
                     }
                     <div class="form-check">
                         <label class="form-check-label">
                             <input asp-for="RememberMe" type="checkbox" class="form-check-input">
-                            <small>Remember Me</small>
+                            <small>@Localizer["RememberMe"]</small>
                         </label>
-                        <button type="submit" class="btn btn-login float-right">Submit</button>
+                        <button type="submit" class="btn btn-login float-right">@Localizer["Login"]</button>
                     </div>
                 </form>
                 <div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="#">OrhEdge team</a></div>

@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
+using DatabaseLayer.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -89,7 +90,7 @@ namespace UnitTests.ServiceTests
                 correctUpdatedStudent.Name = "Milica";
                 correctUpdatedStudent.Rating = 3;
                 correctUpdatedStudent.Username = "mica";
-                correctUpdatedStudent.Privilege = 3;
+                correctUpdatedStudent.Privilege = StudentPrivilege.JuniorAdmin;
                 correctUpdatedStudent.Description = "Pesimist";
                 Assert.IsNotNull(correctUpdatedStudent, "Student to update not found");
 

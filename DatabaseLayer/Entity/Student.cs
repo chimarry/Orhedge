@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -16,7 +17,7 @@ namespace DatabaseLayer.Entity
         public string Description { get; set; }
         public string Email { get; set; }
         public double Rating { get; set; }
-        public int Privilege { get; set; }
+        public StudentPrivilege Privilege { get; set; }
         public bool Deleted { get; set; }
         public string PasswordHash { get; set; }
         public string Salt { get; set; }
