@@ -4,6 +4,7 @@ using ServiceLayer.Common;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Registration;
+using ServiceLayer.ErrorHandling;
 using ServiceLayer.Models;
 using ServiceLayer.Students.Exceptions;
 using ServiceLayer.Students.Interfaces;
@@ -101,14 +102,35 @@ namespace ServiceLayer.Students.Services
 
             byte[] salt = Crypto.GenerateRandomBytes(SALT_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
-            string hash = Convert.ToBase64String(Crypto.DeriveKey(registerData.Password, salt, 
-                Constants.PASSWORD_HASH_SIZE));
+            string hash = Crypto.CreateHash(registerData.Password, salt, 
+                Constants.PASSWORD_HASH_SIZE);
             student.PasswordHash = hash;
             student.Salt = saltBase64;
+            // TODO: Replace with enum value
+            student.Privilege = 2;
+            student.Rating = 0;
             registration.Used = true;
 
             await _registrationService.Update(registration);
             await _studentService.Add(student);
+        }
+
+        public async Task RegisterRootUser(RegisterRootDTO rootData)
+        {
+            StudentDTO studentDTO = Mapping.Mapper.Map<StudentDTO>(rootData);
+            byte[] salt = Crypto.GenerateRandomBytes(SALT_SIZE);
+            string saltBase64 = Convert.ToBase64String(salt);
+            string hash = Crypto.CreateHash(rootData.Password, salt, 
+                Constants.PASSWORD_HASH_SIZE);
+            studentDTO.PasswordHash = hash;
+            studentDTO.Salt = saltBase64;
+            // TODO: Replace with enum value
+            studentDTO.Privilege = 4;
+            studentDTO.Rating = 0;
+
+            // TODO: Ideally this method should throw, we can not handle it in any meanigful way anyway
+            if (await _studentService.Add(studentDTO) == Status.DATABASE_ERROR)
+                throw new DatabaseErrorException();
         }
     }
 }

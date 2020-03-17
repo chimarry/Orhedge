@@ -29,8 +29,7 @@ namespace ServiceLayer.Students.Services
                 return null;
 
             byte[] salt = Convert.FromBase64String(student.Salt);
-            string hash = Convert.ToBase64String(
-                Crypto.DeriveKey(loginRequest.Password, salt, Constants.PASSWORD_HASH_SIZE));
+            string hash = Crypto.CreateHash(loginRequest.Password, salt, Constants.PASSWORD_HASH_SIZE);
 
             if (hash == student.PasswordHash)
                 return new LoginResponse { Id = student.StudentId, Privilege = student.Privilege };         

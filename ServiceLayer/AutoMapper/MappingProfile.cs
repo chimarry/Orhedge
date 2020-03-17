@@ -22,6 +22,8 @@ namespace ServiceLayer.AutoMapper
             CreateMap<RegisterUserDTO, StudentDTO>();
             CreateMap<RegistrationDTO, StudentDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
+            CreateMap<RegisterRootDTO, StudentDTO>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
 
             //CreateMap<Source,Destination>();
             // Additional mappings here...

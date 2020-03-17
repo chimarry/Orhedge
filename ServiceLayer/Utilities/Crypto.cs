@@ -29,5 +29,16 @@ namespace ServiceLayer.Utilities
                 return randomBytes;
             }
         }
+
+        /// <summary>
+        /// Creates hash from password and salt
+        /// </summary>
+        /// <param name="password">User password</param>
+        /// <param name="salt">Salt</param>
+        /// <param name="hashSize">Output hash size in bytes</param>
+        /// <returns>Password hash</returns>
+        public static string CreateHash(string password, byte[] salt, int hashSize)
+            => Convert.ToBase64String(DeriveKey(password, salt, hashSize));
+        
     }
 }
