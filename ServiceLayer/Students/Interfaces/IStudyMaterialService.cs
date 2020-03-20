@@ -2,7 +2,7 @@
 
 namespace ServiceLayer.Students.Interfaces
 {
-    public interface IStudyMaterialService:IServiceTemplate<StudyMaterialDTO>
+    public interface IStudyMaterialService : ICRUDServiceTemplate<StudyMaterialDTO>, ISelectableServiceTemplate<StudyMaterialDTO>
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ServiceLayer.Students.Interfaces
 {
-    public interface ICourseService:IServiceTemplate<CourseDTO>
+    public interface ICourseService : ICRUDServiceTemplate<CourseDTO>, ISelectableServiceTemplate<CourseDTO>
     {
     }
 }

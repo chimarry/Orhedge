@@ -42,20 +42,28 @@ namespace ServiceLayer.Students.Helpers
 
 
         /// <summary>
-        /// Gets list of all elements of specific type in storage 
+        /// Gets list of all elements of specific type in storage. It sorts elements based on given property and flag that
+        /// indicates direction of sorting.
         /// </summary>
-        /// <param name="condition">Function that filters elements to return</param>
-        /// <returns>Found or empty list</returns>
-        Task<List<TDto>> GetAll(Predicate<TEntity> condition);
+        /// <typeparam name="TKey">Type of property on which sorting is applied</typeparam>
+        /// <param name="dtoCondition">Function that filters elements</param>
+        /// <param name="sortKeySelector">Function that gives property on which sorting is applied</param>
+        /// <param name="asc">Indicates direction of sorting. Default is ascending.</param>
+        /// <returns></returns>
+        Task<List<TDto>> GetAll<TKey>(Predicate<TDto> dtoCondition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true);
 
         /// <summary>
-        /// Gets list of all specified number of elements of specific type in storage from certain position
+        /// Gets list of all specified number of elements of specific type in storage from certain position. It sorts elements based on given property and flag that
+        /// indicates direction of sorting.
         /// </summary>
-        /// <param name="offset">How many elements to skip</param>
-        /// <param name="noItems">How many elements to take</param>
-        /// <param name="condition">Function that filters elements to return</param>
+        /// <typeparam name="TKey">Type of property on which sorting is applied</typeparam>
+        /// <param name="offset">Number of elements to skip</param>
+        /// <param name="num">Number of elements to take</param>
+        /// <param name="dtoCondition">Function that filters elements</param>
+        /// <param name="sortKeySelector">Function that gives property on which sorting is applied</param>
+        /// <param name="asc">Indicates direction of sorting. Default is ascending</param>
         /// <returns>Found or empty list</returns>
-        Task<List<TDto>> GetRange(int offset, int noItems, Predicate<TEntity> condition);
+        Task<List<TDto>> GetRange<TKey>(int offset, int num, Predicate<TDto> dtoCondition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true);
 
         /// <summary>
         /// Gets one element from storage based on passed condition it must satisfy
@@ -65,34 +73,9 @@ namespace ServiceLayer.Students.Helpers
         Task<TEntity> GetOne(Predicate<TEntity> condition);
 
         /// <summary>
-        /// Gets list of all elements of specific type in storage. It sorts elements based on given property and flag that
-        /// indicates direction of sorting.
-        /// </summary>
-        /// <typeparam name="TKey">Type of property on which sorting is applied</typeparam>
-        /// <param name="condition">Function that filters elements</param>
-        /// <param name="sortKeySelector">Function that gives property on which sorting is applied</param>
-        /// <param name="asc">Indicates direction of sorting. Default is ascending.</param>
-        /// <returns></returns>
-        Task<List<TDto>> GetAll<TKey>(Predicate<TEntity> condition, Func<TDto, TKey> sortKeySelector, bool asc = true);
-
-        /// <summary>
-        /// Gets list of all specified number of elements of specific type in storage from certain position. It sorts elements based on given property and flag that
-        /// indicates direction of sorting.
-        /// </summary>
-        /// <typeparam name="TKey">Type of property on which sorting is applied</typeparam>
-        /// <param name="offset">Number of elements to skip</param>
-        /// <param name="num">Number of elements to take</param>
-        /// <param name="filter">Function that filters elements</param>
-        /// <param name="sortKeySelector">Function that gives property on which sorting is applied</param>
-        /// <param name="asc">Indicates direction of sorting. Default is ascending</param>
-        /// <returns>Found or empty list</returns>
-        Task<List<TDto>> GetRange<TKey>(int offset, int num, Predicate<TEntity> filter, Func<TDto, TKey> sortKeySelector, bool asc = true);
-
-        /// <summary>
         /// Get number of elements of specified type in storage
         /// </summary>
         /// <returns>Number of elements</returns>
-        Task<int> Count();
-        Task<int> Count(Predicate<TEntity> filter);
+        Task<int> Count(Predicate<TDto> filter = null);
     }
 }

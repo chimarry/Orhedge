@@ -27,7 +27,7 @@ namespace UnitTests.ServiceTests
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
-                List<StudentDTO> students = await executor.GetAll(s => true);
+                List<StudentDTO> students = await executor.GetAll<int>(dtoCondition: s => true);
                 StudentDTO student = await executor.GetSingleOrDefault(x => x.Username == "light");
                 Assert.AreNotEqual(student, null);
 
@@ -97,7 +97,7 @@ namespace UnitTests.ServiceTests
                 Status status = await executor.Update(correctUpdatedStudent, x => x.Username == "light");
                 // Check status of operation
                 Assert.AreEqual(status, Status.SUCCESS);
-                List<StudentDTO> students = await executor.GetAll(s => true);
+                List<StudentDTO> students = await executor.GetAll<int>(dtoCondition: x => true);
                 StudentDTO updatedStudent = await executor.GetSingleOrDefault(x => x.Username == "mica");
                 Assert.AreNotEqual(updatedStudent, null, "Not found");
 
@@ -122,7 +122,7 @@ namespace UnitTests.ServiceTests
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
 
-                List<StudentDTO> list = await executor.GetAll(x => x.Deleted == false);
+                List<StudentDTO> list = await executor.GetAll<int>(dtoCondition: x => x.Deleted == false);
                 Assert.AreEqual(list.Count, numberOfElements);
 
                 string existingUsername = "light";
@@ -142,7 +142,7 @@ namespace UnitTests.ServiceTests
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
 
-                IServicesExecutor<StudentDTO, Student> executor 
+                IServicesExecutor<StudentDTO, Student> executor
                     = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
 
                 Assert.AreEqual(3, await executor.Count());

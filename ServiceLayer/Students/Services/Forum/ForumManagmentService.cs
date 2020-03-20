@@ -21,15 +21,15 @@ namespace ServiceLayer.Students.Services.Forum
         private readonly IAnswerService _answerService;
         private readonly IDiscussionPostService _discussionPostService;
 
-        public ForumManagmentService(IDiscussionService discussionService, 
-            IStudentService studentService, 
+        public ForumManagmentService(IDiscussionService discussionService,
+            IStudentService studentService,
             IQuestionService questionService,
             IForumCategoryService forumCategoryService,
             IAnswerService answerService,
             IDiscussionPostService discussionPostService)
             => (_discussionService, _studentService, _questionService,
             _forumCategoryService, _answerService, _discussionPostService)
-            = (discussionService, studentService, questionService, 
+            = (discussionService, studentService, questionService,
             forumCategoryService, answerService, discussionPostService);
 
         // TODO: Retrieve PostCount
@@ -73,14 +73,14 @@ namespace ServiceLayer.Students.Services.Forum
             return postCountPerTopic;
         }
 
-        private async Task<(int, int)> CheckPage<T>(IServiceTemplate<T> service, int page, int categoryId, int itemsPerPage) where T : TopicDTO
+        private async Task<(int, int)> CheckPage<T>(ISelectableServiceTemplate<T> service, int page, int categoryId, int itemsPerPage) where T : TopicDTO
         {
             int topicCount = await service.Count(x => !x.Deleted && x.ForumCategoryId == categoryId);
             int pageCount = (int)Math.Ceiling(((double)topicCount) / itemsPerPage);
             return (page < 1 || page > pageCount ? 1 : page, pageCount);
         }
 
-        private async Task<TopicListDTO> GetTopics<T>(IServiceTemplate<T> service, int categoryId, int page, int itemsPerPage) 
+        private async Task<TopicListDTO> GetTopics<T>(ISelectableServiceTemplate<T> service, int categoryId, int page, int itemsPerPage)
             where T : TopicDTO
         {
             // Return default category id if given does not exists
@@ -99,7 +99,7 @@ namespace ServiceLayer.Students.Services.Forum
                 Topics = topics.ToArray(),
                 Authors = authors.ToArray(),
                 PageCount = pageCount,
-                Category = categoryId, 
+                Category = categoryId,
             };
         }
 
@@ -109,7 +109,7 @@ namespace ServiceLayer.Students.Services.Forum
 
             foreach (TopicDTO topic in topics)
             {
-                StudentDTO student = await _studentService.GetById(topic.StudentId);
+                StudentDTO student = await _studentService.GetSingleOrDefault(x => x.StudentId == topic.StudentId);
                 authors.Add(student);
             }
 
@@ -119,17 +119,14 @@ namespace ServiceLayer.Students.Services.Forum
 
         private async Task<int> CheckCategoryId(int categoryId)
         {
-            List<ForumCategoryDTO> allCategories = await _forumCategoryService
-                .GetAll();
-
-            IEnumerable<ForumCategoryDTO> orderedCategories = allCategories.OrderBy(cat => cat.Order);
+            List<ForumCategoryDTO> orderedCategories = await _forumCategoryService.GetAll<int>(sortKeySelector: x => x.Order);
             ForumCategoryDTO catDTO = orderedCategories.FirstOrDefault(cat => cat.ForumCategoryId == categoryId);
             return catDTO == null ? orderedCategories.First().ForumCategoryId : catDTO.ForumCategoryId;
         }
 
         public async Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content)
         {
-            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null) 
+            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
             {
                 throw new ForumException("Category does not exist");
             }
@@ -149,7 +146,7 @@ namespace ServiceLayer.Students.Services.Forum
 
         public async Task<Status> AddQuestion(int forumCategoryId, int studentId, string title, string content)
         {
-            if(await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
+            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
             {
                 throw new ForumException("Category does not exist");
             }
@@ -169,7 +166,7 @@ namespace ServiceLayer.Students.Services.Forum
 
         public async Task<DiscussionDTO> GetDiscussion(int discussionId)
         {
-            return await _discussionService.GetById(discussionId);
+            return await _discussionService.GetSingleOrDefault(x => x.TopicId == discussionId && !x.Deleted);
         }
 
         public async Task<DiscussionPostsDTO> GetDiscussionPosts(int discussionId)
@@ -179,7 +176,7 @@ namespace ServiceLayer.Students.Services.Forum
             List<StudentDTO> authors = new List<StudentDTO>();
             foreach (DiscussionPostDTO discussionPost in discussionPostList)
             {
-                StudentDTO student = await _studentService.GetById(discussionPost.StudentId);
+                StudentDTO student = await _studentService.GetSingleOrDefault(x => x.StudentId == discussionPost.StudentId);
                 authors.Add(student);
             }
 
@@ -192,7 +189,7 @@ namespace ServiceLayer.Students.Services.Forum
 
         public async Task<StudentDTO> GetAuthor(int studentId)
         {
-            return await _studentService.GetById(studentId);
+            return await _studentService.GetSingleOrDefault(x => x.StudentId == studentId);
         }
     }
 }

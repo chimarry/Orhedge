@@ -30,17 +30,11 @@ namespace ServiceLayer.Students.Services
             throw new NotImplementedException();
         }
 
-        public async Task<RegistrationDTO> GetById(int id)
-            => await _servicesExecutor.GetSingleOrDefault(x => x.RegistrationId == id);
-
         public async Task<RegistrationDTO> GetSingleOrDefault(Predicate<RegistrationDTO> condition)
-            => await _servicesExecutor.GetSingleOrDefault(
-                    reg => condition(Mapping.Mapper.Map<RegistrationDTO>(reg)));
+            => await _servicesExecutor.GetSingleOrDefault(condition);
 
         public async Task<Status> Update(RegistrationDTO registrationDTO)
             => await _servicesExecutor.Update(registrationDTO, reg => reg.RegistrationId == registrationDTO.RegistrationId);
 
-        public async Task<int> Count()
-            => await _servicesExecutor.Count();
     }
 }

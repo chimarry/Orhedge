@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Council\**" />
+    <EmbeddedResource Remove="Council\**" />
+    <None Remove="Council\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NLog" Version="4.6.6" />
@@ -13,11 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Council\Interfaces\" />
-    <Folder Include="Council\Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace ServiceLayer.Utilities
+namespace ServiceLayer.Helpers
 {
     public static class Crypto
     {

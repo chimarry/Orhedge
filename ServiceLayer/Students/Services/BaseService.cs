@@ -1,21 +1,24 @@
-﻿using ServiceLayer.AutoMapper;
-using ServiceLayer.Students.Helpers;
+﻿using ServiceLayer.Students.Helpers;
+using ServiceLayer.Students.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
 {
-    public abstract class BaseService<TDto, TEntity> where TEntity : class
+    public abstract class BaseService<TDto, TEntity> : ISelectableServiceTemplate<TDto> where TEntity : class
     {
         protected readonly IServicesExecutor<TDto, TEntity> _servicesExecutor;
         public BaseService(IServicesExecutor<TDto, TEntity> servicesExecutor)
             => _servicesExecutor = servicesExecutor;
 
-        public async virtual Task<int> Count()
-            => await _servicesExecutor.Count();
-        public async virtual Task<int> Count(Predicate<TDto> filter)
-            => await _servicesExecutor.Count(x => filter(Mapping.Mapper.Map<TDto>(x)));
+        public async virtual Task<int> Count(Predicate<TDto> filter = null)
+            => await _servicesExecutor.Count(filter);
+
+        public async Task<List<TDto>> GetAll<TKey>(Predicate<TDto> condition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true)
+            => await _servicesExecutor.GetAll(condition, sortKeySelector, asc);
+
+        public async Task<List<TDto>> GetRange<TKey>(int offset, int num, Predicate<TDto> condition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true)
+            => await _servicesExecutor.GetRange(offset, num, condition, sortKeySelector, asc);
     }
 }

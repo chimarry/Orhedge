@@ -2,7 +2,7 @@
 
 namespace ServiceLayer.Students.Interfaces
 {
-    public interface ICategoryService:IServiceTemplate<CategoryDTO>
+    public interface ICategoryService : ICRUDServiceTemplate<CategoryDTO>, ISelectableServiceTemplate<CategoryDTO>
     {
 
     }

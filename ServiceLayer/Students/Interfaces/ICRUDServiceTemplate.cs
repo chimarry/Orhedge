@@ -30,18 +30,10 @@ namespace ServiceLayer.Students.Interfaces
         Task<Status> Update(T dto);
 
         /// <summary>
-        /// Finds element in storage and returns it
-        /// </summary>
-        /// <param name="id">Unique identifier of object to be found</param>
-        /// <returns>If object was found in storage, returns that object, otherwise null.</returns>
-        Task<T> GetById(int id);
-
-        /// <summary>
         /// Finds element in list based on certain condition
         /// </summary>
         /// <param name="condition">Function that gives specification of what element need to satisfy</param>
         /// <returns>Found element or null</returns>
         Task<T> GetSingleOrDefault(Predicate<T> condition);
-
     }
 }

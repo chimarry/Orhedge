@@ -1,12 +1,9 @@
 ﻿using DatabaseLayer.Entity;
-using ServiceLayer.AutoMapper;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Helpers;
 using ServiceLayer.Students.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Students.Services
@@ -25,28 +22,6 @@ namespace ServiceLayer.Students.Services
             question.Deleted = true;
             return await _servicesExecutor.Delete(question);
         }
-
-        public async Task<List<QuestionDTO>> GetAll()
-            => await _servicesExecutor.GetAll(x => !x.Deleted);
-
-
-        public async Task<List<QuestionDTO>> GetAll<TKey>(Func<QuestionDTO, TKey> sortKeySelector, bool asc = true)
-            => await _servicesExecutor.GetAll(x => !x.Deleted, sortKeySelector, asc);
-
-
-        public async Task<QuestionDTO> GetById(int id)
-            => await _servicesExecutor.GetSingleOrDefault(x => x.TopicId == id && !x.Deleted);
-
-
-        public async Task<List<QuestionDTO>> GetRange(int startPosition, int numberOfItems)
-            => throw new NotImplementedException();
-
-
-        public async Task<List<QuestionDTO>> GetRange<TKey>(int offset, int num, Func<QuestionDTO, TKey> sortKeySelector, bool asc = true)
-            => await _servicesExecutor.GetRange(offset, num, x => !x.Deleted, sortKeySelector, asc);
-
-        public async Task<List<QuestionDTO>> GetRange<TKey>(int offset, int num, Predicate<QuestionDTO> filter, Func<QuestionDTO, TKey> sortKeySelector, bool asc = true)
-            => await _servicesExecutor.GetRange(offset, num, x => filter(Mapping.Mapper.Map<QuestionDTO>(x)), sortKeySelector, asc);
 
         public async Task<QuestionDTO> GetSingleOrDefault(Predicate<QuestionDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);

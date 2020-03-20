@@ -1,11 +1,8 @@
 ﻿using ServiceLayer.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ServiceLayer.Students.Interfaces
 {
-    public interface ICommentService:IServiceTemplate<CommentDTO>
+    public interface ICommentService : ICRUDServiceTemplate<CommentDTO>, ISelectableServiceTemplate<CommentDTO>
     {
     }
 }
