@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
-using ServiceLayer.DTO.Registration;
-using ServiceLayer.Models;
 
 namespace ServiceLayer.AutoMapper
 {

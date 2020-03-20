@@ -3,7 +3,6 @@ using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
-using ServiceLayer.DTO.Registration;
 using ServiceLayer.Models;
 using System.Collections.Generic;
 

@@ -4,11 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Orhedge.AutoMapper;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.Common.Services;
-using ServiceLayer.Students.Helpers;
-using ServiceLayer.Students.Interfaces;
-using ServiceLayer.Students.Interfaces.Forum;
-using ServiceLayer.Students.Services;
-using ServiceLayer.Students.Services.Forum;
+using ServiceLayer.Helpers;
+using ServiceLayer.Services;
+using ServiceLayer.Services;
+using ServiceLayer.Services.Forum;
 using System;
 
 namespace Orhedge.IoC

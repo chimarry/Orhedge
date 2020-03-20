@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Orhedge.ViewModels;
-using ServiceLayer.DTO.Registration;
-using ServiceLayer.Models;
-using ServiceLayer.Students.Interfaces;
+using ServiceLayer.DTO;
+using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
@@ -26,11 +24,11 @@ namespace Orhedge.Controllers
         //[Authorize(Roles = "0")]
         public async Task<IActionResult> SendRegistrationEmail([FromForm]RegisterFormViewModel registration)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
-                
-                bool isRegistered 
+
+                bool isRegistered
                     = await _studentManagmentService.IsStudentRegistered(registration.Email);
 
                 if (isRegistered)

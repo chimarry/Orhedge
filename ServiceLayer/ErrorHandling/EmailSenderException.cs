@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace ServiceLayer.ErrorHandling
+namespace ServiceLayer.ErrorHandling.Exceptions
 {
     public class EmailSenderException : Exception
     {
-        public EmailSenderException(string message, Exception innerException) 
+        public EmailSenderException(string message, Exception innerException)
             : base(message, innerException) { }
 
-        public EmailSenderException(string message) 
+        public EmailSenderException(string message)
             : this(message, null) { }
     }
 }

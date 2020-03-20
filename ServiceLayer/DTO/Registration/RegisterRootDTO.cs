@@ -1,4 +1,4 @@
-﻿namespace ServiceLayer.DTO.Registration
+﻿namespace ServiceLayer.DTO
 {
     public class RegisterRootDTO
     {

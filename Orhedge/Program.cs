@@ -1,13 +1,13 @@
 ﻿using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using NLog.Web;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using ServiceLayer.Students.Interfaces;
 using Microsoft.Extensions.Configuration;
-using ServiceLayer.DTO.Registration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
+using ServiceLayer.DTO;
+using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge
 {

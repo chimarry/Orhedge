@@ -1,15 +1,13 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
 using DatabaseLayer.Enums;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.Students.Helpers;
+using ServiceLayer.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnitTests.Common;
 

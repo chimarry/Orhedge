@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orhedge.ViewModels;
 using ServiceLayer.Models;
-using IAuthenticationService = ServiceLayer.Students.Interfaces.IAuthenticationService;
+using IAuthenticationService = ServiceLayer.Services.IAuthenticationService;
 
 namespace Orhedge.Controllers
 {

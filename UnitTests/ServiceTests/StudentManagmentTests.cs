@@ -3,11 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
-using ServiceLayer.DTO.Registration;
 using ServiceLayer.ErrorHandling;
+using ServiceLayer.Services;
 using ServiceLayer.Models;
-using ServiceLayer.Students.Interfaces;
-using ServiceLayer.Students.Services;
+using ServiceLayer.Services;
 using System;
 using System.Threading.Tasks;
 using UnitTests.Common;
@@ -78,9 +77,9 @@ namespace UnitTests.ServiceTests
         [TestMethod]
         public async Task RegisterStudent()
         {
-            
+
             string registrationCode = null;
-            
+
 
             var regMock = new Mock<IRegistrationService>();
             regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
@@ -103,7 +102,7 @@ namespace UnitTests.ServiceTests
             };
 
             await studMng.GenerateRegistrationEmail(reg);
-            
+
             // At this point registrationCode != null 
             RegistrationDTO regDTO = new RegistrationDTO
             {

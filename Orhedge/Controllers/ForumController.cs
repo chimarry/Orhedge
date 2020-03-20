@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Orhedge.ViewModels.Forum;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.Students.Interfaces.Forum;
+using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
@@ -96,7 +95,7 @@ namespace Orhedge.Controllers
         public async Task<IActionResult> ShowDiscussion(int discussionId)
         {
             DiscussionDTO discussion = await _forumService.GetDiscussion(discussionId);
-            if(discussion == null || discussion.Deleted)
+            if (discussion == null || discussion.Deleted)
             {
                 return RedirectToAction("Index");
             }

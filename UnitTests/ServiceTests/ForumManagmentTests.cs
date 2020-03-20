@@ -5,13 +5,11 @@ using Moq;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.Students.Helpers;
-using ServiceLayer.Students.Interfaces;
-using ServiceLayer.Students.Interfaces.Forum;
-using ServiceLayer.Students.Services;
-using ServiceLayer.Students.Services.Forum;
+using ServiceLayer.Helpers;
+using ServiceLayer.Services;
+using ServiceLayer.Services;
+using ServiceLayer.Services.Forum;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnitTests.Common;
@@ -52,8 +50,8 @@ namespace UnitTests.ServiceTests
             IDiscussionPostService discussionPostService = new DiscussionPostService(postExecutor);
 
             _forumMngService =
-                new ForumManagmentService(discussionService, studentService, questService, 
-                forumService,answerService, discussionPostService);
+                new ForumManagmentService(discussionService, studentService, questService,
+                forumService, answerService, discussionPostService);
         }
 
         [TestCleanup]
