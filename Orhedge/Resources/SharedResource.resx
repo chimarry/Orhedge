@@ -117,17 +117,77 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Odustani</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Da li želite da nastavite sa brisanjem?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Obriši</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Izmijeni</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Broj indeksa</value>
+  </data>
   <data name="InvalidCredentials" xml:space="preserve">
     <value>Uneseno korisničko ime ili lozinka nisu validni</value>
+  </data>
+  <data name="JuniorAdmin" xml:space="preserve">
+    <value>Niži administrator</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Prezime</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Prijava</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ime</value>
+  </data>
+  <data name="NameAsc" xml:space="preserve">
+    <value>Ime [A-Z]</value>
+  </data>
+  <data name="NameDesc" xml:space="preserve">
+    <value>Ime [Z-A]</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Standardni korisnik</value>
+  </data>
+  <data name="NoSorting" xml:space="preserve">
+    <value>Bez sortiranja</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Lozinka</value>
   </data>
+  <data name="PrivilegeAsc" xml:space="preserve">
+    <value>Rastuće po ulozi</value>
+  </data>
+  <data name="PrivilegeDesc" xml:space="preserve">
+    <value>Opadajuće po ulozi</value>
+  </data>
+  <data name="Privileges" xml:space="preserve">
+    <value>Privilegije</value>
+  </data>
+  <data name="RatingAsc" xml:space="preserve">
+    <value>Rastuće po ocjeni</value>
+  </data>
+  <data name="RatingDesc" xml:space="preserve">
+    <value>Opadajuće po ocjeni</value>
+  </data>
+  <data name="Reduced" xml:space="preserve">
+    <value>Oduzete privilegije</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Ovde ide prevod za remember me</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sačuvaj</value>
+  </data>
+  <data name="SeniorAdmin" xml:space="preserve">
+    <value>Viši administrator</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Korisničko ime</value>

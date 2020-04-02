@@ -15,6 +15,8 @@ namespace Orhedge.AutoMapper
             CreateMap<RegisterFormViewModel, RegisterFormDTO>();
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
+            CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ReverseMap();
+            CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
         }
         public void MapForum()
         {

@@ -129,7 +129,7 @@ namespace ServiceLayer.Helpers
             {
                 return Status.NOT_FOUND;
             }
-            Mapping.Mapper.Map(dto, dbEntity);
+            dbEntity = Mapping.Mapper.Map(dto, dbEntity);
             await _context.SaveChangesAsync();
             return Status.SUCCESS;
         }

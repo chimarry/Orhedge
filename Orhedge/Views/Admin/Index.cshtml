@@ -1,0 +1,206 @@
+﻿@model Orhedge.ViewModels.Admin.AdminIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+@using Orhedge.ViewModels.Admin;
+@using DatabaseLayer.Enums;
+@using Orhedge.Enums;
+@inject IStringLocalizer<SharedResource> Localizer
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/admin.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
+    <script src="~/js/admin.js"></script>
+    <title>AdminOrhEDGE</title>
+</head>
+<body>
+    <nav style="margin:100px 100px 100px 100px !important">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
+            <a class="nav-item nav-link" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Mozda jos neka funkcionalnost???</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="d-flex tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+            <div class="table-responsive  listaKorisnika">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>KORISNIK</th>
+                            <th>PRIVILEGIJE</th>
+                            <th>OCIJENA</th>
+                            <th>
+                                <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
+                                <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                            </th>
+                            <th>
+                                <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">
+                                    @switch (ViewBag.SortingCriteria)
+                                    {
+                                        case @StudentSortingCriteria.NoSorting:
+                                            <option selected>SORTIRAJ</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case @StudentSortingCriteria.NameAsc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc selected>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case StudentSortingCriteria.NameDesc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc selected>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case StudentSortingCriteria.PrivilegeAsc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc selected>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case StudentSortingCriteria.PrivilegeDesc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc selected>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case StudentSortingCriteria.RatingAsc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc selected>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                            break;
+                                        case StudentSortingCriteria.RatingDesc:
+                                            <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                            <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                            <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                            <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                            <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                            <option value=@StudentSortingCriteria.RatingDesc selected>@Localizer["RatingDesc"]</option>
+                                            break;
+                                    }
+                                </select>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (StudentViewModel student in Model.Students)
+                        {
+                            <tr class="align-items-center">
+                                <td><a href=""><img src="images/avatarlogin.png" alt=" " style="max-width: 20px; max-height: 20px;">  &nbsp;@student.Name @student.LastName</a></td>
+                                <td>@Localizer[student.Privilege.ToString()]</td>
+                                <td>@student.Rating</td>
+                                <td>
+                                    @{
+                                        string param = Json.Serialize(student).ToString();
+                                        <button onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                    }
+                                </td>
+                                <td>
+                                    <button onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="filter listaKorisnika">
+                <p>
+                    <b>Prikaz korisnika po privilegijama</b>
+                </p>
+                <div>
+                    @{var filters = ViewBag.PrivilegeFilters as StudentPrivilege[];}
+
+                    @foreach (StudentPrivilege sp in Enum.GetValues(typeof(StudentPrivilege)))
+                    {
+                        <div class="form-check filteri">
+                            @Html.CheckBox((int)sp + "filter", filters?.Contains(sp), new { @id = (int)sp + "filter", @value = sp.ToString() })
+                            <label for=@((int)sp + "filter")>
+                                @Localizer[sp.ToString()]
+                            </label>
+                        </div>
+                    }
+                    <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">Osviježi</button>
+                </div>
+                <hr>
+            </div>
+            <br><br><br>
+        </div>
+        <div class="tab-pane fade" id="nav-addUser" role="tabpanel" aria-labelledby="nav-addUser-tab">
+            Add new user // TODO
+        </div>
+    </div>
+    <div id="modalEditId" class="modal">
+        <form id="editFormId" class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('modalEditId').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+            <div class="container">
+                <input type="number" hidden="hidden" id="studentId" name="studentId" />
+                <label for="name"><b>@Localizer["Name"]</b></label>
+                <input type="text" id="nameId" name="name" required>
+
+                <label for="lastname"><b>@Localizer["LastName"]</b></label>
+                <input type="text" id="lastNameId" name="lastName" required>
+
+                <label for="indexNumber"><b>@Localizer["Index"]</b></label>
+                <input type="text" id="indexNumberId" name="indexNumber" required>
+
+                <b>@Localizer["Privileges"]</b>
+                <select class="form-control form-control-sm" name="privilege">
+
+                    @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
+                    {
+                        <option id=@privilege value="@privilege">@Localizer[privilege]</option>
+                    }
+                </select>
+                <br>
+                <button type="submit" onclick="editUser()">@Localizer["Save"]</button>
+                <button type="button" onclick="document.getElementById('modalEditId').style.display='none'" class="cancelbtn">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    </div>
+    <div id="modalDeleteId" class="modal">
+        <form id="deleteFormId" class="modal-content animate">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
+            <label><b>@Localizer["ConfirmDelete"]</b></label>
+            <br />
+            <div class="container">
+                <input type="number" hidden="hidden" id="deleteStudentId" name="studentId" />
+                <button type="submit" onclick="deleteUser()">@Localizer["Delete"]</button>
+                <button type="button" onclick="document.getElementById('modalDeleteId').style.display='none'" class="cancelbtn">@Localizer["Cancel"]</button>
+            </div>
+        </form>
+    </div>
+</body>
+
