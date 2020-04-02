@@ -1,0 +1,21 @@
+﻿@model EditProfileViewModel;
+@inject IStringLocalizer<SharedResource> Localizer
+@{
+    //TODO: Specify proper layout
+    Layout = "_Layout";
+}
+
+<form asp-action="EditProfile" enctype="multipart/form-data">
+    <label asp-for="Username">@Localizer["Username"]</label>
+    <input asp-for="Username" value="@Model.Username" />
+    <span asp-validation-for="Username"></span>
+    <label asp-for="Description">Description</label>
+    <input asp-for="Description" value="@Model.Description" />
+    <span asp-validation-for="Username"></span>
+    <label asp-for="Photo">@Localizer["ProfilePicture"]</label>
+    <input asp-for="Photo" />
+    <input type="submit" value="@Localizer["Save"]" />
+</form>
+
+
+

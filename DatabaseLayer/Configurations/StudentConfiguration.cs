@@ -23,6 +23,7 @@ namespace DatabaseLayer.Configurations
             builder.Property(x => x.Index).IsRequired();
             builder.Property(x => x.PasswordHash).IsRequired();
             builder.Property(x => x.Salt).IsRequired();
+            builder.Property(x => x.Description).HasDefaultValue(string.Empty);
 
             // If student is deleted, child entities are not deleted
             // This is not a problem since student can not be deleted

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace ServiceLayer.Services
 {
 
-    public class StudentService : BaseService<StudentDTO, Student>, IStudentService
+    public class StudentService : BaseService<StudentDTO, DatabaseLayer.Entity.Student>, IStudentService
     {
-        public StudentService(IServicesExecutor<StudentDTO, Student> servicesExecutor)
+        public StudentService(IServicesExecutor<StudentDTO, DatabaseLayer.Entity.Student> servicesExecutor)
             : base(servicesExecutor) { }
 
         public async Task<Status> Add(StudentDTO studentDTO)
@@ -21,7 +21,7 @@ namespace ServiceLayer.Services
 
         public async Task<Status> Delete(int id)
         {
-            Student dbStudent = await _servicesExecutor.GetOne(x => x.StudentId == id && x.Deleted == false);
+            DatabaseLayer.Entity.Student dbStudent = await _servicesExecutor.GetOne(x => x.StudentId == id && x.Deleted == false);
             dbStudent.Deleted = true;
             return await _servicesExecutor.Delete(dbStudent);
         }

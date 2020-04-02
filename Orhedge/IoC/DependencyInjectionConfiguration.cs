@@ -6,8 +6,8 @@ using ServiceLayer.Common.Interfaces;
 using ServiceLayer.Common.Services;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
-using ServiceLayer.Services;
 using ServiceLayer.Services.Forum;
+using ServiceLayer.Services.Student;
 using System;
 
 namespace Orhedge.IoC

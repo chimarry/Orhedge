@@ -7,5 +7,6 @@ namespace ServiceLayer.Helpers
     public class Constants
     {
         public const int PASSWORD_HASH_SIZE = 16; // in bytes
+        public const int SALT_SIZE = 16;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
 
 namespace ServiceLayer.AutoMapper
 {

@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Potvrdi lozinku</value>
+  </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>Nova lozinka je obavezna</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="DescriptionRequired" xml:space="preserve">
+    <value>Opis je prazan</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Odustani</value>
   </data>
@@ -141,8 +153,26 @@
   <data name="LastName" xml:space="preserve">
     <value>Prezime</value>
   </data>
+  <data name="InvalidOldPass" xml:space="preserve">
+    <value>Pogrešna lozinka</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Prijava</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Nova lozinka</value>
+  </data>
+  <data name="NewPasswordRequired" xml:space="preserve">
+    <value>Nova lozinka je obavezna</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Stara lozinka</value>
+  </data>
+  <data name="OldPasswordRequired" xml:space="preserve">
+    <value>Stara lozinka je obavezna</value>
+  </data>
+  <data name="PassNoMatch" xml:space="preserve">
+    <value>Lozinke nisu iste</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Ime</value>
@@ -180,6 +210,9 @@
   <data name="Reduced" xml:space="preserve">
     <value>Oduzete privilegije</value>
   </data>
+  <data name="ProfilePicture" xml:space="preserve">
+    <value>Profilna slika</value>
+  </data>
   <data name="RememberMe" xml:space="preserve">
     <value>Ovde ide prevod za remember me</value>
   </data>
@@ -189,7 +222,13 @@
   <data name="SeniorAdmin" xml:space="preserve">
     <value>Viši administrator</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Snimi</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Korisničko ime</value>
+  </data>
+  <data name="UsernameRequired" xml:space="preserve">
+    <value>Korisničko ime je prazno</value>
   </data>
 </root>

@@ -46,7 +46,7 @@ namespace Orhedge
                 .AddCookie(opts =>
                 {
                     opts.Cookie.IsEssential = true;
-                    opts.LoginPath = "/Authentication/Login";
+                    opts.LoginPath = "/Home/Login";
                     opts.SlidingExpiration = true;
                     opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 });
@@ -55,7 +55,10 @@ namespace Orhedge
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddControllersAsServices()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization( 
+                opts =>
+                opts.DataAnnotationLocalizerProvider = 
+                (type, factory) => factory.Create(typeof(SharedResource)));
 
             return DependencyInjectionConfiguration.Configure(services);
         }
@@ -88,6 +91,7 @@ namespace Orhedge
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

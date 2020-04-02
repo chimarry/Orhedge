@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Orhedge.Helpers;
 
 namespace Orhedge.Controllers
 {
@@ -6,11 +7,16 @@ namespace Orhedge.Controllers
     {
         public IActionResult Index()
         {
+            // TODO: If user is authenticated redirect to materials main page
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = "")
         {
+            // TODO: Redirect to materials main page
+            if (this.IsUserAuthenticated())
+                return RedirectToAction("Index");
+            ViewData["returnUrl"] = returnUrl;
             return View();
         }
     }

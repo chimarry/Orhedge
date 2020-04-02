@@ -6,10 +6,15 @@ using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Services;
 using ServiceLayer.Models;
-using ServiceLayer.Services;
 using System;
 using System.Threading.Tasks;
 using UnitTests.Common;
+using ServiceLayer.Helpers;
+using DatabaseLayer.Entity;
+using DatabaseLayer;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.DTO.Student;
+using ServiceLayer.Services.Student;
 
 namespace UnitTests.ServiceTests
 {
@@ -22,19 +27,30 @@ namespace UnitTests.ServiceTests
         private const string EMAIL_LINK_BASE_URL = "https://test.com";
         private const string EMAIL_SUBJECT = "Registration email";
         private const string EMAIL_LINK_ENDPOINT = "Register/ShowRegisterForm";
-        private readonly Mock<IConfiguration> _sharedConfigMock;
+        private Mock<IConfiguration> _sharedConfigMock = new Mock<IConfiguration>();
+        private Mock<IEmailSenderService> _emailMock = new Mock<IEmailSenderService>();
+        private Mock<IRegistrationService> _regMock = new Mock<IRegistrationService>();
+        private Mock<IErrorHandler> _handlerMock = new Mock<IErrorHandler>();
+        private OrhedgeContext _context;
 
-        public StudentManagmentTests()
+        [TestInitialize]
+        public void Initialize()
         {
             var configMock = new Mock<IConfiguration>();
-            configMock.SetupGet(config => config["BaseUrl"]).Returns(EMAIL_LINK_BASE_URL);
-            configMock.SetupGet(config => config["RegisterEmail:From"])
+            _sharedConfigMock.SetupGet(config => config["BaseUrl"]).Returns(EMAIL_LINK_BASE_URL);
+            _sharedConfigMock.SetupGet(config => config["RegisterEmail:From"])
                 .Returns(EMAIL_FROM);
-            configMock.SetupGet(config => config["RegisterEmail:Subject"])
+            _sharedConfigMock.SetupGet(config => config["RegisterEmail:Subject"])
                 .Returns(EMAIL_SUBJECT);
-            configMock.SetupGet(config => config["RegisterEmail:LinkEndpoint"])
+            _sharedConfigMock.SetupGet(config => config["RegisterEmail:LinkEndpoint"])
                 .Returns(EMAIL_LINK_ENDPOINT);
-            _sharedConfigMock = configMock;
+            _context = Utilities.CreateNewContext();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _context.Dispose();
         }
 
 
@@ -42,17 +58,18 @@ namespace UnitTests.ServiceTests
         public async Task GenerateRegistrationEmail()
         {
 
-            var emailMock = new Mock<IEmailSenderService>();
-            emailMock.Setup(emailService => emailService.SendEmailAsync(It.IsAny<SendEmailData>()))
+            _emailMock.Setup(emailService => emailService.SendEmailAsync(It.IsAny<SendEmailData>()))
                 .Returns(Task.CompletedTask);
 
             var regMock = new Mock<IRegistrationService>();
             regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
                 .ReturnsAsync(Status.SUCCESS);
 
+            Mock<IStudentService> studService = new Mock<IStudentService>();
+
             // Passing null here beacause GenerateRegistrationEmail does not use StudentService
             IStudentManagmentService studMng = new StudentManagmentService(
-                emailMock.Object, null, regMock.Object, _sharedConfigMock.Object);
+                _emailMock.Object, studService.Object, regMock.Object, _sharedConfigMock.Object);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -65,7 +82,7 @@ namespace UnitTests.ServiceTests
 
             await studMng.GenerateRegistrationEmail(reg);
 
-            emailMock.Verify(emailService => emailService.SendEmailAsync
+            _emailMock.Verify(emailService => emailService.SendEmailAsync
             (
                 It.Is<SendEmailData>(emailData => emailData.To == EMAIL_TO && emailData.Subject == EMAIL_SUBJECT)
             ), Times.Once);
@@ -80,9 +97,7 @@ namespace UnitTests.ServiceTests
 
             string registrationCode = null;
 
-
-            var regMock = new Mock<IRegistrationService>();
-            regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
+            _regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
                 // Note callback here setting registrationCode variable
                 .Callback((RegistrationDTO dto) => registrationCode = dto.RegistrationCode)
                 .Returns(Task.FromResult(Status.SUCCESS));
@@ -90,7 +105,10 @@ namespace UnitTests.ServiceTests
             var studServiceMock = new Mock<IStudentService>();
 
             IStudentManagmentService studMng = new StudentManagmentService
-                (new Mock<IEmailSenderService>().Object, studServiceMock.Object, regMock.Object, _sharedConfigMock.Object);
+                (new Mock<IEmailSenderService>().Object, 
+                studServiceMock.Object,
+                _regMock.Object, 
+                _sharedConfigMock.Object);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -113,7 +131,7 @@ namespace UnitTests.ServiceTests
                 Used = false
             };
 
-            regMock.Setup(regService => regService.GetSingleOrDefault(
+            _regMock.Setup(regService => regService.GetSingleOrDefault(
                 It.IsAny<Predicate<RegistrationDTO>>())).ReturnsAsync(regDTO);
 
             RegisterUserDTO regData = new RegisterUserDTO
@@ -128,8 +146,78 @@ namespace UnitTests.ServiceTests
             studServiceMock.Verify(service => service.Add(
                 It.Is<StudentDTO>(dto => dto.Username == regData.Username)));
 
-            regMock.Verify(service => service.Update(
+            _regMock.Verify(service => service.Update(
                 It.Is<RegistrationDTO>(dto => dto.Used == true)));
+        }
+
+        [TestMethod]
+        public async Task UpdateStudentProfile()
+        {
+
+            IServicesExecutor<StudentDTO, Student> executor
+                = new ServiceExecutor<StudentDTO, Student>(_context, _handlerMock.Object);
+            IStudentService studentService = new StudentService(executor);
+            IStudentManagmentService studMngService
+                = new StudentManagmentService(
+                    _emailMock.Object, 
+                    studentService, 
+                    _regMock.Object, 
+                    _sharedConfigMock.Object);
+
+            Student stud = await _context.Students.FirstOrDefaultAsync();
+            string newUsername = "New username";
+            string newDescription = "New description";
+
+            await studMngService.EditStudentProfile(stud.StudentId, new ProfileUpdateDTO()
+            {
+                Username = "New username",
+                Description = "New description"
+                // TODO: Add Photo
+            });
+
+            stud = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == stud.StudentId);
+            Assert.AreEqual(newUsername, stud.Username);
+            Assert.AreEqual(newDescription, stud.Description);
+
+        }
+
+        [DataTestMethod]
+        [DataRow("lightPassword", "newPassword", "newPassword")]
+        [DataRow("lightPassword", "newPassword", "NEWPASSWORD")]
+        [DataRow("LIGHTPASSWORD", "newPassword", "newPassword")]
+        public async Task ChangePassword(string oldPassword, string newPassword, string confirmPassword)
+        {
+            Mock<IEmailSenderService> mockEmail = new Mock<IEmailSenderService>();
+            Mock<IRegistrationService> mockReg = new Mock<IRegistrationService>();
+            Mock<IErrorHandler> handlerMock = new Mock<IErrorHandler>();
+
+            IServicesExecutor<StudentDTO, Student> executor
+                = new ServiceExecutor<StudentDTO, Student>(_context, handlerMock.Object);
+            IStudentService studentService = new StudentService(executor);
+            IStudentManagmentService studMngService
+                = new StudentManagmentService(
+                    mockEmail.Object, 
+                    studentService, 
+                    mockReg.Object, 
+                    _sharedConfigMock.Object);
+
+            Student stud = await _context.Students.FirstOrDefaultAsync(s => s.Username == "light");
+            const string studOldPassword = "lightPassword";
+
+            PassChangeStatus status = await studMngService.UpdateStudentPassword(
+                stud.StudentId, new UpdatePasswordDTO
+            {
+                OldPassword = oldPassword,
+                NewPassword = newPassword,
+                ConfirmPassword = confirmPassword
+            });
+
+            if (studOldPassword != oldPassword)
+                Assert.AreEqual(PassChangeStatus.InvalidOldPass, status);
+            else if (newPassword != confirmPassword)
+                Assert.AreEqual(PassChangeStatus.PassNoMatch, status);
+            else
+                Assert.AreEqual(PassChangeStatus.Success, status);
         }
     }
 }

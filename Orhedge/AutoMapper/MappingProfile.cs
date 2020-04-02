@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Orhedge.Helpers;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
+using Orhedge.ViewModels.Student;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.Models;
 using System.Collections.Generic;
 
@@ -15,6 +18,15 @@ namespace Orhedge.AutoMapper
             CreateMap<RegisterFormViewModel, RegisterFormDTO>();
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
+            CreateMap<StudentDTO, EditProfileViewModel>();
+            CreateMap<EditProfileViewModel, ProfileUpdateDTO>()
+                .ForMember(dest => dest.Photo, opts =>
+                {
+                    opts.MapFrom(src => new FormFile(src.Photo));
+                    opts.Condition(src => src.Photo != null);
+                });
+
+            CreateMap<ChangePasswordViewModel, UpdatePasswordDTO>();
             CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ReverseMap();
             CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
         }
