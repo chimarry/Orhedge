@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading.Tasks;
 using DatabaseLayer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -49,6 +50,29 @@ namespace Orhedge
                     opts.LoginPath = "/Home/Login";
                     opts.SlidingExpiration = true;
                     opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    opts.Events.OnRedirectToLogin = async ctx =>
+                    {
+                        bool apiCall = ctx.Request.Path.StartsWithSegments("/api");
+
+                        if (apiCall)
+                            ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        else
+                            ctx.Response.Redirect(ctx.RedirectUri);
+
+
+                        await Task.CompletedTask;
+                    };
+                    opts.Events.OnRedirectToAccessDenied = async ctx =>
+                    {
+                        bool apiCall = ctx.Request.Path.StartsWithSegments("/api");
+
+                        if (apiCall)
+                            ctx.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        else
+                            ctx.Response.Redirect(ctx.RedirectUri);
+
+                        await Task.CompletedTask;
+                    };
                 });
 
             services.AddMvc()

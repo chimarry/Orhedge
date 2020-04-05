@@ -24,5 +24,6 @@ namespace ServiceLayer.Services
         /// <param name="profile">Edit data</param>
         Task EditStudentProfile(int id, ProfileUpdateDTO profile);
         Task<PassChangeStatus> UpdateStudentPassword(int id, UpdatePasswordDTO passwordDTO);
+        Task<bool> ValidatePassword(int id, string password);
     }
 }

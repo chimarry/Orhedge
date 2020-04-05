@@ -185,5 +185,10 @@ namespace ServiceLayer.Services.Student
                 Convert.FromBase64String(salt),
                 Constants.PASSWORD_HASH_SIZE) == oldPasswordHash;
 
+        public async Task<bool> ValidatePassword(int id, string password)
+        {
+            StudentDTO st = await _studentService.GetSingleOrDefault(s => s.StudentId == id);
+            return VerifyOldPassword(password, st.Salt, st.PasswordHash);
+        }
     }
 }

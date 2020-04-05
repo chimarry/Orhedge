@@ -7,7 +7,7 @@ namespace Orhedge.Helpers
 {
     public static class ControllerHelpers
     {
-        public static int GetUserId(this Controller controller)
+        public static int GetUserId(this ControllerBase controller)
         {
             string userIdStr = controller
                 .User
@@ -20,7 +20,7 @@ namespace Orhedge.Helpers
             return int.Parse(userIdStr);
         }
 
-        public static bool IsUserAuthenticated(this Controller controller)
+        public static bool IsUserAuthenticated(this ControllerBase controller)
             => controller.User.Identity.IsAuthenticated;
     }
 }

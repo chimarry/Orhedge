@@ -56,38 +56,6 @@ namespace Orhedge.Controllers
             else
                 return View(profile);
         }
-
-        public IActionResult EditPassword()
-            => View();
-
         
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPassword(ChangePasswordViewModel passVm)
-        {
-            if (ModelState.IsValid)
-            {
-                UpdatePasswordDTO passwordDTO = _mapper.Map<UpdatePasswordDTO>(passVm);
-                PassChangeStatus status = await _studMngService.
-                    UpdateStudentPassword(this.GetUserId(), passwordDTO);
-
-                if (status == PassChangeStatus.InvalidOldPass)
-                {
-                    ModelState.AddModelError(nameof(ChangePasswordViewModel.OldPassword), _localizer["PassNoMatch"]);
-                    return View();
-                }
-                else if (status == PassChangeStatus.PassNoMatch)
-                {
-                    ModelState.AddModelError(nameof(ChangePasswordViewModel.NewPassword), _localizer["PassNoMatch"]);
-                    return View();
-                }
-
-
-                return RedirectToAction("Index");
-
-            }
-            else
-                return View();
-        }
     }
 }

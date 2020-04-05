@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Orhedge.ViewModels.Student
 {
     public class ChangePasswordViewModel
     {
-        [Required(ErrorMessage = "OldPasswordRequired")]
+        [Required]
         public string OldPassword { get; set; }
-        [Required(ErrorMessage = "NewPasswordRequired")]
-        [Compare(nameof(ConfirmPassword), ErrorMessage = "PassNoMatch")]
+        [Required]
         public string NewPassword { get; set; }
-        [Required(ErrorMessage = "ConfirmPasswordRequired")]
+        [Required]
+        [Compare(nameof(ConfirmPassword))]
         public string ConfirmPassword { get; set; }
     }
 }

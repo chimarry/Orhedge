@@ -18,4 +18,28 @@
 </form>
 
 
+<!-- TODO: This should be modal-->
+<form id="passform">
+    <label for="oldpass">@Localizer["OldPassword"]</label>
+    <input id="oldpass" name="oldpass" type="password" required />
+    <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
+    <label for="newpass">@Localizer["NewPassword"]</label>
+    <input id="newpass" name="newpass" type="password" required />
+    <label for="confirmpass">@Localizer["ConfirmPassword"]</label>
+    <input id="confirmpass" name="confirmpass" type="password" required />
+
+    <button type="reset" id="cancel" formnovalidate>Cancel</button>
+    <button id="save">@Localizer["Save"]</button>
+</form>
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="~/js/studentProfile.js" defer></script>
+}
+
+@section Stylesheet
+{
+    <link rel="stylesheet" href="~/css/studentProfile.css" />
+}
 
