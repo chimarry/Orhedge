@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
-using ServiceLayer.DTO.Student;
+using ServiceLayer.Models;
+using ServiceLayer.Students.Shared;
 
 namespace ServiceLayer.AutoMapper
 {
@@ -31,7 +32,6 @@ namespace ServiceLayer.AutoMapper
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
             CreateMap<RegisterRootDTO, StudentDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
-
             //CreateMap<Source,Destination>();
             // Additional mappings here...
         }

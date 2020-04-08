@@ -217,18 +217,51 @@
     <value>Ovde ide prevod za remember me</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Sačuvaj</value>
+    <value>Snimi</value>
   </data>
   <data name="SeniorAdmin" xml:space="preserve">
     <value>Viši administrator</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Snimi</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Korisničko ime</value>
   </data>
   <data name="UsernameRequired" xml:space="preserve">
     <value>Korisničko ime je prazno</value>
+  </data>
+  <data name="CommonYear" xml:space="preserve">
+    <value>Zajednička godina</value>
+  </data>
+  <data name="ComputerEngineeringAndInformatics" xml:space="preserve">
+    <value>Računarstvo i informatika</value>
+  </data>
+  <data name="Eighth" xml:space="preserve">
+    <value>Osmi semestar</value>
+  </data>
+  <data name="ElectronicsAndTelecommunications" xml:space="preserve">
+    <value>Elektronika i telekomunikacije</value>
+  </data>
+  <data name="Fifth" xml:space="preserve">
+    <value>Peti semestar</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>Prvi semestar</value>
+  </data>
+  <data name="Forth" xml:space="preserve">
+    <value>Četvrti semestar</value>
+  </data>
+  <data name="PowerEngineeringAndIndustrialSystems" xml:space="preserve">
+    <value>Energetika i automatika</value>
+  </data>
+  <data name="Second" xml:space="preserve">
+    <value>Drugi semestar</value>
+  </data>
+  <data name="Seventh" xml:space="preserve">
+    <value>Sedmi semstar</value>
+  </data>
+  <data name="Sixth" xml:space="preserve">
+    <value>Šesti semestar</value>
+  </data>
+  <data name="Third" xml:space="preserve">
+    <value>Treći semestar</value>
   </data>
 </root>

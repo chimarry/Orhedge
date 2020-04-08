@@ -145,14 +145,15 @@ namespace DatabaseLayer.Migrations
 
             modelBuilder.Entity("DatabaseLayer.Entity.CourseStudyProgram", b =>
                 {
-                    b.Property<int>("StudyProgramId");
+                    b.Property<int>("StudyProgram");
 
                     b.Property<int>("CourseId");
 
-                    b.Property<string>("Semester")
-                        .IsRequired();
+                    b.Property<int>("Semester");
 
-                    b.HasKey("StudyProgramId", "CourseId");
+                    b.Property<int>("StudyYear");
+
+                    b.HasKey("StudyProgram", "CourseId");
 
                     b.HasIndex("CourseId");
 
@@ -351,22 +352,6 @@ namespace DatabaseLayer.Migrations
                     b.ToTable("StudyMaterialRatings");
                 });
 
-            modelBuilder.Entity("DatabaseLayer.Entity.StudyProgram", b =>
-                {
-                    b.Property<int>("StudyProgramId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("Rank");
-
-                    b.HasKey("StudyProgramId");
-
-                    b.ToTable("StudyPrograms");
-                });
-
             modelBuilder.Entity("DatabaseLayer.Entity.Topic", b =>
                 {
                     b.Property<int>("TopicId")
@@ -496,11 +481,6 @@ namespace DatabaseLayer.Migrations
                     b.HasOne("DatabaseLayer.Entity.Course", "Course")
                         .WithMany("CourseStudyPrograms")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("DatabaseLayer.Entity.StudyProgram", "StudyProgram")
-                        .WithMany("CourseStudyPrograms")
-                        .HasForeignKey("StudyProgramId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

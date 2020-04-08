@@ -79,9 +79,9 @@ namespace Orhedge
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddControllersAsServices()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization( 
+                .AddDataAnnotationsLocalization(
                 opts =>
-                opts.DataAnnotationLocalizerProvider = 
+                opts.DataAnnotationLocalizerProvider =
                 (type, factory) => factory.Create(typeof(SharedResource)));
 
             return DependencyInjectionConfiguration.Configure(services);

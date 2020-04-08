@@ -8,7 +8,7 @@ namespace DatabaseLayer.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "StudyYear",
+                name: "StudyProgram",
                 table: "Courses");
 
             migrationBuilder.AlterColumn<string>(
@@ -75,7 +75,7 @@ namespace DatabaseLayer.Migrations
                 oldClrType: typeof(string));
 
             migrationBuilder.AddColumn<int>(
-                name: "StudyYear",
+                name: "StudyProgram",
                 table: "Courses",
                 nullable: false,
                 defaultValue: 0);

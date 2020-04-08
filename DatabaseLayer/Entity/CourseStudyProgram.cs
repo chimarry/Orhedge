@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,14 +9,14 @@ namespace DatabaseLayer.Entity
     {
         public int CourseId { get; set; }
 
-        public int StudyProgramId { get; set; }
+        public StudyProgram StudyProgram { get; set; }
 
-        public string Semester { get; set; }
+        public Semester Semester { get; set; }
+
+        public int StudyYear { get; set; }
 
         #region NavigationProperties
         public virtual Course Course { get; set; }
-
-        public virtual StudyProgram StudyProgram { get; set; }
         #endregion
     }
 }

@@ -38,8 +38,6 @@ namespace DatabaseLayer
 
         public DbSet<Discussion> Discussions { get; set; }
 
-        public DbSet<StudyProgram> StudyPrograms { get; set; }
-
         public DbSet<CourseStudyProgram> CourseStudyPrograms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,7 +55,6 @@ namespace DatabaseLayer
             modelBuilder.ApplyConfiguration(new ForumCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new TopicRatingConfiguration());
             modelBuilder.ApplyConfiguration(new AnswerRatingConfiguration());
-            modelBuilder.ApplyConfiguration(new StudyProgramConfiguration());
             modelBuilder.ApplyConfiguration(new CourseStudyProgramConfiguration());
         }
     }

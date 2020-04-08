@@ -20,6 +20,7 @@ namespace Orhedge.IoC
             builder.Populate(services);
 
             builder.RegisterType<StudentService>().InstancePerLifetimeScope().As<IStudentService>();
+            builder.RegisterType<LocalDocumentService>().InstancePerLifetimeScope().As<IDocumentService>();
             builder.RegisterType<StudyMaterialService>().InstancePerLifetimeScope().As<IStudyMaterialService>();
             builder.RegisterType<CourseService>().InstancePerLifetimeScope().As<ICourseService>();
             builder.RegisterType<CategoryService>().InstancePerLifetimeScope().As<ICategoryService>();
@@ -38,7 +39,7 @@ namespace Orhedge.IoC
             builder.RegisterType<TopicRatingService>().InstancePerLifetimeScope().As<ITopicRatingService>();
             builder.RegisterType<TopicService>().InstancePerLifetimeScope().As<ITopicService>();
             builder.RegisterType<ForumManagmentService>().InstancePerLifetimeScope().As<IForumManagmentService>();
-
+            builder.RegisterType<StudyMaterialMenagementService>().InstancePerLifetimeScope().As<IStudyMaterialManagementService>();
             // IMapper is thread safe, hence we register it as singleton
             builder.Register(ctx => MappingConfiguration.CreateMapping());
             IContainer container = builder.Build();

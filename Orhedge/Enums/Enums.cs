@@ -9,4 +9,21 @@ namespace Orhedge.Enums
     {
         NoSorting, RatingAsc, RatingDesc, NameAsc, NameDesc, PrivilegeAsc, PrivilegeDesc
     }
+
+    public enum StudyProgramRang
+    {
+        CommonYear,
+
+        ComputerEngineeringAndInformatics,
+
+        ElectronicsAndTelecommunications,
+
+        PowerEngineeringAndIndustrialSystems
+    }
+
+    public enum Semester
+    {
+        First, Second, Third, Forth, Fifth, Sixth, Seventh, Eighth,
+        Unknown
+    }
 }

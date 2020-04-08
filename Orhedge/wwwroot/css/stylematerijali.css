@@ -1,0 +1,47 @@
+.navbar {
+    padding: 10px;
+}
+.navbar-nav li {
+    padding-left: 20px;
+}
+.nav-link {
+    font-size: 20px;
+}
+.logo-font-one {
+    font-size: 30px;
+    
+} 
+.logo-font-two {
+    font-size: 14px;
+    text-decoration: underline;
+}
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    
+    background: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ), url('/img/libary.jpg');
+    
+
+    
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.linkpredmeta {
+    margin-bottom: 20px;
+    background-color: white;
+    color: black;
+    width: 400px;
+}
+footer {
+    background-color: #3f3f3f;
+    color: white;
+    padding-top: 2rem;
+}

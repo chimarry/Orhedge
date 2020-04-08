@@ -7,7 +7,6 @@ using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
-using ServiceLayer.Services;
 using ServiceLayer.Services.Forum;
 using System;
 using System.Linq;

@@ -7,11 +7,7 @@ namespace ServiceLayer.DTO
     public class CourseDTO
     {
         public int CourseId { get; set; }
-
         public string Name { get; set; }
-
-        public string Semester { get; set; }
-
         public bool Deleted { get; set; }
 
         public override bool Equals(object obj)

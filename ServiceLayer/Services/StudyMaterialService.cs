@@ -3,6 +3,8 @@ using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
+using ServiceLayer.Shared;
+using ServiceLayer.Students.Shared;
 using System;
 using System.Threading.Tasks;
 
@@ -11,7 +13,9 @@ namespace ServiceLayer.Services
     public class StudyMaterialService : BaseService<StudyMaterialDTO, StudyMaterial>, IStudyMaterialService
     {
         public StudyMaterialService(IServicesExecutor<StudyMaterialDTO, StudyMaterial> servicesExecutor)
-            : base(servicesExecutor) { }
+            : base(servicesExecutor)
+        {
+        }
 
         public async Task<Status> Add(StudyMaterialDTO studyMaterialDTO)
              => await _servicesExecutor.Add(studyMaterialDTO, x => x.Name == studyMaterialDTO.Name && x.StudentId == studyMaterialDTO.StudentId

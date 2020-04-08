@@ -3,6 +3,7 @@ using Orhedge.Helpers;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
 using Orhedge.ViewModels.Student;
+using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.DTO.Student;
@@ -29,6 +30,8 @@ namespace Orhedge.AutoMapper
             CreateMap<ChangePasswordViewModel, UpdatePasswordDTO>();
             CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ReverseMap();
             CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
+            CreateMap<CourseDTO, IndexCourseViewModel>();
+            CreateMap<DetailedSemesterDTO, SemesterViewModel>().ForMember(dest => dest.Courses, conf => conf.MapFrom(src => src.Courses)).ReverseMap();
         }
         public void MapForum()
         {
