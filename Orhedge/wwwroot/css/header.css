@@ -1,0 +1,50 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 0px;   
+}
+
+/*-------------------NAVBAR--------------------*/
+#nav-bar
+{
+    position: sticky;
+    height: auto;
+    min-height: 85px;
+    top: 0;
+    z-index: 10;
+    background-image: linear-gradient(to right, #ccffff, #336666);
+}
+.navbar
+{
+    padding: 0 !important;
+}
+.navbar-brand img
+{
+    height: 65px;
+    padding-left: 20px;
+}
+.navbar-nav li
+{
+    padding: 0 10px;
+}
+.navbar-nav li a
+{
+    color: #000000 !important;
+    font-weight: 500;
+    float: right;
+    text-align: left;
+}
+.fa-bars
+{
+    color: #000000;
+    font-size: 30px !important;
+}
+.navbar-toggler
+{
+    outline: none !important;
+}
