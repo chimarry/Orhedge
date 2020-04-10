@@ -37,7 +37,7 @@ namespace Orhedge.Controllers
                 StudentId = this.GetUserId(),
                 UploadDate = DateTime.Now,
             };
-            Status status = await _studyMaterialManagementService.SaveMaterial(studyMaterial, fileInfo);
+            ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveMaterial(studyMaterial, fileInfo);
             string newUrl = Url.Link("Default", new
             {
                 Controller = "StudyMaterial",

@@ -45,12 +45,12 @@ namespace ServiceLayer.Services
             return semesters;
         }
 
-        public async Task<Status> SaveMaterial(StudyMaterialDTO data, BasicFileInfo fileInfo)
+        public async Task<ResultMessage<bool>> SaveMaterial(StudyMaterialDTO data, BasicFileInfo fileInfo)
         {
             data.Uri = PathBuilder.BuildPathForStudyMaterial(data.CategoryId, data.CategoryId, fileInfo.FileName);
-            Status status = await _studyMaterialService.Add(data);
-            if (status != Status.SUCCESS)
-                return status;
+            ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
+            if (!studyMaterialResult.IsSuccess)
+                return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
             return await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
         }
     }

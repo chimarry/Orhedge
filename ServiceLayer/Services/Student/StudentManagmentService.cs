@@ -42,15 +42,16 @@ namespace ServiceLayer.Services.Student
             _emailLinkEndpoint = config["RegisterEmail:LinkEndpoint"];
         }
 
-        public async Task GenerateRegistrationEmail(RegisterFormDTO registerFormDTO)
+        public async Task<ResultMessage<bool>> GenerateRegistrationEmail(RegisterFormDTO registerFormDTO)
         {
-
             RegistrationDTO regDTO = Mapping.Mapper.Map<RegistrationDTO>(registerFormDTO);
             regDTO.RegistrationCode = GenerateRegistrationCode();
             regDTO.Used = false;
             regDTO.Timestamp = DateTime.Now;
 
-            await _registrationService.Add(regDTO);
+            ResultMessage<RegistrationDTO> registrationProcessResult = await _registrationService.Add(regDTO);
+            if (!registrationProcessResult.IsSuccess)
+                return new ResultMessage<bool>(registrationProcessResult.Status, registrationProcessResult.Message);
 
             await _emailSender.SendEmailAsync(
                 new SendEmailData
@@ -61,6 +62,7 @@ namespace ServiceLayer.Services.Student
                     Message = GenerateRegistrationLink(regDTO.RegistrationCode),
                     Subject = _emailSubject
                 });
+            return new ResultMessage<bool>(true);
         }
 
         private string GenerateRegistrationLink(string code)
@@ -88,14 +90,15 @@ namespace ServiceLayer.Services.Student
             return registration != null && !await IsStudentRegistered(registration.Email);
         }
 
-        public async Task RegisterStudent(RegisterUserDTO registerData)
+        public async Task<ResultMessage<RegistrationDTO>> RegisterStudent(RegisterUserDTO registerData)
         {
 
             StudentDTO student = Mapping.Mapper.Map<StudentDTO>(registerData);
 
-            RegistrationDTO registration = await _registrationService.GetSingleOrDefault(
+            ResultMessage<RegistrationDTO> res = await _registrationService.GetSingleOrDefault(
                 reg => reg.RegistrationCode == registerData.RegistrationCode);
 
+            RegistrationDTO registration = res.Result;
             Mapping.Mapper.Map(registration, student);
 
             byte[] salt = Crypto.GenerateRandomBytes(Constants.SALT_SIZE);
@@ -108,8 +111,14 @@ namespace ServiceLayer.Services.Student
             student.Rating = 0;
             registration.Used = true;
 
-            await _registrationService.Update(registration);
-            await _studentService.Add(student);
+            ResultMessage<RegistrationDTO> registrationProcessResult = await _registrationService.Update(registration);
+            if (!registrationProcessResult.IsSuccess)
+                return new ResultMessage<RegistrationDTO>(registrationProcessResult.Status, "Registration couldn't been updated." + registrationProcessResult.Message);
+            ResultMessage<StudentDTO> dtoStudent = await _studentService.Add(student);
+            if (!dtoStudent.IsSuccess)
+                return new ResultMessage<RegistrationDTO>(dtoStudent.Status, "Registration couldn't been updated." + dtoStudent.Message);
+
+            return registrationProcessResult;
         }
 
         public async Task RegisterRootUser(RegisterRootDTO rootData)
@@ -124,15 +133,14 @@ namespace ServiceLayer.Services.Student
             studentDTO.Privilege = StudentPrivilege.SeniorAdmin;
             studentDTO.Rating = 0;
 
-            // TODO: Ideally this method should throw, we can not handle it in any meanigful way anyway
-            if (await _studentService.Add(studentDTO) == Status.DATABASE_ERROR)
-                throw new DatabaseErrorException();
+            ResultMessage<StudentDTO> studentResult = await _studentService.Add(studentDTO);
+            if (!studentResult.IsSuccess)
+                throw new CouldNotRegisterRootUserException(studentResult.Status.ToString());
         }
 
-        public async Task EditStudentProfile(int id, ProfileUpdateDTO profile)
+        public async Task<ResultMessage<StudentDTO>> EditStudentProfile(int id, ProfileUpdateDTO profile)
         {
             StudentDTO stud = await _studentService.GetSingleOrDefault(s => s.StudentId == id);
-
 
             if (profile.Photo != null)
             {
@@ -143,10 +151,7 @@ namespace ServiceLayer.Services.Student
             stud.Username = profile.Username;
             stud.Description = profile.Description;
 
-            Status status = await _studentService.Update(stud);
-
-            if (status == Status.DATABASE_ERROR)
-                throw new DatabaseErrorException();
+            return await _studentService.Update(stud);
         }
 
         public async Task<PassChangeStatus> UpdateStudentPassword(int id, UpdatePasswordDTO passwordDTO)
@@ -172,11 +177,9 @@ namespace ServiceLayer.Services.Student
                 salt,
                 Constants.PASSWORD_HASH_SIZE);
 
-            Status status = await _studentService.Update(student);
-
-            if (status == Status.DATABASE_ERROR)
-                throw new DatabaseErrorException();
-
+            ResultMessage<StudentDTO> updatedStudent = await _studentService.Update(student);
+            if (!updatedStudent.IsSuccess)
+                return PassChangeStatus.Error;
             return PassChangeStatus.Success;
         }
 

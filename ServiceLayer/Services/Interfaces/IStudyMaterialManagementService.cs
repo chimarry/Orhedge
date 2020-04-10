@@ -12,6 +12,6 @@ namespace ServiceLayer.Services
     {
         Task<HashSet<DetailedSemesterDTO>> GetSemestersWithAllInformation();
 
-        Task<Status> SaveMaterial(StudyMaterialDTO data, BasicFileInfo basicFileInfo);
+        Task<ResultMessage<bool>> SaveMaterial(StudyMaterialDTO data, BasicFileInfo basicFileInfo);
     }
 }

@@ -14,18 +14,18 @@ namespace ServiceLayer.Services
         public AnswerRatingService(IServicesExecutor<AnswerRatingDTO, AnswerRating> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(AnswerRatingDTO answerRatingDTO)
+        public async Task<ResultMessage<AnswerRatingDTO>> Add(AnswerRatingDTO answerRatingDTO)
              => await _servicesExecutor.Add(answerRatingDTO, x => false);
 
-        public Task<Status> Delete(int id)
+        public Task<ResultMessage<bool>> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Status> Update(AnswerRatingDTO answerRatingDTO)
+        public async Task<ResultMessage<AnswerRatingDTO>> Update(AnswerRatingDTO answerRatingDTO)
              => await _servicesExecutor.Update(answerRatingDTO, x => x.AnswerId == answerRatingDTO.AnswerId && x.StudentId == answerRatingDTO.StudentId);
 
-        public async Task<AnswerRatingDTO> GetSingleOrDefault(Predicate<AnswerRatingDTO> condition)
+        public async Task<ResultMessage<AnswerRatingDTO>> GetSingleOrDefault(Predicate<AnswerRatingDTO> condition)
              => await _servicesExecutor.GetSingleOrDefault(condition);
     }
 }

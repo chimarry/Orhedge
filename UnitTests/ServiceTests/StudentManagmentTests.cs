@@ -63,7 +63,7 @@ namespace UnitTests.ServiceTests
 
             var regMock = new Mock<IRegistrationService>();
             regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
-                .ReturnsAsync(Status.SUCCESS);
+                .ReturnsAsync(new ResultMessage<RegistrationDTO>());
 
             Mock<IStudentService> studService = new Mock<IStudentService>();
 
@@ -100,9 +100,14 @@ namespace UnitTests.ServiceTests
             _regMock.Setup(regService => regService.Add(It.IsAny<RegistrationDTO>()))
                 // Note callback here setting registrationCode variable
                 .Callback((RegistrationDTO dto) => registrationCode = dto.RegistrationCode)
-                .Returns(Task.FromResult(Status.SUCCESS));
+                .ReturnsAsync(new ResultMessage<RegistrationDTO>());
+
+            _regMock.Setup(regService => regService.Update(It.IsAny<RegistrationDTO>()))
+                .ReturnsAsync(new ResultMessage<RegistrationDTO>());
 
             var studServiceMock = new Mock<IStudentService>();
+            studServiceMock.Setup(stud => stud.Add(It.IsAny<StudentDTO>()))
+                .ReturnsAsync(new ResultMessage<StudentDTO>());
 
             IStudentManagmentService studMng = new StudentManagmentService
                 (new Mock<IEmailSenderService>().Object, 
@@ -132,7 +137,7 @@ namespace UnitTests.ServiceTests
             };
 
             _regMock.Setup(regService => regService.GetSingleOrDefault(
-                It.IsAny<Predicate<RegistrationDTO>>())).ReturnsAsync(regDTO);
+                It.IsAny<Predicate<RegistrationDTO>>())).ReturnsAsync(new ResultMessage<RegistrationDTO>(regDTO));
 
             RegisterUserDTO regData = new RegisterUserDTO
             {

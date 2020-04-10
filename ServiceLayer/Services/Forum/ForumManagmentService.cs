@@ -123,12 +123,11 @@ namespace ServiceLayer.Services.Forum
             return catDTO == null ? orderedCategories.First().ForumCategoryId : catDTO.ForumCategoryId;
         }
 
-        public async Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content)
+        public async Task<ResultMessage<DiscussionDTO>> AddDiscussion(int forumCategoryId, int studentId, string title, string content)
         {
-            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
-            {
-                throw new ForumException("Category does not exist");
-            }
+            ResultMessage<ForumCategoryDTO> forumCategory = await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId);
+            if (!forumCategory.IsSuccess)
+                return new ResultMessage<DiscussionDTO>(OperationStatus.NotSupported, "Category does not exist");
 
             DiscussionDTO newDiscussion = new DiscussionDTO
             {
@@ -143,12 +142,11 @@ namespace ServiceLayer.Services.Forum
             return await _discussionService.Add(newDiscussion);
         }
 
-        public async Task<Status> AddQuestion(int forumCategoryId, int studentId, string title, string content)
+        public async Task<ResultMessage<QuestionDTO>> AddQuestion(int forumCategoryId, int studentId, string title, string content)
         {
-            if (await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId) == null)
-            {
-                throw new ForumException("Category does not exist");
-            }
+            ResultMessage<ForumCategoryDTO> forumCategory = await _forumCategoryService.GetSingleOrDefault(cat => cat.ForumCategoryId == forumCategoryId);
+            if (!forumCategory.IsSuccess)
+                return new ResultMessage<QuestionDTO>(OperationStatus.NotSupported, "Category does not exist");
 
             QuestionDTO newQuestion = new QuestionDTO
             {
@@ -163,10 +161,8 @@ namespace ServiceLayer.Services.Forum
             return await _questionService.Add(newQuestion);
         }
 
-        public async Task<DiscussionDTO> GetDiscussion(int discussionId)
-        {
-            return await _discussionService.GetSingleOrDefault(x => x.TopicId == discussionId && !x.Deleted);
-        }
+        public async Task<ResultMessage<DiscussionDTO>> GetDiscussion(int discussionId)
+             => await _discussionService.GetSingleOrDefault(x => x.TopicId == discussionId && !x.Deleted);
 
         public async Task<DiscussionPostsDTO> GetDiscussionPosts(int discussionId)
         {
@@ -186,9 +182,7 @@ namespace ServiceLayer.Services.Forum
             };
         }
 
-        public async Task<StudentDTO> GetAuthor(int studentId)
-        {
-            return await _studentService.GetSingleOrDefault(x => x.StudentId == studentId);
-        }
+        public async Task<ResultMessage<StudentDTO>> GetAuthor(int studentId)
+            => await _studentService.GetSingleOrDefault(x => x.StudentId == studentId);
     }
 }

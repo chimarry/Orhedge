@@ -26,7 +26,7 @@ namespace Orhedge.Controllers
         [HttpPut]
         public async Task<ActionResult> Edit([FromBody]EditStudentViewModel model)
         {
-            Status status = await _studentService.Update(_mapper.Map<StudentDTO>(model));
+            ResultMessage<StudentDTO> operationResult = await _studentService.Update(_mapper.Map<StudentDTO>(model));
             string newUrl = Url.Link("Default", new
             {
                 Controller = "Admin",
@@ -38,7 +38,7 @@ namespace Orhedge.Controllers
         [HttpPut("delete")]
         public async Task<ActionResult> Delete([FromBody]DeleteStudentViewModel model)
         {
-            Status status = await _studentService.Delete(model.StudentId);
+            ResultMessage<bool> operationResult = await _studentService.Delete(model.StudentId);
             string newUrl = Url.Link("Default", new
             {
                 Controller = "Admin",

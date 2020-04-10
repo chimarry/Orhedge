@@ -13,24 +13,16 @@ namespace ServiceLayer.Services
         public DiscussionPostService(IServicesExecutor<DiscussionPostDTO, DiscussionPost> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(DiscussionPostDTO discussionPostDTO)
+        public async Task<ResultMessage<DiscussionPostDTO>> Add(DiscussionPostDTO discussionPostDTO)
            => await _servicesExecutor.Add(discussionPostDTO, x => false);
 
-        public async Task<Status> Delete(int id)
-        {
-            DiscussionPost dbDiscussionPost = await _servicesExecutor.GetOne(x => x.DiscussionPostId == id && x.Deleted == false);
-            if (dbDiscussionPost == null)
-            {
-                return Status.NOT_FOUND;
-            }
-            dbDiscussionPost.Deleted = true;
-            return await _servicesExecutor.Delete(dbDiscussionPost);
-        }
+        public async Task<ResultMessage<bool>> Delete(int id)
+          => await _servicesExecutor.Delete((DiscussionPost x) => x.DiscussionPostId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        public async Task<DiscussionPostDTO> GetSingleOrDefault(Predicate<DiscussionPostDTO> condition)
+        public async Task<ResultMessage<DiscussionPostDTO>> GetSingleOrDefault(Predicate<DiscussionPostDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(DiscussionPostDTO discussionPostDTO)
+        public async Task<ResultMessage<DiscussionPostDTO>> Update(DiscussionPostDTO discussionPostDTO)
             => await _servicesExecutor.Update(discussionPostDTO, x => x.DiscussionPostId == discussionPostDTO.DiscussionPostId && x.Deleted == false);
     }
 }

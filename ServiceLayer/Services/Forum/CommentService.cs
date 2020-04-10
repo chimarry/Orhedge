@@ -13,24 +13,16 @@ namespace ServiceLayer.Services
         public CommentService(IServicesExecutor<CommentDTO, Comment> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(CommentDTO commentDTO)
+        public async Task<ResultMessage<CommentDTO>> Add(CommentDTO commentDTO)
            => await _servicesExecutor.Add(commentDTO, x => false);
 
-        public async Task<Status> Delete(int id)
-        {
-            Comment dbComment = await _servicesExecutor.GetOne(x => x.CommentId == id && x.Deleted == false);
-            if (dbComment == null)
-            {
-                return Status.NOT_FOUND;
-            }
-            dbComment.Deleted = true;
-            return await _servicesExecutor.Delete(dbComment);
-        }
+        public async Task<ResultMessage<bool>> Delete(int id)
+             => await _servicesExecutor.Delete((Comment x) => x.CommentId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        public async Task<CommentDTO> GetSingleOrDefault(Predicate<CommentDTO> condition)
+        public async Task<ResultMessage<CommentDTO>> GetSingleOrDefault(Predicate<CommentDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(CommentDTO commentDTO)
+        public async Task<ResultMessage<CommentDTO>> Update(CommentDTO commentDTO)
             => await _servicesExecutor.Update(commentDTO, x => x.CommentId == commentDTO.CommentId && x.Deleted == false);
     }
 }

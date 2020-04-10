@@ -26,10 +26,10 @@ namespace UnitTests.ServiceTests
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
                 List<StudentDTO> students = await executor.GetAll<int>(dtoCondition: s => true);
-                StudentDTO student = await executor.GetSingleOrDefault(x => x.Username == "light");
+                StudentDTO student = await executor.GetSingleOrDefault((StudentDTO x) => x.Username == "light");
                 Assert.AreNotEqual(student, null);
 
-                StudentDTO noStudent = await executor.GetSingleOrDefault(x => x.Username == "nonexistent");
+                StudentDTO noStudent = await executor.GetSingleOrDefault((StudentDTO x) => x.Username == "nonexistent");
                 Assert.AreEqual(noStudent, null);
 
                 // Make sure ErrorHandler.Handle method was not called
@@ -56,15 +56,15 @@ namespace UnitTests.ServiceTests
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
-                Status status = await executor.Add(correctStudent, s => s.Email == correctStudent.Email
+                ResultMessage<StudentDTO> addedStudentResult = await executor.Add(correctStudent, s => s.Email == correctStudent.Email
                                                && s.Index == correctStudent.Index && s.Username == correctStudent.Username);
 
                 // Check status of operation
-                Assert.AreEqual(status, Status.SUCCESS);
+                Assert.AreEqual(addedStudentResult.Status, OperationStatus.Success);
 
                 // Check if inserted record exists with valid data
-                StudentDTO student = await executor.GetSingleOrDefault(x => x.Email == correctStudent.Email);
-                Assert.AreNotEqual(student, null, "Wasn't added");
+                StudentDTO student = await executor.GetSingleOrDefault((StudentDTO x) => x.Email == correctStudent.Email);
+                Assert.IsNotNull(student);
                 Assert.AreEqual(student.Index, correctStudent.Index, "Wrong index");
                 Assert.AreEqual(student.Username, correctStudent.Username, "Wrong username");
                 Assert.AreEqual(student.Privilege, correctStudent.Privilege, "Wrong privlege");
@@ -84,7 +84,7 @@ namespace UnitTests.ServiceTests
             {
                 var errHandlerMock = new Mock<IErrorHandler>();
                 var executor = new ServiceExecutor<StudentDTO, Student>(context, errHandlerMock.Object);
-                StudentDTO correctUpdatedStudent = await executor.GetSingleOrDefault(x => x.Username == "light");
+                StudentDTO correctUpdatedStudent = await executor.GetSingleOrDefault((StudentDTO x) => x.Username == "light");
                 correctUpdatedStudent.Name = "Milica";
                 correctUpdatedStudent.Rating = 3;
                 correctUpdatedStudent.Username = "mica";
@@ -92,19 +92,19 @@ namespace UnitTests.ServiceTests
                 correctUpdatedStudent.Description = "Pesimist";
                 Assert.IsNotNull(correctUpdatedStudent, "Student to update not found");
 
-                Status status = await executor.Update(correctUpdatedStudent, x => x.Username == "light");
+                ResultMessage<StudentDTO> status = await executor.Update(correctUpdatedStudent, x => x.Username == "light");
                 // Check status of operation
-                Assert.AreEqual(status, Status.SUCCESS);
+                Assert.AreEqual(status.Status, OperationStatus.Success);
                 List<StudentDTO> students = await executor.GetAll<int>(dtoCondition: x => true);
-                StudentDTO updatedStudent = await executor.GetSingleOrDefault(x => x.Username == "mica");
-                Assert.AreNotEqual(updatedStudent, null, "Not found");
+                ResultMessage<StudentDTO> updatedStudent = await executor.GetSingleOrDefault((StudentDTO x) => x.Username == "mica");
+                Assert.IsNotNull(updatedStudent.Result);
 
                 // Check if inserted record exists with valid data
-                Assert.AreEqual(updatedStudent.Rating, correctUpdatedStudent.Rating, "Wrong rating");
-                Assert.AreEqual(updatedStudent.Name, correctUpdatedStudent.Name, "Wrong name");
-                Assert.AreEqual(updatedStudent.Username, correctUpdatedStudent.Username, "Wrong username");
-                Assert.AreEqual(updatedStudent.Privilege, correctUpdatedStudent.Privilege, "Wrong privilege");
-                Assert.AreEqual(updatedStudent.Description, correctUpdatedStudent.Description, "Wrong description");
+                Assert.AreEqual(updatedStudent.Result.Rating, correctUpdatedStudent.Rating, "Wrong rating");
+                Assert.AreEqual(updatedStudent.Result.Name, correctUpdatedStudent.Name, "Wrong name");
+                Assert.AreEqual(updatedStudent.Result.Username, correctUpdatedStudent.Username, "Wrong username");
+                Assert.AreEqual(updatedStudent.Result.Privilege, correctUpdatedStudent.Privilege, "Wrong privilege");
+                Assert.AreEqual(updatedStudent.Result.Description, correctUpdatedStudent.Description, "Wrong description");
 
                 // Make sure ErrorHandler.Handle method was not called
                 errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
@@ -124,7 +124,7 @@ namespace UnitTests.ServiceTests
                 Assert.AreEqual(list.Count, numberOfElements);
 
                 string existingUsername = "light";
-                StudentDTO student = await executor.GetSingleOrDefault(x => x.Username == existingUsername);
+                StudentDTO student = await executor.GetSingleOrDefault((StudentDTO x) => x.Username == existingUsername);
                 Assert.IsTrue(list.Contains(student));
 
                 // Make sure ErrorHandler.Handle method was not called

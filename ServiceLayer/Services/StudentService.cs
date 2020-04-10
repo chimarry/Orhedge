@@ -16,20 +16,16 @@ namespace ServiceLayer.Services
         public StudentService(IServicesExecutor<StudentDTO, DatabaseLayer.Entity.Student> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(StudentDTO studentDTO)
+        public async Task<ResultMessage<StudentDTO>> Add(StudentDTO studentDTO)
              => await _servicesExecutor.Add(studentDTO, x => x.Username == studentDTO.Username && x.Deleted == false);
 
-        public async Task<Status> Delete(int id)
-        {
-            DatabaseLayer.Entity.Student dbStudent = await _servicesExecutor.GetOne(x => x.StudentId == id && x.Deleted == false);
-            dbStudent.Deleted = true;
-            return await _servicesExecutor.Delete(dbStudent);
-        }
+        public async Task<ResultMessage<bool>> Delete(int id)
+            => await _servicesExecutor.Delete((DatabaseLayer.Entity.Student x) => x.StudentId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        public async Task<Status> Update(StudentDTO studentDTO)
+        public async Task<ResultMessage<StudentDTO>> Update(StudentDTO studentDTO)
             => await _servicesExecutor.Update(studentDTO, x => x.StudentId == studentDTO.StudentId && x.Deleted == false);
 
-        public async Task<StudentDTO> GetSingleOrDefault(Predicate<StudentDTO> condition)
+        public async Task<ResultMessage<StudentDTO>> GetSingleOrDefault(Predicate<StudentDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
     }
 }

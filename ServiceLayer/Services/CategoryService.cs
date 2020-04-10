@@ -13,22 +13,18 @@ namespace ServiceLayer.Services
         public CategoryService(IServicesExecutor<CategoryDTO, Category> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(CategoryDTO categoryDTO)
+        public async Task<ResultMessage<CategoryDTO>> Add(CategoryDTO categoryDTO)
             => await _servicesExecutor.Add(categoryDTO, x => x.Name == categoryDTO.Name && x.Deleted == false);
 
-        public async Task<Status> Delete(int id)
-        {
-            Category dbCategory = await _servicesExecutor.GetOne((x => x.CategoryId == id && x.Deleted == false));
-            dbCategory.Deleted = true;
-            return await _servicesExecutor.Delete(dbCategory);
+        public async Task<ResultMessage<bool>> Delete(int id)
+            => await _servicesExecutor.Delete((Category x) => x.CategoryId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        }
 
-        public async Task<CategoryDTO> GetSingleOrDefault(Predicate<CategoryDTO> condition)
+        public async Task<ResultMessage<CategoryDTO>> GetSingleOrDefault(Predicate<CategoryDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
 
-        public async Task<Status> Update(CategoryDTO categoryDTO)
+        public async Task<ResultMessage<CategoryDTO>> Update(CategoryDTO categoryDTO)
             => await _servicesExecutor.Update(categoryDTO, x => x.CategoryId == categoryDTO.CategoryId && x.Deleted == false);
     }
 }

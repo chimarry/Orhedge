@@ -7,8 +7,8 @@ namespace ServiceLayer.Services
 {
     public interface IDocumentService
     {
-        Task<BasicFileInfo> DownloadFromStorage(string storagePath);
+        Task<ResultMessage<BasicFileInfo>> DownloadFromStorage(string storagePath);
 
-        Task<Status> UploadDocumentToStorage(string storagePath, byte[] fileInfo);
+        Task<ResultMessage<bool>> UploadDocumentToStorage(string storagePath, byte[] fileInfo);
     }
 }

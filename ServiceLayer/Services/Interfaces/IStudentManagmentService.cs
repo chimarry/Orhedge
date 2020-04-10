@@ -1,20 +1,21 @@
 ﻿using ServiceLayer.DTO;
 using ServiceLayer.DTO.Student;
+using ServiceLayer.ErrorHandling;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
 {
 
-    public enum PassChangeStatus { Success, InvalidOldPass, PassNoMatch};
+    public enum PassChangeStatus { Success, InvalidOldPass, PassNoMatch, Error };
     public interface IStudentManagmentService
     {
-        Task GenerateRegistrationEmail(RegisterFormDTO registerFormData);
+        Task<ResultMessage<bool>> GenerateRegistrationEmail(RegisterFormDTO registerFormData);
 
         Task<bool> IsStudentRegistered(string email);
 
         Task<bool> ValidateRegistrationCode(string code);
 
-        Task RegisterStudent(RegisterUserDTO registerData);
+        Task<ResultMessage<RegistrationDTO>> RegisterStudent(RegisterUserDTO registerData);
         Task RegisterRootUser(RegisterRootDTO rootData);
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="id">Student id</param>
         /// <param name="profile">Edit data</param>
-        Task EditStudentProfile(int id, ProfileUpdateDTO profile);
+        Task<ResultMessage<StudentDTO>> EditStudentProfile(int id, ProfileUpdateDTO profile);
         Task<PassChangeStatus> UpdateStudentPassword(int id, UpdatePasswordDTO passwordDTO);
         Task<bool> ValidatePassword(int id, string password);
     }

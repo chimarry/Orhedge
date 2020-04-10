@@ -15,22 +15,18 @@ namespace ServiceLayer.Services
         public TopicService(IServicesExecutor<TopicDTO, Topic> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(TopicDTO topic)
+        public async Task<ResultMessage<TopicDTO>> Add(TopicDTO topic)
             => await _servicesExecutor.Add(topic, x => false);
 
 
-        public async Task<Status> Delete(int id)
-        {
-            Topic topic = await _servicesExecutor.GetOne(x => x.TopicId == id && !x.Deleted);
-            topic.Deleted = true;
-            return await _servicesExecutor.Delete(topic);
-        }
+        public async Task<ResultMessage<bool>> Delete(int id)
+           => await _servicesExecutor.Delete((Topic x) => x.TopicId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        public async Task<TopicDTO> GetSingleOrDefault(Predicate<TopicDTO> condition)
+        public async Task<ResultMessage<TopicDTO>> GetSingleOrDefault(Predicate<TopicDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
 
-        public Task<Status> Update(TopicDTO topic)
-            => _servicesExecutor.Update(topic, x => x.TopicId == topic.TopicId && !x.Deleted);
+        public async Task<ResultMessage<TopicDTO>> Update(TopicDTO topic)
+            => await _servicesExecutor.Update(topic, x => x.TopicId == topic.TopicId && !x.Deleted);
     }
 }

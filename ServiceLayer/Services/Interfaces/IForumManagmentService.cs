@@ -9,10 +9,10 @@ namespace ServiceLayer.Services
     {
         Task<TopicListDTO> GetDiscussions(int categoryId, int page, int itemsPerPage);
         Task<TopicListDTO> GetQuestions(int categoryId, int page, int itemsPerPage);
-        Task<Status> AddDiscussion(int forumCategoryId, int studentId, string title, string content);
-        Task<Status> AddQuestion(int forumCategoryId, int studentId, string title, string content);
-        Task<DiscussionDTO> GetDiscussion(int discussionId);
+        Task<ResultMessage<DiscussionDTO>> AddDiscussion(int forumCategoryId, int studentId, string title, string content);
+        Task<ResultMessage<QuestionDTO>> AddQuestion(int forumCategoryId, int studentId, string title, string content);
+        Task<ResultMessage<DiscussionDTO>> GetDiscussion(int discussionId);
         Task<DiscussionPostsDTO> GetDiscussionPosts(int discussionId);
-        Task<StudentDTO> GetAuthor(int studentId);
+        Task<ResultMessage<StudentDTO>> GetAuthor(int studentId);
     }
 }

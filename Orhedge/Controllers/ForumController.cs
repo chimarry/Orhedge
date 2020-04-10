@@ -55,8 +55,8 @@ namespace Orhedge.Controllers
                 return RedirectToAction("CreateDiscussion");
             }
 
-            Status result = await _forumService.AddDiscussion(discussion.ForumCategoryId, studentId, discussion.Title, discussion.Content);
-            if (result == Status.SUCCESS)
+            ResultMessage<DiscussionDTO> addedDiscussion = await _forumService.AddDiscussion(discussion.ForumCategoryId, studentId, discussion.Title, discussion.Content);
+            if (addedDiscussion.IsSuccess)
             {
                 //Display page: posted discussion or index forum page
                 return RedirectToAction("Index");
@@ -81,8 +81,8 @@ namespace Orhedge.Controllers
                 return RedirectToAction("CreateQuestion");
             }
 
-            Status result = await _forumService.AddQuestion(question.ForumCategoryId, studentId, question.Title, question.Content);
-            if (result == Status.SUCCESS)
+            ResultMessage<QuestionDTO> postedQuestion = await _forumService.AddQuestion(question.ForumCategoryId, studentId, question.Title, question.Content);
+            if (postedQuestion.IsSuccess)
             {
                 //Display page: posted discussion or index forum page
                 return RedirectToAction("Index");
@@ -94,20 +94,19 @@ namespace Orhedge.Controllers
 
         public async Task<IActionResult> ShowDiscussion(int discussionId)
         {
-            DiscussionDTO discussion = await _forumService.GetDiscussion(discussionId);
-            if (discussion == null || discussion.Deleted)
-            {
+            ResultMessage<DiscussionDTO> discussion = await _forumService.GetDiscussion(discussionId);
+            if (!discussion.IsSuccess)
                 return RedirectToAction("Index");
-            }
-            StudentDTO author = await _forumService.GetAuthor(discussion.StudentId);
+
+            StudentDTO author = await _forumService.GetAuthor(discussion.Result.StudentId);
 
             DiscussionPostsDTO discussionPosts = await _forumService.GetDiscussionPosts(discussionId);
             DiscussionViewModel discussionVM = new DiscussionViewModel
             {
-                Title = discussion.Title,
-                Content = discussion.Content,
-                LastPost = discussion.LastPost,
-                Created = discussion.Created,
+                Title = discussion.Result.Title,
+                Content = discussion.Result.Content,
+                LastPost = discussion.Result.LastPost,
+                Created = discussion.Result.Created,
                 Author = _mapper.Map<StudentDTO, AuthorViewModel>(author),
                 DiscussionPosts = _mapper.Map<DiscussionPostsDTO, DiscussionPostViewModel[]>(discussionPosts)
             };

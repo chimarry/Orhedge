@@ -15,14 +15,14 @@ namespace ServiceLayer.Helpers
         /// <param name="dto">Element to add</param>
         /// <param name="condition">Function to check if element exists</param>
         /// <returns>Status depending on success of operation</returns>
-        Task<Status> Add(TDto dto, Predicate<TEntity> condition);
+        Task<ResultMessage<TDto>> Add(TDto dto, Predicate<TEntity> condition);
 
         /// <summary>
         /// Deletes element from storage
         /// </summary>
         /// <param name="entity">Element from storage to delete</param>
         /// <returns>Status depending on success of operation</returns>
-        Task<Status> Delete(TEntity entity);
+        Task<ResultMessage<bool>> Delete(Predicate<TEntity> filter, Func<TEntity, TEntity> applyDelete);
 
         /// <summary>
         /// Updates element in storage
@@ -31,14 +31,14 @@ namespace ServiceLayer.Helpers
         /// </param>
         /// <param name="condition">Function to check if element exists</param>
         /// <returns>Status depending on success of operation</returns>
-        Task<Status> Update(TDto dto, Predicate<TEntity> condition);
+        Task<ResultMessage<TDto>> Update(TDto dto, Predicate<TEntity> condition);
 
         /// <summary>
         /// Gets one element from storage based on passed condition it must satisfy
         /// </summary>
         /// <param name="condition">Function that is used to uniquely identify element</param>
         /// <returns>Found element or null</returns>
-        Task<TDto> GetSingleOrDefault(Predicate<TDto> condition);
+        Task<ResultMessage<TDto>> GetSingleOrDefault(Predicate<TDto> condition);
 
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace ServiceLayer.Helpers
         /// </summary>
         /// <param name="condition">Function that is used to uniquely identify element</param>
         /// <returns>Found element or null</returns>
-        Task<TEntity> GetOne(Predicate<TEntity> condition);
+        Task<TEntity> GetSingleOrDefault(Predicate<TEntity> condition);
 
         /// <summary>
         /// Get number of elements of specified type in storage

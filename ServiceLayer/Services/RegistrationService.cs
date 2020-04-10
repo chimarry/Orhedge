@@ -22,18 +22,18 @@ namespace ServiceLayer.Services
             => _servicesExecutor = servicesExecutor;
 
 
-        public async Task<Status> Add(RegistrationDTO registrationDTO)
+        public async Task<ResultMessage<RegistrationDTO>> Add(RegistrationDTO registrationDTO)
             => await _servicesExecutor.Add(registrationDTO, reg => reg.RegistrationCode == registrationDTO.RegistrationCode);
 
-        public Task<Status> Delete(int id)
+        public Task<ResultMessage<bool>> Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RegistrationDTO> GetSingleOrDefault(Predicate<RegistrationDTO> condition)
+        public async Task<ResultMessage<RegistrationDTO>> GetSingleOrDefault(Predicate<RegistrationDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(RegistrationDTO registrationDTO)
+        public async Task<ResultMessage<RegistrationDTO>> Update(RegistrationDTO registrationDTO)
             => await _servicesExecutor.Update(registrationDTO, reg => reg.RegistrationId == registrationDTO.RegistrationId);
 
     }

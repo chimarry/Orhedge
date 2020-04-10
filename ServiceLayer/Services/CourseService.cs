@@ -15,19 +15,16 @@ namespace ServiceLayer.Services
         public CourseService(IServicesExecutor<CourseDTO, Course> servicesExecutor)
              : base(servicesExecutor) { }
 
-        public async Task<Status> Add(CourseDTO courseDTO)
+        public async Task<ResultMessage<CourseDTO>> Add(CourseDTO courseDTO)
              => await _servicesExecutor.Add(courseDTO, x => x.Name != courseDTO.Name && x.Deleted == false);
 
-        public async Task<Status> Delete(int id)
-        {
-            Course dbCourse = await _servicesExecutor.GetOne((x => x.CourseId == id && x.Deleted == false));
-            dbCourse.Deleted = true;
-            return await _servicesExecutor.Delete(dbCourse);
-        }
-        public async Task<CourseDTO> GetSingleOrDefault(Predicate<CourseDTO> condition)
+        public async Task<ResultMessage<bool>> Delete(int id)
+            => await _servicesExecutor.Delete((Course x) => x.CourseId == id && !x.Deleted, x => { x.Deleted = true; return x; });
+
+        public async Task<ResultMessage<CourseDTO>> GetSingleOrDefault(Predicate<CourseDTO> condition)
              => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(CourseDTO courseDTO)
+        public async Task<ResultMessage<CourseDTO>> Update(CourseDTO courseDTO)
             => await _servicesExecutor.Update(courseDTO, x => x.CourseId == courseDTO.CourseId && x.Deleted == false);
     }
 }

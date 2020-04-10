@@ -17,21 +17,17 @@ namespace ServiceLayer.Services
         {
         }
 
-        public async Task<Status> Add(StudyMaterialDTO studyMaterialDTO)
+        public async Task<ResultMessage<StudyMaterialDTO>> Add(StudyMaterialDTO studyMaterialDTO)
              => await _servicesExecutor.Add(studyMaterialDTO, x => x.Name == studyMaterialDTO.Name && x.StudentId == studyMaterialDTO.StudentId
                                                                      && x.UploadDate == studyMaterialDTO.UploadDate && x.Deleted == false);
 
-        public async Task<Status> Delete(int id)
-        {
-            StudyMaterial dbStudyMaterial = await _servicesExecutor.GetOne((x => x.StudyMaterialId == id && x.Deleted == false));
-            dbStudyMaterial.Deleted = true;
-            return await _servicesExecutor.Delete(dbStudyMaterial);
-        }
+        public async Task<ResultMessage<bool>> Delete(int id)
+            => await _servicesExecutor.Delete((StudyMaterial x) => x.StudyMaterialId == id && !x.Deleted, x => { x.Deleted = true; return x; });
 
-        public async Task<StudyMaterialDTO> GetSingleOrDefault(Predicate<StudyMaterialDTO> condition)
+        public async Task<ResultMessage<StudyMaterialDTO>> GetSingleOrDefault(Predicate<StudyMaterialDTO> condition)
              => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(StudyMaterialDTO studyMaterialDTO)
+        public async Task<ResultMessage<StudyMaterialDTO>> Update(StudyMaterialDTO studyMaterialDTO)
              => await _servicesExecutor.Update(studyMaterialDTO, x => x.StudyMaterialId == studyMaterialDTO.StudyMaterialId && x.Deleted == false);
     }
 }

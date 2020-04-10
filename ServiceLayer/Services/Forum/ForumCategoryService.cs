@@ -15,23 +15,18 @@ namespace ServiceLayer.Services
         public ForumCategoryService(IServicesExecutor<ForumCategoryDTO, ForumCategory> servicesExecutor)
             : base(servicesExecutor) { }
 
-        public async Task<Status> Add(ForumCategoryDTO forumCategoryDTO)
+        public async Task<ResultMessage<ForumCategoryDTO>> Add(ForumCategoryDTO forumCategoryDTO)
           => await _servicesExecutor.Add(forumCategoryDTO, x => x.Name == forumCategoryDTO.Name);
 
-        public async Task<Status> Delete(int id)
+        public async Task<ResultMessage<bool>> Delete(int id)
         {
-            ForumCategory dbForumCategory = await _servicesExecutor.GetOne(x => x.ForumCategoryId == id);
-            if (dbForumCategory == null)
-            {
-                return Status.NOT_FOUND;
-            }
-            return await _servicesExecutor.Delete(dbForumCategory);  // Not complete 
+            throw new NotImplementedException();
         }
 
-        public async Task<ForumCategoryDTO> GetSingleOrDefault(Predicate<ForumCategoryDTO> condition)
+        public async Task<ResultMessage<ForumCategoryDTO>> GetSingleOrDefault(Predicate<ForumCategoryDTO> condition)
           => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<Status> Update(ForumCategoryDTO forumCategoryDTO)
+        public async Task<ResultMessage<ForumCategoryDTO>> Update(ForumCategoryDTO forumCategoryDTO)
           => await _servicesExecutor.Update(forumCategoryDTO, x => x.ForumCategoryId == forumCategoryDTO.ForumCategoryId);
     }
 }

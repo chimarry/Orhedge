@@ -12,23 +12,23 @@ namespace ServiceLayer.Services
 {
     public class LocalDocumentService : IDocumentService
     {
-        public Task<BasicFileInfo> DownloadFromStorage(string storagePath)
+        public Task<ResultMessage<BasicFileInfo>> DownloadFromStorage(string storagePath)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Status> UploadDocumentToStorage(string storagePath, byte[] file)
+        public async Task<ResultMessage<bool>> UploadDocumentToStorage(string storagePath, byte[] file)
         {
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(storagePath));
                 using (FileStream fileStream = File.Create(storagePath))
                     await fileStream.WriteAsync(file);
-                return Status.SUCCESS;
+                return new ResultMessage<bool>(true, OperationStatus.Success);
             }
             catch (IOException)
             {
-                throw;
+                return new ResultMessage<bool>(false, OperationStatus.FileSystemError);
             }
         }
     }
