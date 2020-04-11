@@ -62,3 +62,34 @@ function searchSortFilter(numberOfElements) {
     url = url + "&searchFor=" + searchFor + " &sortCriteria=" + selectedValue;
     window.location.href = url;
 }
+
+let requiredMsg = "Ovo polje je obavezno";
+$("#regForm").validate(
+    {
+        messages:
+        {
+            firstname: requiredMsg,
+            lastname: requiredMsg,
+            email: {
+                required: requiredMsg,
+                email: "Neispravna email adresa"
+            },
+            indexnumber: {
+                required: requiredMsg,
+                pattern: "Neispravan broj indeksa"
+            }
+        },
+        errorPlacement: function (label, element) {
+            label.addClass('error-msg');
+            label.insertAfter(element);
+        },
+    });
+
+$("#sendEmailBttn").click(e => {
+    e.preventDefault();
+
+    if (!$("#regForm").valid())
+        return;
+
+    // Add code which submits the form via ajax
+});

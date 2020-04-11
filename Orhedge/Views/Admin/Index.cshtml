@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="~/css/admin.css">   
 }
 
-@section HeadScripts
+@section Scripts
 {
     <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="~/js/admin.js"></script>
 }
 
@@ -188,7 +189,24 @@
         <br><br><br>
     </div>
     <div class="tab-pane fade" id="nav-addUser" role="tabpanel" aria-labelledby="nav-addUser-tab">
-        Add new user // TODO
+        <form id="regForm">
+            <label for="regFirstName">@Localizer["Name"]</label>
+            <input id="regFirstName" name="firstname" type="text" required/>
+            <label for="regLastName">@Localizer["LastName"]</label>
+            <input id="regLastName" name="lastname" type="text" required />
+            <label for="regEmail">@Localizer["Email"]</label>
+            <input id="regEmail" name="email" type="email" required/>
+            <label for="regIndexNumber">@Localizer["Index"]</label>
+            <input id="regIndexNumber" name="indexnumber" type="text" pattern="\d+\/\d{2}" required/>
+            <label for="regPrivilege">@Localizer["UserPrivilege"]</label>
+            <select id="regPrivilege">
+                @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
+                {
+                    <!option value="@privilege" @(privilege == "Normal" ? "selected" : "")>@Localizer[privilege]</!option>
+                }
+            </select>
+            <button id="sendEmailBttn">@Localizer["SendRegisterEmail"]</button>
+        </form>
     </div>
 </div>
 <div id="modalEditId" class="modal">

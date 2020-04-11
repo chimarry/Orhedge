@@ -264,4 +264,13 @@
   <data name="Third" xml:space="preserve">
     <value>Treći semestar</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="UserPrivilege" xml:space="preserve">
+    <value>Nivo korisnika</value>
+  </data>
+  <data name="SendRegisterEmail" xml:space="preserve">
+    <value>Pošalji registracioni email</value>
+  </data>
 </root>
