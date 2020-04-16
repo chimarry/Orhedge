@@ -25,188 +25,203 @@
 <section id="nav-admin">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
+            <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" tabindex="0" 
+               aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
+            <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1" 
+               aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
         </li>
     </ul>
 </section>
 
-<!--<nav style="margin:100px 100px 100px 100px !important">
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
-        <a class="nav-item nav-link" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
-        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Mozda jos neka funkcionalnost???</a>
-    </div>
-</nav>-->
 <div class="tab-content" id="nav-tabContent">
-    <div class="d-flex tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
-        <div class="table-responsive  listaKorisnika">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>KORISNIK</th>
-                        <th>PRIVILEGIJE</th>
-                        <th>OCJENA</th>
-                        <th>
-                            <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
-                            <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)" class="buttonSearch"><i class="fa fa-search"></i></button>
-                        </th>
-                        <th>
-                            <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">
-                                @switch (ViewBag.SortingCriteria)
-                                {
-                                    case @StudentSortingCriteria.NoSorting:
-                                        <option selected>SORTIRAJ</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case @StudentSortingCriteria.NameAsc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc selected>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case StudentSortingCriteria.NameDesc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc selected>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case StudentSortingCriteria.PrivilegeAsc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc selected>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case StudentSortingCriteria.PrivilegeDesc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc selected>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case StudentSortingCriteria.RatingAsc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc selected>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                                        break;
-                                    case StudentSortingCriteria.RatingDesc:
-                                        <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                                        <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
-                                        <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
-                                        <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
-                                        <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                                        <option value=@StudentSortingCriteria.RatingDesc selected>@Localizer["RatingDesc"]</option>
-                                        break;
-                                }
-                            </select>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (StudentViewModel student in Model.Students)
-                    {
-                        <tr class="align-items-center">
-                            <td><a href=""><img src="images/avatarlogin.png" alt=" " style="max-width: 20px; max-height: 20px;">  &nbsp;@student.Name @student.LastName</a></td>
-                            <td>@Localizer[student.Privilege.ToString()]</td>
-                            <td>@student.Rating</td>
-                            <td>
-                                @{
-                                    string param = Json.Serialize(student).ToString();
-                                    <button onclick="showEditModal(@param)">@Localizer["Edit"]</button>
-                                }
-                            </td>
-                            <td>
-                                <button onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>
-                            <a href="#nav-users"><i class="fa fa-angle-double-left prev-next"></i></a>
-                            <a href="#nav-users"><i class="fa fa-angle-left prev-next"></i></a>
-                        </td>
-                        <td>
-                            <div id="pageFooter">Stranica 1 od 5</div>
-                        </td>
-                        <td>
-                            <a href="#nav-users"><i class="fa fa-angle-right prev-next"></i></a>
-                            <a href="#nav-users"><i class="fa fa-angle-double-right prev-next"></i></a>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <div class="filter listaKorisnika">
-            <p>
-                <b>Prikaz korisnika po privilegijama</b>
-            </p>
-            <div>
-                @{var filters = ViewBag.PrivilegeFilters as StudentPrivilege[];}
+    <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+        <div class="row">
 
-                @foreach (StudentPrivilege sp in Enum.GetValues(typeof(StudentPrivilege)))
-                {
-                    <div class="form-check filteri">
-                        @Html.CheckBox((int)sp + "filter", filters?.Contains(sp), new { @id = (int)sp + "filter", @value = sp.ToString() })
-                        <label for=@((int)sp + "filter")>
-                            @Localizer[sp.ToString()]
-                        </label>
-                    </div>
-                }
-                <br><br>
-                <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">Osvježi</button>
+            <div class="col-xl-8">
+                <div class="table-responsive  listaKorisnika">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>KORISNIK</th>
+                                <th>PRIVILEGIJE</th>
+                                <th>OCJENA</th>
+                                <th>
+                                    <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
+                                    <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                                </th>
+                                <th>
+                                    <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">
+                                        @switch (ViewBag.SortingCriteria)
+                                        {
+                                            case @StudentSortingCriteria.NoSorting:
+                                                <option selected>SORTIRAJ</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case @StudentSortingCriteria.NameAsc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc selected>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case StudentSortingCriteria.NameDesc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc selected>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case StudentSortingCriteria.PrivilegeAsc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc selected>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case StudentSortingCriteria.PrivilegeDesc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc selected>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case StudentSortingCriteria.RatingAsc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc selected>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                                break;
+                                            case StudentSortingCriteria.RatingDesc:
+                                                <option value=@StudentSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                                <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
+                                                <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
+                                                <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
+                                                <option value=@StudentSortingCriteria.PrivilegeDesc>@Localizer["PrivilegeDesc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                                <option value=@StudentSortingCriteria.RatingDesc selected>@Localizer["RatingDesc"]</option>
+                                                break;
+                                        }
+                                    </select>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (StudentViewModel student in Model.Students)
+                            {
+                                <tr class="align-items-center">
+                                    <td><a href=""><img src="images/avatarlogin.png" alt=" " style="max-width: 20px; max-height: 20px;">  &nbsp;@student.Name @student.LastName</a></td>
+                                    <td>@Localizer[student.Privilege.ToString()]</td>
+                                    <td>@student.Rating</td>
+                                    <td>
+                                        @{
+                                            string param = Json.Serialize(student).ToString();
+                                            <button onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <a href="#nav-users"><i class="fa fa-angle-double-left prev-next"></i></a>
+                                    <a href="#nav-users"><i class="fa fa-angle-left prev-next"></i></a>
+                                </td>
+                                <td>
+                                    <div id="pageFooter">Stranica 1 od 5</div>
+                                </td>
+                                <td>
+                                    <a href="#nav-users"><i class="fa fa-angle-right prev-next"></i></a>
+                                    <a href="#nav-users"><i class="fa fa-angle-double-right prev-next"></i></a>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
-            <hr>
+
+            <div class="col-xl-auto">
+                <div class="filter listaKorisnika">
+                    <p>
+                        <b>Prikaz korisnika po privilegijama</b>
+                    </p>
+                    <div>
+                        @{var filters = ViewBag.PrivilegeFilters as StudentPrivilege[];}
+
+                        @foreach (StudentPrivilege sp in Enum.GetValues(typeof(StudentPrivilege)))
+                        {
+                            <div class="form-check filteri">
+                                @Html.CheckBox((int)sp + "filter", filters?.Contains(sp), new { @id = (int)sp + "filter", @value = sp.ToString() })
+                                <label for=@((int)sp + "filter")>
+                                    @Localizer[sp.ToString()]
+                                </label>
+                            </div>
+                        }
+                        <br><br>
+                        <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">Osvježi</button>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
         </div>
-        <br><br><br>
     </div>
     <div class="tab-pane fade" id="nav-addUser" role="tabpanel" aria-labelledby="nav-addUser-tab">
-        <form id="regForm">
-            <label for="regFirstName">@Localizer["Name"]</label>
-            <input id="regFirstName" name="firstname" type="text" required/>
-            <label for="regLastName">@Localizer["LastName"]</label>
-            <input id="regLastName" name="lastname" type="text" required />
-            <label for="regEmail">@Localizer["Email"]</label>
-            <input id="regEmail" name="email" type="email" required/>
-            <label for="regIndexNumber">@Localizer["Index"]</label>
-            <input id="regIndexNumber" name="indexnumber" type="text" pattern="\d+\/\d{2}" required/>
-            <label for="regPrivilege">@Localizer["UserPrivilege"]</label>
-            <select id="regPrivilege">
-                @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
-                {
-                    <!option value="@privilege" @(privilege == "Normal" ? "selected" : "")>@Localizer[privilege]</!option>
-                }
-            </select>
-            <button id="sendEmailBttn">@Localizer["SendRegisterEmail"]</button>
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+
+                <div class="col-lg-6">
+                    <div id="form-ui">
+                        <h2 class="text-center">Dodavanje korisnika:</h2>
+                        <form id="regForm">
+                            <label for="regFirstName">@Localizer["Name"]</label>
+                            <input class="form-control" id="regFirstName" name="firstname" type="text" placeholder="Unesite ime korisnika.." required /><br>
+                            <label for="regLastName">@Localizer["LastName"]</label>
+                            <input class="form-control" id="regLastName" name="lastname" type="text" placeholder="Unesite prezime korisnika.." required /><br>
+                            <label for="regEmail">@Localizer["Email"]</label>
+                            <input class="form-control input-email" id="regEmail" name="email" type="email" placeholder="Unesite email korisnika.." required /><br>
+                            <label for="regIndexNumber">@Localizer["Index"]</label>
+                            <input class="form-control" id="regIndexNumber" name="indexnumber" type="text" pattern="\d+\/\d{2}" placeholder="Unesite broj indeksa korisnika.." required /><br>
+                            <label for="regPrivilege">@Localizer["UserPrivilege"]</label>
+                            <select id="regPrivilege" class="form-control">
+                                @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
+                                {
+                                    <!option value="@privilege" @(privilege == "Normal" ? "selected" : "")>@Localizer[privilege]</!option>
+                                }
+                            </select><br>
+                            <button class="btn btn-primary btn-block btn-lg" id="sendEmailBttn">@Localizer["SendRegisterEmail"]</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
     </div>
 </div>
 <div id="modalEditId" class="modal">
