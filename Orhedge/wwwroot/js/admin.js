@@ -1,4 +1,4 @@
-function showEditModal(studentParam) {
+﻿function showEditModal(studentParam) {
     document.getElementById('studentId').value = studentParam.studentId;
     document.getElementById('nameId').value = studentParam.name;
     document.getElementById('lastNameId').value = studentParam.lastName;
@@ -64,7 +64,7 @@ function searchSortFilter(numberOfElements) {
 }
 
 let requiredMsg = "Ovo polje je obavezno";
-$("#regForm").validate(
+let regFormValidator = $("#regForm").validate(
     {
         messages:
         {
@@ -83,13 +83,39 @@ $("#regForm").validate(
             label.addClass('error-msg');
             label.insertAfter(element);
         },
+        submitHandler: (form, e) => {
+            $("#sendEmailBttn").prop("disabled", true);
+
+            let data = {
+                firstName: $("#regFirstName").val(),
+                lastName: $("#regLastName").val(),
+                email: $("#regEmail").val(),
+                indexNumber: $("#regIndexNumber").val(),
+                privilege: $("#regPrivilege").val()
+            }
+
+            $.ajax({
+                url: "/api/adminapi/send-confirmation-email",
+                method: "POST",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                statusCode: {
+                    400: xhr => {
+                        console.log(xhr.responseJSON);
+                        if (xhr.responseJSON.error === "AlreadyExists")
+                            regFormValidator.showErrors({ email: "Korisnik sa datom email adresom već postoji" });
+
+                        $("#sendEmailBttn").prop("disabled", false);
+                    }
+                },
+                success: () => {
+                    alert(`Email sent to ${data.email}`);
+                    $("#regForm").trigger('reset');
+                    $("#sendEmailBttn").prop("disabled", false);
+                },
+                data: JSON.stringify(data)
+            });
+        }
     });
 
-$("#sendEmailBttn").click(e => {
-    e.preventDefault();
 
-    if (!$("#regForm").valid())
-        return;
-
-    // Add code which submits the form via ajax
-});

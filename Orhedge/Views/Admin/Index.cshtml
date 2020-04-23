@@ -18,6 +18,7 @@
 {
     <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
     <script src="~/js/admin.js"></script>
 }
 
@@ -201,15 +202,15 @@
                         <h2 class="text-center">Dodavanje korisnika:</h2>
                         <form id="regForm">
                             <label for="regFirstName">@Localizer["Name"]</label>
-                            <input class="form-control" id="regFirstName" name="firstname" type="text" placeholder="Unesite ime korisnika.." required /><br>
+                            <input class="form-control" id="regFirstName" name="firstname" type="text" placeholder="@Localizer["EnterFirstName"]" required /><br>
                             <label for="regLastName">@Localizer["LastName"]</label>
-                            <input class="form-control" id="regLastName" name="lastname" type="text" placeholder="Unesite prezime korisnika.." required /><br>
+                            <input class="form-control" id="regLastName" name="lastname" type="text" placeholder="@Localizer["EnterLastName"]" required /><br>
                             <label for="regEmail">@Localizer["Email"]</label>
-                            <input class="form-control input-email" id="regEmail" name="email" type="email" placeholder="Unesite email korisnika.." required /><br>
+                            <input class="form-control input-email" id="regEmail" name="email" type="email" placeholder="@Localizer["EnterEmail"]" required /><br>
                             <label for="regIndexNumber">@Localizer["Index"]</label>
-                            <input class="form-control" id="regIndexNumber" name="indexnumber" type="text" pattern="\d+\/\d{2}" placeholder="Unesite broj indeksa korisnika.." required /><br>
+                            <input class="form-control" id="regIndexNumber" name="indexnumber" type="text" pattern="\d+\/\d{2}" placeholder="@Localizer["EnterIndex"]" required /><br>
                             <label for="regPrivilege">@Localizer["UserPrivilege"]</label>
-                            <select id="regPrivilege" class="form-control">
+                            <select id="regPrivilege" class="form-control" name="privilege">
                                 @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
                                 {
                                     <!option value="@privilege" @(privilege == "Normal" ? "selected" : "")>@Localizer[privilege]</!option>

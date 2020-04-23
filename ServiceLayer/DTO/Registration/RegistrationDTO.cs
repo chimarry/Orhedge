@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 
 namespace ServiceLayer.DTO
 {
@@ -10,7 +11,7 @@ namespace ServiceLayer.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Index { get; set; }
-        public int Privilege { get; set; }
+        public StudentPrivilege Privilege { get; set; }
         /// <summary>
         /// Date and time when registration is created
         /// </summary>

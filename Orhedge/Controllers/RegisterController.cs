@@ -16,41 +16,6 @@ namespace Orhedge.Controllers
         public RegisterController(IStudentManagmentService studentManagmentService, IMapper mapper)
             => (_studentManagmentService, _mapper) = (studentManagmentService, mapper);
 
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        // TODO: Uncomment this to allow only administrators to register new users
-        //[Authorize(Roles = "0")]
-        public async Task<IActionResult> SendRegistrationEmail([FromForm]RegisterFormViewModel registration)
-        {
-            if (ModelState.IsValid)
-            {
-
-
-                bool isRegistered
-                    = await _studentManagmentService.IsStudentRegistered(registration.Email);
-
-                if (isRegistered)
-                {
-                    // TODO: Present error page
-                    return Content("Already registered");
-                }
-                else
-                {
-                    RegisterFormDTO registerFormDTO = _mapper.Map<RegisterFormDTO>(registration);
-                    await _studentManagmentService.GenerateRegistrationEmail(registerFormDTO);
-                    // TODO: Display success page
-                    return Content("Success");
-                }
-            }
-            else
-            {
-                // TODO: Display view explaining which fields are invalid
-                return Content("Display view here");
-            }
-        }
-
         public async Task<IActionResult> ShowRegisterForm([FromQuery] string code)
         {
             bool codeValid = await _studentManagmentService.ValidateRegistrationCode(code);

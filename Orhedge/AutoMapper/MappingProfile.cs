@@ -16,7 +16,8 @@ namespace Orhedge.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<RegisterFormViewModel, RegisterFormDTO>();
+            CreateMap<RegisterFormViewModel, RegisterFormDTO>()
+                .ForMember(dest => dest.Index, opts => opts.MapFrom(src => src.IndexNumber));
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<StudentDTO, EditProfileViewModel>();

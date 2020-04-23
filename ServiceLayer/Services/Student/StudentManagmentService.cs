@@ -69,7 +69,7 @@ namespace ServiceLayer.Services.Student
             => new Uri(_baseUrl, $"{_emailLinkEndpoint}?code={Uri.EscapeDataString(code)}").AbsoluteUri;
 
         public async Task<bool> IsStudentRegistered(string email)
-            => await _studentService.GetSingleOrDefault(student => student.Email == email) != null;
+            => (await _studentService.GetSingleOrDefault(student => student.Email == email)).Result != null;
 
 
         private string GenerateRegistrationCode()

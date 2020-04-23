@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 
 namespace DatabaseLayer.Entity
 {
@@ -10,7 +11,7 @@ namespace DatabaseLayer.Entity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Index { get; set; }
-        public int Privilege { get; set; }
+        public StudentPrivilege Privilege { get; set; }
         public DateTime Timestamp { get; set; }
         public bool Used { get; set; }
     }

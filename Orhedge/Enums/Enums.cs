@@ -26,4 +26,6 @@ namespace Orhedge.Enums
         First, Second, Third, Forth, Fifth, Sixth, Seventh, Eighth,
         Unknown
     }
+
+    public enum SendConfirmEmailStatus { Success, AlreadyExists };
 }

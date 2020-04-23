@@ -15,6 +15,7 @@ using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Services.Student;
+using DatabaseLayer.Enums;
 
 namespace UnitTests.ServiceTests
 {
@@ -77,7 +78,7 @@ namespace UnitTests.ServiceTests
                 FirstName = "FirstName",
                 LastName = "LastName",
                 Index = "1111/11",
-                Privilege = 3
+                Privilege = DatabaseLayer.Enums.StudentPrivilege.Normal
             };
 
             await studMng.GenerateRegistrationEmail(reg);
@@ -121,7 +122,7 @@ namespace UnitTests.ServiceTests
                 FirstName = "FirstName",
                 LastName = "LastName",
                 Index = "1111/11",
-                Privilege = 3
+                Privilege = StudentPrivilege.Normal
             };
 
             await studMng.GenerateRegistrationEmail(reg);

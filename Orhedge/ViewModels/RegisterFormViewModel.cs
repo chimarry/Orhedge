@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DatabaseLayer.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Orhedge.ViewModels
 {
@@ -15,6 +16,6 @@ namespace Orhedge.ViewModels
         [Required]
         [RegularExpression(@"\d+\/\d{2}")]
         public string IndexNumber { get; set; }
-        public int Privilege { get; set; }
+        public StudentPrivilege Privilege { get; set; }
     }
 }

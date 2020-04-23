@@ -273,4 +273,16 @@
   <data name="SendRegisterEmail" xml:space="preserve">
     <value>Pošalji registracioni email</value>
   </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Unesite email korisnika..</value>
+  </data>
+  <data name="EnterFirstName" xml:space="preserve">
+    <value>Unesite ime korisnika..</value>
+  </data>
+  <data name="EnterIndex" xml:space="preserve">
+    <value>Unesite broj indeksa korisnika..</value>
+  </data>
+  <data name="EnterLastName" xml:space="preserve">
+    <value>Unesite prezime korisnika..</value>
+  </data>
 </root>
