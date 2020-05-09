@@ -6,6 +6,7 @@ using Orhedge.ViewModels.Student;
 using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
+using ServiceLayer.DTO.Materials;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Models;
 using System.Collections.Generic;
@@ -33,6 +34,11 @@ namespace Orhedge.AutoMapper
             CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
             CreateMap<CourseDTO, IndexCourseViewModel>();
             CreateMap<DetailedSemesterDTO, SemesterViewModel>().ForMember(dest => dest.Courses, conf => conf.MapFrom(src => src.Courses)).ReverseMap();
+            CreateMap<CategoryDTO, CategoryViewModel>();
+            CreateMap<CourseCategoryDTO, CourseCategoryViewModel>()
+                .ForMember(dest => dest.CourseId, opts => opts.MapFrom(courseCat => courseCat.Course.CourseId))
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(courseCat => courseCat.Course.Name))
+                .ForMember(dest => dest.Categories, opts => opts.MapFrom(courseCat => courseCat.Categories));
         }
         public void MapForum()
         {

@@ -10,17 +10,30 @@
 @section Stylesheet {
     <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="~/css/stylematerijali.css">
 }
 
 @section HeadScripts {
-    <script src="~/js/javascriptMaterijal.js" type="text/javascript" defer></script>
+    <script src="~/js/materials/material.js" type="text/javascript" defer></script>
     <script src="~/js/saveMaterial.js" type="text/javascript" defer></script>
     <script src="~/js/filereader.js" type="text/javascript" defer></script>
 }
 
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+}
+
+<div class="spinner-wrapper">
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
 <!--Posalji materijal-->
-<div class="container-fluid" style="background-color:#04001D; color: white;">
+<div class="container-fluid main-content" style="background-color:#04001D; color: white;">
     <div class="row padding">
         <div class="col-xs-12 col-sm-12 col-md-8">
             <p style="text-align: center; padding-top:30px;">
@@ -36,7 +49,7 @@
             <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
                 <!--Dodati potrebnu akciju-->
                 <br>
-                <select class="form-control form-control-lg" name="category" id="validationCustom03" onchange="ChangecatList()" required">
+                <select class="form-control form-control-lg" name="category" id="year-input" required">
                     <option value="">Izaberite... </option>
                     <option value="1">Prva godina</option>
                     <option value="2">Druga godina</option>
@@ -44,15 +57,10 @@
                     <option value="4">Četvrta godina</option>
                 </select>
                 <br>
-                <select class="form-control form-control-lg" id="validationCustom04" name="course" required></select>
+                <!--<select class="form-control form-control-lg" id="validationCustom04" name="course" required></select>-->
+                <input id="course-input" class="form-control form-control-lg" name="course" required />
                 <br>
-                <select class="form-control form-control-lg" name="category" id="validationCustom03" onchange="ChangecatList()" required">
-                    <option value="">Izaberite... </option>
-                    <option value="1">Sveska</option>
-                    <option value="2">Ispitni rokovi</option>
-                    <option value="3">Knjiga</option>
-                    <option value="4">Prezentacije</option>
-                    <option value="5">Linkovi</option>
+                <select class="form-control form-control-lg" name="category" id="category-input" required">
                 </select>
                 <br>
                 <button id="buttonSave" name="buttonSave" class="btn btn-primary btn-outline-light" onclick="saveMaterial()"> Pošalji nam materijal</button>
