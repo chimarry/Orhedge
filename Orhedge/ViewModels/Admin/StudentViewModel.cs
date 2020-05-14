@@ -17,5 +17,7 @@ namespace Orhedge.ViewModels.Admin
         public string Index { get; set; }
 
         public StudentPrivilege Privilege { get; set; }
+
+        public string Email { get; set; }
     }
 }

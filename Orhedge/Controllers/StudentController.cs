@@ -8,6 +8,8 @@ using ServiceLayer.DTO.Student;
 using AutoMapper;
 using Microsoft.Extensions.Localization;
 using ServiceLayer.DTO;
+using ServiceLayer.ErrorHandling;
+using Orhedge.ViewModels.Admin;
 
 namespace Orhedge.Controllers
 {
@@ -22,14 +24,19 @@ namespace Orhedge.Controllers
         public StudentController(
             IStudentManagmentService studMngService,
             IStudentService studService,
-            IMapper mapper, 
+            IMapper mapper,
             IStringLocalizer<SharedResource> localizer)
-            => (_studMngService, _mapper, _localizer, _studService) 
+            => (_studMngService, _mapper, _localizer, _studService)
             = (studMngService, mapper, localizer, studService);
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index([FromQuery] int id)
         {
-            return View();
+            ResultMessage<StudentDTO> result = await _studService.GetSingleOrDefault(stud => stud.StudentId == id);
+            if (result.IsSuccess)
+                return View(_mapper.Map<StudentViewModel>(result.Result));
+            
+            // TODO: Consider better place for redirection
+            return RedirectToAction("Index", "Home");
         }
 
         
