@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Services.Student;
 using DatabaseLayer.Enums;
+using System.Linq;
 
 namespace UnitTests.ServiceTests
 {
@@ -32,6 +33,7 @@ namespace UnitTests.ServiceTests
         private Mock<IEmailSenderService> _emailMock = new Mock<IEmailSenderService>();
         private Mock<IRegistrationService> _regMock = new Mock<IRegistrationService>();
         private Mock<IErrorHandler> _handlerMock = new Mock<IErrorHandler>();
+        private Mock<IDocumentService> _docMock = new Mock<IDocumentService>();
         private OrhedgeContext _context;
 
         [TestInitialize]
@@ -70,7 +72,11 @@ namespace UnitTests.ServiceTests
 
             // Passing null here beacause GenerateRegistrationEmail does not use StudentService
             IStudentManagmentService studMng = new StudentManagmentService(
-                _emailMock.Object, studService.Object, regMock.Object, _sharedConfigMock.Object);
+                _emailMock.Object, 
+                studService.Object, 
+                regMock.Object, 
+                _sharedConfigMock.Object, 
+                _docMock.Object);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -78,7 +84,7 @@ namespace UnitTests.ServiceTests
                 FirstName = "FirstName",
                 LastName = "LastName",
                 Index = "1111/11",
-                Privilege = DatabaseLayer.Enums.StudentPrivilege.Normal
+                Privilege = StudentPrivilege.Normal
             };
 
             await studMng.GenerateRegistrationEmail(reg);
@@ -114,7 +120,7 @@ namespace UnitTests.ServiceTests
                 (new Mock<IEmailSenderService>().Object, 
                 studServiceMock.Object,
                 _regMock.Object, 
-                _sharedConfigMock.Object);
+                _sharedConfigMock.Object, null);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -159,6 +165,17 @@ namespace UnitTests.ServiceTests
         [TestMethod]
         public async Task UpdateStudentProfile()
         {
+            byte[] mockImgData = Enumerable.Range(0, 10)
+                .Select(n => (byte)n)
+                .ToArray();
+            Mock<IUploadedFile> fileMock = new Mock<IUploadedFile>();
+            fileMock
+                .Setup(file => file.GetFileDataAsync())
+                .ReturnsAsync(mockImgData);
+
+            _docMock
+                .Setup(doc => doc.UploadDocumentToStorage(It.IsAny<string>(), mockImgData))
+                .ReturnsAsync(new ResultMessage<bool>(OperationStatus.Success));
 
             IServicesExecutor<StudentDTO, Student> executor
                 = new ServiceExecutor<StudentDTO, Student>(_context, _handlerMock.Object);
@@ -168,22 +185,24 @@ namespace UnitTests.ServiceTests
                     _emailMock.Object, 
                     studentService, 
                     _regMock.Object, 
-                    _sharedConfigMock.Object);
+                    _sharedConfigMock.Object, 
+                    _docMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync();
             string newUsername = "New username";
             string newDescription = "New description";
 
-            await studMngService.EditStudentProfile(stud.StudentId, new ProfileUpdateDTO()
+            await studMngService.EditStudentProfile(stud.StudentId, new ProfileUpdateDTO
             {
                 Username = "New username",
-                Description = "New description"
-                // TODO: Add Photo
+                Description = "New description",
+                Photo = fileMock.Object
             });
 
             stud = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == stud.StudentId);
             Assert.AreEqual(newUsername, stud.Username);
             Assert.AreEqual(newDescription, stud.Description);
+            _docMock.Verify(doc => doc.UploadDocumentToStorage(It.IsAny<string>(), mockImgData), Times.Once);
 
         }
 
@@ -205,7 +224,8 @@ namespace UnitTests.ServiceTests
                     mockEmail.Object, 
                     studentService, 
                     mockReg.Object, 
-                    _sharedConfigMock.Object);
+                    _sharedConfigMock.Object, 
+                    _docMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync(s => s.Username == "light");
             const string studOldPassword = "lightPassword";
@@ -225,5 +245,7 @@ namespace UnitTests.ServiceTests
             else
                 Assert.AreEqual(PassChangeStatus.Success, status);
         }
+
+
     }
 }

@@ -285,4 +285,7 @@
   <data name="EnterLastName" xml:space="preserve">
     <value>Unesite prezime korisnika..</value>
   </data>
+  <data name="InvalidImageFile" xml:space="preserve">
+    <value>Format slike nije jpg</value>
+  </data>
 </root>

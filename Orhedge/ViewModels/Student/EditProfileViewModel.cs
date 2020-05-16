@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Orhedge.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Orhedge.ViewModels.Student
@@ -7,10 +8,10 @@ namespace Orhedge.ViewModels.Student
     {
         [Required(ErrorMessage = "UsernameRequired")]
         public string Username { get; set; }
-        [Required(ErrorMessage = "DescriptionRequired")]
         public string Description { get; set; }
 
         // Used only when transfering data from view to controller
+        [PhotoFile("jpg","jpeg", ErrorMessage = "InvalidImageFile")]
         public IFormFile Photo { get; set; } 
     }
 }

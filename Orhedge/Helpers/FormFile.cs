@@ -15,5 +15,14 @@ namespace Orhedge.Helpers
 
         public async Task CopyToAsync(Stream target)
             => await _formFile.CopyToAsync(target);
+
+        public async Task<byte[]> GetFileDataAsync()
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                await _formFile.CopyToAsync(stream);
+                return stream.ToArray();
+            }
+        }
     }
 }

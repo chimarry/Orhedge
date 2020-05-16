@@ -21,7 +21,8 @@ namespace Orhedge.AutoMapper
                 .ForMember(dest => dest.Index, opts => opts.MapFrom(src => src.IndexNumber));
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
-            CreateMap<StudentDTO, EditProfileViewModel>();
+            CreateMap<StudentDTO, EditProfileViewModel>()
+                .ForMember(dest => dest.Photo, opts => opts.Ignore());
             CreateMap<EditProfileViewModel, ProfileUpdateDTO>()
                 .ForMember(dest => dest.Photo, opts =>
                 {

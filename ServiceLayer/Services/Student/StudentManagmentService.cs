@@ -10,6 +10,7 @@ using ServiceLayer.Models;
 using System;
 using System.Threading.Tasks;
 using ServiceLayer.DTO.Student;
+using ServiceLayer.Shared;
 
 namespace ServiceLayer.Services.Student
 {
@@ -20,6 +21,7 @@ namespace ServiceLayer.Services.Student
         private readonly IEmailSenderService _emailSender;
         private readonly IStudentService _studentService;
         private readonly IRegistrationService _registrationService;
+        private readonly IDocumentService _docService;
         private readonly Uri _baseUrl;
         private readonly string _fromEmailAddress;
         private readonly string _emailSubject;
@@ -33,10 +35,11 @@ namespace ServiceLayer.Services.Student
             IEmailSenderService emailSender,
             IStudentService studentService,
             IRegistrationService registrationService,
-            IConfiguration config)
+            IConfiguration config,
+            IDocumentService docService)
         {
-            (_emailSender, _studentService, _registrationService) =
-                (emailSender, studentService, registrationService);
+            (_emailSender, _studentService, _registrationService, _docService) =
+                (emailSender, studentService, registrationService, docService);
             (_baseUrl, _fromEmailAddress, _emailSubject) =
                 (new Uri(config["BaseUrl"]), config["RegisterEmail:From"], config["RegisterEmail:Subject"]);
             _emailLinkEndpoint = config["RegisterEmail:LinkEndpoint"];
@@ -144,12 +147,14 @@ namespace ServiceLayer.Services.Student
 
             if (profile.Photo != null)
             {
-                // TODO: Update file
-                // Save file to storage, get external reference, save external reference to Photo field
+                string path = PathBuilder.BuildPathForProfilePictures(id);
+                await _docService.UploadDocumentToStorage(path, await profile.Photo.GetFileDataAsync());
+                stud.Photo = path;
             }
 
             stud.Username = profile.Username;
-            stud.Description = profile.Description;
+            if(! string.IsNullOrEmpty(profile.Description))
+                stud.Description = profile.Description;
 
             return await _studentService.Update(stud);
         }
