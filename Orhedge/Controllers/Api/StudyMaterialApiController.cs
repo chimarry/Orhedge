@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO.Materials;
 using ServiceLayer.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers.Api
 {
@@ -32,10 +29,10 @@ namespace Orhedge.Controllers.Api
             List<CourseCategoryDTO> courses = await _studMatMng.GetCoursesByYear(year);
             List<CourseCategoryViewModel> coursesVm = _mapper.Map<List<CourseCategoryViewModel>>(courses);
 
-            return Ok(JsonConvert.SerializeObject(coursesVm, 
+            return Ok(JsonConvert.SerializeObject(coursesVm,
                 new JsonSerializerSettings
-                { 
-                    ContractResolver = new CamelCasePropertyNamesContractResolver() 
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
                 }));
         }
     }

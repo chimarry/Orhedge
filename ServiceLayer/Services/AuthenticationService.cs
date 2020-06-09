@@ -1,8 +1,6 @@
-﻿using ServiceLayer.Common;
-using ServiceLayer.DTO;
+﻿using ServiceLayer.DTO;
 using ServiceLayer.Helpers;
 using ServiceLayer.Models;
-using ServiceLayer.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -32,7 +30,7 @@ namespace ServiceLayer.Services
             string hash = Crypto.CreateHash(loginRequest.Password, salt, Constants.PASSWORD_HASH_SIZE);
 
             if (hash == student.PasswordHash)
-                return new LoginResponse { Id = student.StudentId, Privilege = student.Privilege };         
+                return new LoginResponse { Id = student.StudentId, Privilege = student.Privilege };
             else
                 return null;
         }

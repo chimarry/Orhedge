@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Buffers.Text;
-using System.Text;
 
 namespace Orhedge.ViewModels.StudyMaterial
 {

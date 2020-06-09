@@ -1,8 +1,4 @@
-﻿using DatabaseLayer;
-using DatabaseLayer.Entity;
-using ServiceLayer.AutoMapper;
-using ServiceLayer.DTO;
-using ServiceLayer.ErrorHandling;
+﻿using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Shared;
 using System;
 using System.IO;

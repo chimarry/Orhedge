@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Orhedge.ViewModels.Admin;
-using Newtonsoft.Json;
-using ServiceLayer.Services;
-using ServiceLayer.ErrorHandling;
-using Orhedge.AutoMapper;
-using ServiceLayer.DTO;
-using AutoMapper;
-using Orhedge.ViewModels;
 using Orhedge.Enums;
+using Orhedge.ViewModels;
+using Orhedge.ViewModels.Admin;
+using ServiceLayer.DTO;
+using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {

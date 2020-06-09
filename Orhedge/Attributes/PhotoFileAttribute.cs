@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Orhedge.Attributes
 {
@@ -23,7 +21,7 @@ namespace Orhedge.Attributes
             string contentType = file.ContentType.ToLowerInvariant();
             string[] mimeSplit = contentType.Split("/");
             return mimeSplit.Length == 2 &&
-                mimeSplit[0] == MIME_TYPE && 
+                mimeSplit[0] == MIME_TYPE &&
                 _subtypes.Contains(mimeSplit[1]);
         }
     }

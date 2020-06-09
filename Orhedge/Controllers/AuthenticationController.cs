@@ -1,12 +1,12 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orhedge.ViewModels;
 using ServiceLayer.Models;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using IAuthenticationService = ServiceLayer.Services.IAuthenticationService;
 
 namespace Orhedge.Controllers
@@ -71,6 +71,6 @@ namespace Orhedge.Controllers
 
             return new ClaimsPrincipal(identity);
         }
-        
+
     }
 }

@@ -8,10 +8,8 @@ using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Shared;
 using ServiceLayer.Students.Shared;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
@@ -50,14 +48,14 @@ namespace ServiceLayer.Services
 
         public async Task<List<CourseCategoryDTO>> GetCoursesByYear(int year)
         {
-            List<CourseCategoryDTO> courses =  await _context
+            List<CourseCategoryDTO> courses = await _context
                 .CourseStudyPrograms
                 .Where(csp => csp.StudyYear == year)
                 .Select(csp => new CourseCategoryDTO
-                    {
-                        Course = Mapping.Mapper.Map<CourseDTO>(csp.Course),
-                        Categories = csp.Course.Categories.Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
-                    }
+                {
+                    Course = Mapping.Mapper.Map<CourseDTO>(csp.Course),
+                    Categories = csp.Course.Categories.Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
+                }
                 ).ToListAsync();
 
 

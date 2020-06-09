@@ -1,5 +1,4 @@
-﻿using Orhedge.Helpers;
-using ServiceLayer.Students.Shared;
+﻿using ServiceLayer.Students.Shared;
 using System;
 
 namespace Orhedge.ViewModels.StudyMaterial

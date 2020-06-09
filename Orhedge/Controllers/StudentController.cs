@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Orhedge.ViewModels.Student;
-using ServiceLayer.Services;
-using Orhedge.Helpers;
-using ServiceLayer.DTO.Student;
-using AutoMapper;
 using Microsoft.Extensions.Localization;
-using ServiceLayer.DTO;
-using ServiceLayer.ErrorHandling;
+using Orhedge.Helpers;
 using Orhedge.ViewModels.Admin;
+using Orhedge.ViewModels.Student;
+using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
+using ServiceLayer.ErrorHandling;
+using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
@@ -34,22 +34,22 @@ namespace Orhedge.Controllers
             ResultMessage<StudentDTO> result = await _studService.GetSingleOrDefault(stud => stud.StudentId == id);
             if (result.IsSuccess)
                 return View(_mapper.Map<StudentViewModel>(result.Result));
-            
+
             // TODO: Consider better place for redirection
             return RedirectToAction("Index", "Home");
         }
 
-        
+
         public async Task<IActionResult> EditProfile()
         {
             int studId = this.GetUserId();
             StudentDTO profile = await _studService.GetSingleOrDefault(s => s.StudentId == studId);
             EditProfileViewModel vm = _mapper.Map<EditProfileViewModel>(profile);
-            
+
             return View(vm);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(EditProfileViewModel profile)
@@ -63,6 +63,6 @@ namespace Orhedge.Controllers
             else
                 return View(profile);
         }
-        
+
     }
 }

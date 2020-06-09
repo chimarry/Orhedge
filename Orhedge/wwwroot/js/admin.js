@@ -44,7 +44,9 @@ function deleteUser() {
     })
 }
 
-function searchSortFilter(numberOfElements) {
+function searchSortFilter(paramsArray) {
+    var numberOfElements = paramsArray.itemCount;
+    var pageNumber = paramsArray.pageNumber;
     var searchFor = document.getElementById("search").value;
     var selectBox = document.getElementById("sort");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
@@ -59,7 +61,7 @@ function searchSortFilter(numberOfElements) {
         if (document.getElementById(i + "filter").checked)
             url = url.concat("&privileges=", document.getElementById(i + "filter").value);
     url = url.replace("=&privileges", "");
-    url = url + "&searchFor=" + searchFor + " &sortCriteria=" + selectedValue;
+    url = url + "&searchFor=" + searchFor + " &sortCriteria=" + selectedValue + " &pageNumber=" + pageNumber;
     window.location.href = url;
 }
 

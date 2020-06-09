@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Orhedge.ViewModels.Admin
+﻿namespace Orhedge.ViewModels.Admin
 {
     public class DeleteStudentViewModel
     {

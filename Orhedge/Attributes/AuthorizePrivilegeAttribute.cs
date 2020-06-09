@@ -1,7 +1,6 @@
 ﻿using DatabaseLayer.Enums;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
-using System.Text;
 
 namespace Orhedge.Attributes
 {

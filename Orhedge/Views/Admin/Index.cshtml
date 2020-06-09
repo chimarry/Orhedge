@@ -11,7 +11,7 @@
 
 @section Stylesheet
 {
-    <link rel="stylesheet" href="~/css/admin.css">   
+    <link rel="stylesheet" href="~/css/admin.css">
 }
 
 @section Scripts
@@ -26,11 +26,11 @@
 <section id="nav-admin">
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" tabindex="0" 
+            <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" tabindex="0"
                aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1" 
+            <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1"
                aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
         </li>
     </ul>
@@ -38,8 +38,11 @@
 
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+        @{
+            string format = "{{itemCount:{0},pageNumber:{1}}}";
+            string paramsSearchSortFilter = string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageNumber);
+        }
         <div class="row">
-
             <div class="col-xl-8">
                 <div class="table-responsive  listaKorisnika">
                     <table class="table">
@@ -50,10 +53,10 @@
                                 <th>OCJENA</th>
                                 <th>
                                     <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
-                                    <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                                    <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
                                 </th>
                                 <th>
-                                    <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">
+                                    <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@paramsSearchSortFilter)">
                                         @switch (ViewBag.SortingCriteria)
                                         {
                                             case @StudentSortingCriteria.NoSorting:
@@ -143,19 +146,34 @@
                                 </tr>
                             }
                         </tbody>
+                        <!--Paging-->
                         <tfoot>
                             <tr>
+                                @if (!Model.IsFirst())
+                                {
+                                    <td>
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetFirstPageNumber()))">
+                                            <i class="fa fa-angle-double-left prev-next"></i>
+                                        </a>
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetPreviousPageNumber()))">
+                                            <i class="fa fa-angle-left prev-next"></i>
+                                        </a>
+                                    </td>
+                                }
                                 <td>
-                                    <a href="#nav-users"><i class="fa fa-angle-double-left prev-next"></i></a>
-                                    <a href="#nav-users"><i class="fa fa-angle-left prev-next"></i></a>
+                                    <div id="pageFooter">Stranica @(Model.PageNumber + 1) od @(Model.GetLastPageNumber()+1)</div>
                                 </td>
-                                <td>
-                                    <div id="pageFooter">Stranica 1 od 5</div>
-                                </td>
-                                <td>
-                                    <a href="#nav-users"><i class="fa fa-angle-right prev-next"></i></a>
-                                    <a href="#nav-users"><i class="fa fa-angle-double-right prev-next"></i></a>
-                                </td>
+                                @if (!Model.IsLast())
+                                {
+                                    <td>
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetNextPageNumber()))">
+                                            <i class="fa fa-angle-right prev-next"></i>
+                                        </a>
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetLastPageNumber()))">
+                                            <i class="fa fa-angle-double-right prev-next"></i>
+                                        </a>
+                                    </td>
+                                }
                                 <td>
                                 </td>
                                 <td>
@@ -163,6 +181,7 @@
                             </tr>
                         </tfoot>
                     </table>
+
                 </div>
             </div>
 
@@ -184,7 +203,7 @@
                             </div>
                         }
                         <br><br>
-                        <button type="submit" onclick="searchSortFilter(@Enum.GetValues(typeof(StudentPrivilege)).Length)">Osvježi</button>
+                        <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)">Osvježi</button>
                     </div>
                     <hr>
                 </div>
@@ -231,27 +250,33 @@
             <span onclick="document.getElementById('modalEditId').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
         <div class="container">
-            <input type="number" hidden="hidden" id="studentId" name="studentId" />
-            <label for="name"><b>@Localizer["Name"]</b></label>
-            <input type="text" id="nameId" name="name" required>
+            <div class="row">
+                <input type="number" hidden="hidden" id="studentId" name="studentId" />
+                <label for="name" class="col-6"><b>@Localizer["Name"]</b></label>
+                <input type="text" class="col-6" id="nameId" name="name" required>
+            </div>
+            <div class="row">
+                <label for="lastname" class="col-6"><b>@Localizer["LastName"]</b></label>
+                <input type="text" class="col-6" id="lastNameId" name="lastName" required>
+            </div>
+            <div class="row">
+                <label for="indexNumber" class="col-6"><b>@Localizer["Index"]</b></label>
+                <input type="text" class="col-6" id="indexNumberId" name="indexNumber" required>
+            </div>
+            <div class="row">
+                <b class="col-6">@Localizer["Privileges"]</b>
+                <select class="form-control form-control-sm col-6" name="privilege">
 
-            <label for="lastname"><b>@Localizer["LastName"]</b></label>
-            <input type="text" id="lastNameId" name="lastName" required>
-
-            <label for="indexNumber"><b>@Localizer["Index"]</b></label>
-            <input type="text" id="indexNumberId" name="indexNumber" required>
-
-            <b>@Localizer["Privileges"]</b>
-            <select class="form-control form-control-sm" name="privilege">
-
-                @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
-                {
-                    <option id=@privilege value="@privilege">@Localizer[privilege]</option>
-                }
-            </select>
-            <br>
-            <button type="submit" onclick="editUser()">@Localizer["Save"]</button>
-            <button type="button" onclick="document.getElementById('modalEditId').style.display='none'" class="cancelbtn">@Localizer["Cancel"]</button>
+                    @foreach (string privilege in Enum.GetNames(typeof(StudentPrivilege)))
+                    {
+                        <option id=@privilege value="@privilege">@Localizer[privilege]</option>
+                    }
+                </select>
+            </div>
+            <div class="row">
+                <button type="submit" class="col-6" onclick="editUser()">@Localizer["Save"]</button>
+                <button type="button" class="cancelbtn col-6" onclick="document.getElementById('modalEditId').style.display='none'">@Localizer["Cancel"]</button>
+            </div>
         </div>
     </form>
 </div>

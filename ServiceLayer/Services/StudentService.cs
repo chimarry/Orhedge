@@ -1,11 +1,7 @@
-﻿using DatabaseLayer.Entity;
-using ServiceLayer.AutoMapper;
-using ServiceLayer.DTO;
+﻿using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
-using ServiceLayer.Services;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services

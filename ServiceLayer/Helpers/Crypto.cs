@@ -39,6 +39,6 @@ namespace ServiceLayer.Helpers
         /// <returns>Password hash</returns>
         public static string CreateHash(string password, byte[] salt, int hashSize)
             => Convert.ToBase64String(DeriveKey(password, salt, hashSize));
-        
+
     }
 }

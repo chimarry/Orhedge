@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -8,6 +7,7 @@ using Orhedge.Helpers;
 using Orhedge.ViewModels.Student;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Services;
+using System.Threading.Tasks;
 
 namespace Orhedge.Controllers.Api
 {

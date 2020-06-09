@@ -44,7 +44,7 @@ namespace ServiceLayer.Helpers
         /// <summary>
         /// Saves changes to changed entity (flag Deleted is marked);
         /// </summary>
-        public async Task<ResultMessage<bool>> Delete(Predicate<TEntity> filter, Func<TEntity,TEntity> applyDelete)
+        public async Task<ResultMessage<bool>> Delete(Predicate<TEntity> filter, Func<TEntity, TEntity> applyDelete)
         {
             try
             {

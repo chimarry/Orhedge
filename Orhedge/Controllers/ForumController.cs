@@ -47,7 +47,7 @@ namespace Orhedge.Controllers
 
         public async Task<IActionResult> PostDiscussion(PostDiscussionViewModel discussion)
         {
-            //TODO: Get StudentId from cookie
+            // TODO: Get StudentId from cookie
             int studentId = 1;
 
             if (!ModelState.IsValid)
@@ -58,11 +58,11 @@ namespace Orhedge.Controllers
             ResultMessage<DiscussionDTO> addedDiscussion = await _forumService.AddDiscussion(discussion.ForumCategoryId, studentId, discussion.Title, discussion.Content);
             if (addedDiscussion.IsSuccess)
             {
-                //Display page: posted discussion or index forum page
+                // Display page: posted discussion or index forum page
                 return RedirectToAction("Index");
             }
             else
-                //TODO: Show massage to user that posting was not success
+                // TODO: Show massage to user that posting was not success
                 return Content("Not successful");
         }
 
@@ -73,7 +73,7 @@ namespace Orhedge.Controllers
 
         public async Task<IActionResult> PostQuestion(PostQuestionViewModel question)
         {
-            //TODO: Get StudentId from cookie
+            // TODO: Get StudentId from cookie
             int studentId = 1;
 
             if (!ModelState.IsValid)

@@ -2,9 +2,7 @@
 using ServiceLayer.DTO.Materials;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Students.Shared;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services

@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
-using ServiceLayer.Common.Interfaces;
+﻿using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using ServiceLayer.Common.Interfaces;
+using ServiceLayer.ErrorHandling.Exceptions;
 using ServiceLayer.Models;
 using System;
-using ServiceLayer.ErrorHandling;
-using Microsoft.Extensions.Configuration;
 using System.Net;
-using ServiceLayer.ErrorHandling.Exceptions;
+using System.Threading.Tasks;
 
 namespace ServiceLayer.Common.Services
 {

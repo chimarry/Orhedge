@@ -288,4 +288,7 @@
   <data name="InvalidImageFile" xml:space="preserve">
     <value>Format slike nije jpg</value>
   </data>
+  <data name="NoResults" xml:space="preserve">
+    <value>Nema rezultata</value>
+  </data>
 </root>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DatabaseLayer.Entity
+﻿namespace DatabaseLayer.Entity
 {
     public class AnswerRating
     {

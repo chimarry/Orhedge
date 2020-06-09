@@ -1,22 +1,22 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DatabaseLayer;
+using DatabaseLayer.Entity;
+using DatabaseLayer.Enums;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.Services;
+using ServiceLayer.Helpers;
 using ServiceLayer.Models;
+using ServiceLayer.Services;
+using ServiceLayer.Services.Student;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnitTests.Common;
-using ServiceLayer.Helpers;
-using DatabaseLayer.Entity;
-using DatabaseLayer;
-using Microsoft.EntityFrameworkCore;
-using ServiceLayer.DTO.Student;
-using ServiceLayer.Services.Student;
-using DatabaseLayer.Enums;
-using System.Linq;
 
 namespace UnitTests.ServiceTests
 {
@@ -72,10 +72,10 @@ namespace UnitTests.ServiceTests
 
             // Passing null here beacause GenerateRegistrationEmail does not use StudentService
             IStudentManagmentService studMng = new StudentManagmentService(
-                _emailMock.Object, 
-                studService.Object, 
-                regMock.Object, 
-                _sharedConfigMock.Object, 
+                _emailMock.Object,
+                studService.Object,
+                regMock.Object,
+                _sharedConfigMock.Object,
                 _docMock.Object);
 
             RegisterFormDTO reg = new RegisterFormDTO
@@ -117,9 +117,9 @@ namespace UnitTests.ServiceTests
                 .ReturnsAsync(new ResultMessage<StudentDTO>());
 
             IStudentManagmentService studMng = new StudentManagmentService
-                (new Mock<IEmailSenderService>().Object, 
+                (new Mock<IEmailSenderService>().Object,
                 studServiceMock.Object,
-                _regMock.Object, 
+                _regMock.Object,
                 _sharedConfigMock.Object, null);
 
             RegisterFormDTO reg = new RegisterFormDTO
@@ -182,10 +182,10 @@ namespace UnitTests.ServiceTests
             IStudentService studentService = new StudentService(executor);
             IStudentManagmentService studMngService
                 = new StudentManagmentService(
-                    _emailMock.Object, 
-                    studentService, 
-                    _regMock.Object, 
-                    _sharedConfigMock.Object, 
+                    _emailMock.Object,
+                    studentService,
+                    _regMock.Object,
+                    _sharedConfigMock.Object,
                     _docMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync();
@@ -221,10 +221,10 @@ namespace UnitTests.ServiceTests
             IStudentService studentService = new StudentService(executor);
             IStudentManagmentService studMngService
                 = new StudentManagmentService(
-                    mockEmail.Object, 
-                    studentService, 
-                    mockReg.Object, 
-                    _sharedConfigMock.Object, 
+                    mockEmail.Object,
+                    studentService,
+                    mockReg.Object,
+                    _sharedConfigMock.Object,
                     _docMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync(s => s.Username == "light");
@@ -232,11 +232,11 @@ namespace UnitTests.ServiceTests
 
             PassChangeStatus status = await studMngService.UpdateStudentPassword(
                 stud.StudentId, new UpdatePasswordDTO
-            {
-                OldPassword = oldPassword,
-                NewPassword = newPassword,
-                ConfirmPassword = confirmPassword
-            });
+                {
+                    OldPassword = oldPassword,
+                    NewPassword = newPassword,
+                    ConfirmPassword = confirmPassword
+                });
 
             if (studOldPassword != oldPassword)
                 Assert.AreEqual(PassChangeStatus.InvalidOldPass, status);

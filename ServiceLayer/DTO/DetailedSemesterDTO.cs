@@ -1,9 +1,7 @@
 ﻿using DatabaseLayer.Enums;
 using ServiceLayer.DTO;
-using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ServiceLayer.DTO
 {

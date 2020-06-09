@@ -3,14 +3,13 @@ using Microsoft.Extensions.Configuration;
 using ServiceLayer.AutoMapper;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.ErrorHandling.Exceptions;
 using ServiceLayer.Helpers;
 using ServiceLayer.Models;
+using ServiceLayer.Shared;
 using System;
 using System.Threading.Tasks;
-using ServiceLayer.DTO.Student;
-using ServiceLayer.Shared;
 
 namespace ServiceLayer.Services.Student
 {
@@ -153,7 +152,7 @@ namespace ServiceLayer.Services.Student
             }
 
             stud.Username = profile.Username;
-            if(! string.IsNullOrEmpty(profile.Description))
+            if (!string.IsNullOrEmpty(profile.Description))
                 stud.Description = profile.Description;
 
             return await _studentService.Update(stud);

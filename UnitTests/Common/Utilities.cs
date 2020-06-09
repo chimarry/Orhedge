@@ -1,11 +1,7 @@
 ﻿using DatabaseLayer;
-using DatabaseLayer.Entity;
 using Microsoft.EntityFrameworkCore;
-using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace UnitTests.Common
 {

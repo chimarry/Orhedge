@@ -1,8 +1,6 @@
 ﻿using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.ErrorHandling;
-using ServiceLayer.ErrorHandling.Exceptions;
-using ServiceLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

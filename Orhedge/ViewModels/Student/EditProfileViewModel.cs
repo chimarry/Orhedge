@@ -11,7 +11,7 @@ namespace Orhedge.ViewModels.Student
         public string Description { get; set; }
 
         // Used only when transfering data from view to controller
-        [PhotoFile("jpg","jpeg", ErrorMessage = "InvalidImageFile")]
-        public IFormFile Photo { get; set; } 
+        [PhotoFile("jpg", "jpeg", ErrorMessage = "InvalidImageFile")]
+        public IFormFile Photo { get; set; }
     }
 }
