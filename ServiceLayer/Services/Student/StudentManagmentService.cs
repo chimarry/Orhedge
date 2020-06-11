@@ -23,9 +23,8 @@ namespace ServiceLayer.Services.Student
         private readonly IDocumentService _docService;
         private readonly Uri _baseUrl;
         private readonly string _fromEmailAddress;
-        private readonly string _emailSubject;
         private readonly string _emailLinkEndpoint;
-
+        private readonly string _regEmailTemplateId;
         // TODO: Replace this with text/html once we design looks of registration email
         private const string CONTENT_TYPE = "text/plain";
         private const int REGISTRATION_CODE_SIZE = 16; // In bytes
@@ -39,9 +38,10 @@ namespace ServiceLayer.Services.Student
         {
             (_emailSender, _studentService, _registrationService, _docService) =
                 (emailSender, studentService, registrationService, docService);
-            (_baseUrl, _fromEmailAddress, _emailSubject) =
-                (new Uri(config["BaseUrl"]), config["RegisterEmail:From"], config["RegisterEmail:Subject"]);
+            (_baseUrl, _fromEmailAddress) =
+                (new Uri(config["BaseUrl"]), config["RegisterEmail:From"]);
             _emailLinkEndpoint = config["RegisterEmail:LinkEndpoint"];
+            _regEmailTemplateId = config["RegisterEmail:TemplateId"];
         }
 
         public async Task<ResultMessage<bool>> GenerateRegistrationEmail(RegisterFormDTO registerFormDTO)
@@ -55,14 +55,19 @@ namespace ServiceLayer.Services.Student
             if (!registrationProcessResult.IsSuccess)
                 return new ResultMessage<bool>(registrationProcessResult.Status, registrationProcessResult.Message);
 
-            await _emailSender.SendEmailAsync(
-                new SendEmailData
+            await _emailSender.SendTemplateEmailAsync(
+                new TemplateEmail
                 {
                     From = _fromEmailAddress,
                     To = registerFormDTO.Email,
-                    ContentType = CONTENT_TYPE,
-                    Message = GenerateRegistrationLink(regDTO.RegistrationCode),
-                    Subject = _emailSubject
+                    TemplateId = _regEmailTemplateId,
+                    TemplateData = new 
+                    { 
+                        reg_link = GenerateRegistrationLink(regDTO.RegistrationCode),
+                        first_name = registerFormDTO.FirstName,
+                        last_name = registerFormDTO.LastName,
+                        index_number = registerFormDTO.Index
+                    },
                 });
             return new ResultMessage<bool>(true);
         }

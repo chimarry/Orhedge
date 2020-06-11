@@ -17,17 +17,17 @@ namespace ServiceLayer.Common.Services
         public EmailSenderService(IConfiguration config)
             => _client = new SendGridClient(config["SendGridApiKey"]);
 
-        public async Task SendEmailAsync(SendEmailData sendEmailData)
+        public async Task SendTemplateEmailAsync(TemplateEmail sendEmailData)
         {
             EmailAddress fromAddress = new EmailAddress(sendEmailData.From);
             EmailAddress toAddress = new EmailAddress(sendEmailData.To);
             SendGridMessage msg = new SendGridMessage
             {
                 From = fromAddress,
-                Subject = sendEmailData.Subject
+                TemplateId = sendEmailData.TemplateId
             };
             msg.AddTo(toAddress);
-            msg.AddContent(sendEmailData.ContentType, sendEmailData.Message);
+            msg.SetTemplateData(sendEmailData.TemplateData);
             try
             {
                 Response response = await _client.SendEmailAsync(msg);

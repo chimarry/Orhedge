@@ -27,7 +27,6 @@ namespace UnitTests.ServiceTests
         private const string EMAIL_TO = "test@test.com";
         private const string EMAIL_FROM = "noreply@orhedge.com";
         private const string EMAIL_LINK_BASE_URL = "https://test.com";
-        private const string EMAIL_SUBJECT = "Registration email";
         private const string EMAIL_LINK_ENDPOINT = "Register/ShowRegisterForm";
         private Mock<IConfiguration> _sharedConfigMock = new Mock<IConfiguration>();
         private Mock<IEmailSenderService> _emailMock = new Mock<IEmailSenderService>();
@@ -43,8 +42,6 @@ namespace UnitTests.ServiceTests
             _sharedConfigMock.SetupGet(config => config["BaseUrl"]).Returns(EMAIL_LINK_BASE_URL);
             _sharedConfigMock.SetupGet(config => config["RegisterEmail:From"])
                 .Returns(EMAIL_FROM);
-            _sharedConfigMock.SetupGet(config => config["RegisterEmail:Subject"])
-                .Returns(EMAIL_SUBJECT);
             _sharedConfigMock.SetupGet(config => config["RegisterEmail:LinkEndpoint"])
                 .Returns(EMAIL_LINK_ENDPOINT);
             _context = Utilities.CreateNewContext();
@@ -61,7 +58,7 @@ namespace UnitTests.ServiceTests
         public async Task GenerateRegistrationEmail()
         {
 
-            _emailMock.Setup(emailService => emailService.SendEmailAsync(It.IsAny<SendEmailData>()))
+            _emailMock.Setup(emailService => emailService.SendTemplateEmailAsync(It.IsAny<TemplateEmail>()))
                 .Returns(Task.CompletedTask);
 
             var regMock = new Mock<IRegistrationService>();
@@ -89,9 +86,9 @@ namespace UnitTests.ServiceTests
 
             await studMng.GenerateRegistrationEmail(reg);
 
-            _emailMock.Verify(emailService => emailService.SendEmailAsync
+            _emailMock.Verify(emailService => emailService.SendTemplateEmailAsync
             (
-                It.Is<SendEmailData>(emailData => emailData.To == EMAIL_TO && emailData.Subject == EMAIL_SUBJECT)
+                It.Is<TemplateEmail>(emailData => emailData.To == EMAIL_TO)
             ), Times.Once);
 
             regMock.Verify(regService => regService.Add(

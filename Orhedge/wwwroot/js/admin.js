@@ -111,7 +111,7 @@ let regFormValidator = $("#regForm").validate(
                     }
                 },
                 success: () => {
-                    alert(`Email sent to ${data.email}`);
+                    alert(`Email uspješno poslan na ${data.email}`);
                     $("#regForm").trigger('reset');
                     $("#sendEmailBttn").prop("disabled", false);
                 },
