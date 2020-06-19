@@ -1,6 +1,6 @@
 body {
     margin-top: 45px;
-    background-image: url("images/library-books.jpg");
+    background-image: url("../images/library-books.jpg");
     /* background-image: url("images/backgorundImg.jpg"); */
     /* background-image: url("images/739385-download-smartphone-wallpapers-1080x1920.jpg"); */
     /* background-image: url("images/library1.jpeg"); */
@@ -18,14 +18,14 @@ form{
 }
 .blur {
     margin-top: 30px;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(116, 117, 50, 0.3);
     border-radius: 15px;
     padding: 35px;
 }
 
 .header{
-    /* color: rgba(116, 117, 50, 0.787); */
-    color: rgb(255, 255, 255); 
+     color: rgba(116, 117, 50, 0.787); 
+    /*color: rgb(255, 255, 255);*/ 
     margin: 0;
     width: 100%;
     /* padding-top: 30px; */
