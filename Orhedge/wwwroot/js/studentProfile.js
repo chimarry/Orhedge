@@ -80,3 +80,13 @@ $("#passform #cancel").click(e => {
     validator.resetForm();
     //TODO: Close modal here
 });
+
+
+
+$("#btnShowModal").click(function() {
+    $("#passModal").modal('show');
+});  
+
+$("#cancel").click(function () {
+    $("#passModal").modal('hide');
+}); 

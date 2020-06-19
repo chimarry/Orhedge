@@ -217,7 +217,7 @@
     <value>Ovde ide prevod za remember me</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Snimi</value>
+    <value>Sačuvaj</value>
   </data>
   <data name="SeniorAdmin" xml:space="preserve">
     <value>Viši administrator</value>
@@ -290,5 +290,11 @@
   </data>
   <data name="NoResults" xml:space="preserve">
     <value>Nema rezultata</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Izmijeni lozinku</value>
+  </data>
+  <data name="ChangeUserProfile" xml:space="preserve">
+    <value>Izmjena profila</value>
   </data>
 </root>

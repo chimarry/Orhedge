@@ -2,3 +2,31 @@
 {
     color: red;
 }
+
+#form-ui {
+    background-color: #336666;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+    #form-ui label, h2 {
+        color: aliceblue;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+.profile-userpic img{
+    border-radius: 40px;
+    align-content:center;
+    margin-left: 10px;
+}
+
+#passform {
+    background-color: #083839;
+    padding: 30px;
+}
+
+#passform, h4 {
+    color: aliceblue;
+}

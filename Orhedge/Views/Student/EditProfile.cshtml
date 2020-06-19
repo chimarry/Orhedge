@@ -5,32 +5,79 @@
     Layout = "_Layout";
 }
 
-<form asp-action="EditProfile" enctype="multipart/form-data">
-    <label asp-for="Username">@Localizer["Username"]</label>
-    <input asp-for="Username" value="@Model.Username" />
-    <span asp-validation-for="Username"></span>
-    <label asp-for="Description">Description</label>
-    <input asp-for="Description" value="@Model.Description" />
-    <span asp-validation-for="Username"></span>
-    <label asp-for="Photo">@Localizer["ProfilePicture"]</label>
-    <input asp-for="Photo" />
-    <input type="submit" value="@Localizer["Save"]" />
-</form>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-6">
+                <div id="form-ui">
+                    <h2 class="text-center">@Localizer["ChangeUserProfile"]:</h2>
+                    <form asp-action="EditProfile" enctype="multipart/form-data">
+                        <div class="profile-userpic">
+                            <label asp-for="Photo">@Localizer["ProfilePicture"]</label><br>
+                            <a href="https://placeholder.com"><img src="https://via.placeholder.com/150"></a><br><br>
+                            <input asp-for="Photo" /><br><br>
+                        </div>
+                        <label asp-for="Username">@Localizer["Username"]</label>
+                        <input class="form-control" asp-for="Username" value="@Model.Username" /><br>
+                        <span asp-validation-for="Username"></span>
+                        <div class="form-group">
+                            <label asp-for="Description">@Localizer["Description"]</label>
+                            <textarea class="form-control" rows="5" asp-for="Description" value="@Model.Description"></textarea>
+                            @*<input class="form-control" asp-for="Description" value="@Model.Description" />*@
+                            <br>
+                        </div>
+                        <span asp-validation-for="Username"></span>
+                        <input class="btn btn-primary btn-block btn-lg" type="submit" value="@Localizer["Save"]" />
+                    </form>
+                    <br><hr><br>
+
+                    <button id="btnShowModal" type="button" class="btn btn-primary btn-block btn-lg">@Localizer["ChangePassword"]</button>
+                    <br>
+
+                    <div class="modal fade" tabindex="-1" id="passModal" data-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                    <form id="passform">
+                                        <h4 class="modal-title">@Localizer["ChangePassword"]</h4> <br>
+                                        <div class="form-group">
+                                            <input id="oldpass" name="oldpass" type="password" placeholder="@Localizer["OldPassword"]" class="form-control" required /><br>
+                                            <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="newpass" name="newpass" type="password" placeholder="@Localizer["NewPassword"]" class="form-control" required /><br>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="confirmpass" name="confirmpass" type="password" placeholder="@Localizer["ConfirmPassword"]" class="form-control" required /><br>
+                                        </div>
+
+                                    <button type="reset" id="cancel" class="btn btn-primary button button4" formnovalidate>@Localizer["Cancel"]</button>
+                                    <button type="button" id="save" class="btn btn-primary button button4">@Localizer["Save"]</button>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
 
 
-<!-- TODO: This should be modal-->
-<form id="passform">
-    <label for="oldpass">@Localizer["OldPassword"]</label>
-    <input id="oldpass" name="oldpass" type="password" required />
-    <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
-    <label for="newpass">@Localizer["NewPassword"]</label>
-    <input id="newpass" name="newpass" type="password" required />
-    <label for="confirmpass">@Localizer["ConfirmPassword"]</label>
-    <input id="confirmpass" name="confirmpass" type="password" required />
 
-    <button type="reset" id="cancel" formnovalidate>Cancel</button>
-    <button id="save">@Localizer["Save"]</button>
-</form>
+                            @*<form id="passform">
+                    <label for="oldpass">@Localizer["OldPassword"]</label>
+                    <input id="oldpass" name="oldpass" type="password" required /><br>
+                    <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
+                    <label for="newpass">@Localizer["NewPassword"]</label>
+                    <input id="newpass" name="newpass" type="password" required /><br>
+                    <label for="confirmpass">@Localizer["ConfirmPassword"]</label>
+                    <input id="confirmpass" name="confirmpass" type="password" required /><br>
+
+                    <button type="reset" id="cancel" formnovalidate>Cancel</button>
+                    <button id="save">@Localizer["Save"]</button>
+                </form>*@
+
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div><br>
 
 @section Scripts
 {
