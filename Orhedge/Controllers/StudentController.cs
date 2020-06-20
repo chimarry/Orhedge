@@ -40,7 +40,7 @@ namespace Orhedge.Controllers
         }
 
 
-        public async Task<IActionResult> EditProfile()
+        public async Task<IActionResult> Edit()
         {
             int studId = this.GetUserId();
             StudentDTO profile = await _studService.GetSingleOrDefault(s => s.StudentId == studId);
@@ -52,7 +52,7 @@ namespace Orhedge.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProfile(EditProfileViewModel profile)
+        public async Task<IActionResult> Edit(EditProfileViewModel profile)
         {
             if (ModelState.IsValid)
             {
