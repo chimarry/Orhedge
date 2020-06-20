@@ -22,13 +22,12 @@ namespace Orhedge.Controllers
 
             if (codeValid)
             {
-                // TODO: Display registration form, pass given code to form
-                return Content("Display registration form here");
+                ViewBag.RegistrationCode = code;
+                return View();
             }
             else
-            {
                 return RedirectToAction("Index", "Home");
-            }
+            
         }
 
         [HttpPost]
@@ -50,8 +49,7 @@ namespace Orhedge.Controllers
                 return Content("Registration succesfull");
             }
             else
-                // TODO: Display error page with invalid fields
-                return Content("Display error page with fields");
+                return RedirectToAction("Index", "Home");
         }
 
     }

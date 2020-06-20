@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Orhedge.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-
         [Required]
         public string Username { get; set; }
 
@@ -22,10 +18,7 @@ namespace Orhedge.ViewModels
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [RegularExpression(@"\d+\/\d{2}")]
-        public string Index { get; set; }
-
-        [Required]
+        [HiddenInput]
         public string RegistrationCode { get; set; } // This should be in hidden input field
 
     }

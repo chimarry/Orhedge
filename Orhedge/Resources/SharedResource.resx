@@ -330,4 +330,10 @@
   <data name="ChangeUserProfile" xml:space="preserve">
     <value>Izmjena profila</value>
   </data>
+  <data name="CreateAccount" xml:space="preserve">
+    <value>Kreiraj nalog</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>Registracija</value>
+  </data>
 </root>
