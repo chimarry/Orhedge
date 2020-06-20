@@ -11,7 +11,6 @@ namespace Orhedge.Controllers
 {
 
     // TODO: Add authorization attributes
-
     [Route("api/AdminApi")]
     [ApiController]
     public class AdminApiController : ControllerBase

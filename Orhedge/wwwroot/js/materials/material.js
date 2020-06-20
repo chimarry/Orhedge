@@ -52,16 +52,14 @@ $("#year-input").change(ev => {
 
 for (let year = 0; year < 4; ++year) {
     $.ajax({
-        url: `/api/studymaterialapi/courses/${year + 1}`,
+        url: `/api/StudyMaterialApi/courses/${year + 1}`,
         method: "GET",
         success: response => {
             coursesByYear[year] = response.map(course => { course.value = course.name; return course });
-
             if (coursesByYear[0] && coursesByYear[1] && coursesByYear[2] && coursesByYear[3]) {
                 $(".spinner-wrapper").hide();
                 console.log("Spinner hidden");
             }
-
         },
         dataType: "json"
     });

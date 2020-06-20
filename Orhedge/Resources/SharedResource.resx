@@ -291,6 +291,39 @@
   <data name="NoResults" xml:space="preserve">
     <value>Nema rezultata</value>
   </data>
+  <data name="Materials" xml:space="preserve">
+    <value>Materijali</value>
+  </data>
+  <data name="NameObject" xml:space="preserve">
+    <value>Naziv</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Ocjena</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Kategorija</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="UploadDate" xml:space="preserve">
+    <value>Datum postavljanja</value>
+  </data>
+  <data name="FilterBy" xml:space="preserve">
+    <value>Filtriraj po...</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Pretraži...</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Sortiraj</value>
+  </data>
+  <data name="UploadDateAsc" xml:space="preserve">
+    <value>Po datumu rastuće</value>
+  </data>
+  <data name="UploadDateDesc" xml:space="preserve">
+    <value>Po datumu opadajuće</value>
+  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Izmijeni lozinku</value>
   </data>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
+using System;
 
 namespace ServiceLayer.AutoMapper
 {
@@ -13,7 +14,21 @@ namespace ServiceLayer.AutoMapper
             CreateMap<Student, StudentDTO>();
             CreateMap<Course, CourseDTO>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
-            CreateMap<StudyMaterial, StudyMaterialDTO>().ReverseMap();
+            CreateMap<StudyMaterialDTO, StudyMaterial>()
+                .ForMember(dest => dest.UploadDate, conf =>
+                {
+                    conf.PreCondition(src => src.UploadDate != default);
+                    conf.MapFrom(src => src.UploadDate);
+                })
+                .ForMember(dest => dest.StudentId, conf =>
+                  {
+                      conf.PreCondition(src => src.StudentId != default);
+                      conf.MapFrom(src => src.UploadDate);
+                  })
+                .ForMember(dest => dest.TotalRating, conf => conf.Ignore())
+                .ForAllOtherMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); ;
+            CreateMap<StudyMaterial, StudyMaterial>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<StudyMaterial, StudyMaterialDTO>();
             CreateMap<StudyMaterialRating, StudyMaterialRatingDTO>().ReverseMap();
             CreateMap<Registration, RegistrationDTO>().ReverseMap();
             CreateMap<Answer, AnswerDTO>().ReverseMap();

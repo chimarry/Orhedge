@@ -40,7 +40,7 @@
     <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
         @{
             string format = "{{itemCount:{0},pageNumber:{1}}}";
-            string paramsSearchSortFilter = string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageNumber);
+            string paramsSearchSortFilter = string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.PageNumber);
         }
         <div class="row">
             <div class="col-xl-8">
@@ -149,27 +149,27 @@
                         <!--Paging-->
                         <tfoot>
                             <tr>
-                                @if (!Model.IsFirst())
+                                @if (!Model.PageInformation.IsFirst)
                                 {
                                     <td>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetFirstPageNumber()))">
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.FirstPageNumber))">
                                             <i class="fa fa-angle-double-left prev-next"></i>
                                         </a>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetPreviousPageNumber()))">
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.PreviousPageNumber))">
                                             <i class="fa fa-angle-left prev-next"></i>
                                         </a>
                                     </td>
                                 }
                                 <td>
-                                    <div id="pageFooter">Stranica @(Model.PageNumber + 1) od @(Model.GetLastPageNumber()+1)</div>
+                                    <div id="pageFooter">Stranica @(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)</div>
                                 </td>
-                                @if (!Model.IsLast())
+                                @if (!Model.PageInformation.IsLast)
                                 {
                                     <td>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetNextPageNumber()))">
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.NextPageNumber))">
                                             <i class="fa fa-angle-right prev-next"></i>
                                         </a>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.GetLastPageNumber()))">
+                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.LastPageNumber))">
                                             <i class="fa fa-angle-double-right prev-next"></i>
                                         </a>
                                     </td>

@@ -24,6 +24,6 @@ namespace ServiceLayer.Services
 
 
         public async Task<ResultMessage<CategoryDTO>> Update(CategoryDTO categoryDTO)
-            => await _servicesExecutor.Update(categoryDTO, x => x.CategoryId == categoryDTO.CategoryId && x.Deleted == false);
+            => await _servicesExecutor.Update(categoryDTO, x => x.CategoryId == categoryDTO.CategoryId && !x.Deleted);
     }
 }

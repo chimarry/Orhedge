@@ -2,25 +2,48 @@
 {
     public enum StudentSortingCriteria
     {
-        NoSorting, RatingAsc, RatingDesc, NameAsc, NameDesc, PrivilegeAsc, PrivilegeDesc
+        NoSorting,
+        RatingAsc,
+        RatingDesc,
+        NameAsc,
+        NameDesc,
+        PrivilegeAsc,
+        PrivilegeDesc
     }
 
     public enum StudyProgramRang
     {
         CommonYear,
-
         ComputerEngineeringAndInformatics,
-
         ElectronicsAndTelecommunications,
-
         PowerEngineeringAndIndustrialSystems
     }
 
     public enum Semester
     {
-        First, Second, Third, Forth, Fifth, Sixth, Seventh, Eighth,
+        First,
+        Second,
+        Third,
+        Forth,
+        Fifth,
+        Sixth,
+        Seventh,
+        Eighth,
         Unknown
     }
 
-    public enum SendConfirmEmailStatus { Success, AlreadyExists };
+    public enum SendConfirmEmailStatus
+    {
+        Success,
+        AlreadyExists
+    };
+
+    public enum StudyMaterialSortingCriteria
+    {
+        NoSorting,
+        RatingAsc,
+        RatingDesc,
+        UploadDateAsc,
+        UploadDateDesc
+    }
 }

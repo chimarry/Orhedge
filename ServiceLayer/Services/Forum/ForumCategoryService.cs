@@ -15,7 +15,7 @@ namespace ServiceLayer.Services
         public async Task<ResultMessage<ForumCategoryDTO>> Add(ForumCategoryDTO forumCategoryDTO)
           => await _servicesExecutor.Add(forumCategoryDTO, x => x.Name == forumCategoryDTO.Name);
 
-        public async Task<ResultMessage<bool>> Delete(int id)
+        public Task<ResultMessage<bool>> Delete(int id)
         {
             throw new NotImplementedException();
         }

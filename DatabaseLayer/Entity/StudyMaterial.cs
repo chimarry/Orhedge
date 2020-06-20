@@ -11,7 +11,7 @@ namespace DatabaseLayer.Entity
         public DateTime UploadDate { get; set; }
         public int StudentId { get; set; }
         public int CategoryId { get; set; }
-
+        public double TotalRating { get; set; }
         public bool Deleted { get; set; }
         #region NavigationProperies
         public virtual Student Student { get; set; }

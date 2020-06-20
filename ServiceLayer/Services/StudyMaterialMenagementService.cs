@@ -8,6 +8,7 @@ using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Shared;
 using ServiceLayer.Students.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,14 +20,17 @@ namespace ServiceLayer.Services
         private readonly ICourseService _courseService;
         private readonly IStudyMaterialService _studyMaterialService;
         private readonly IDocumentService _documentService;
+        private readonly ICategoryService _categoryService;
         private readonly OrhedgeContext _context;
 
-        public StudyMaterialMenagementService(OrhedgeContext context, IStudyMaterialService studyMaterialService, ICourseService courseService, IDocumentService documentService) : base()
+        public StudyMaterialMenagementService(ICourseService courseService, IStudyMaterialService studyMaterialService, IDocumentService documentService,
+                                              ICategoryService categoryService, OrhedgeContext context)
         {
             _courseService = courseService;
-            _context = context;
             _studyMaterialService = studyMaterialService;
             _documentService = documentService;
+            _categoryService = categoryService;
+            _context = context;
         }
 
         public async Task<HashSet<DetailedSemesterDTO>> GetSemestersWithAllInformation()
@@ -69,6 +73,73 @@ namespace ServiceLayer.Services
             if (!studyMaterialResult.IsSuccess)
                 return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
             return await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
+        }
+
+        /// <summary>
+        /// Returns list of detailed study materials, sorted and filtered.
+        /// </summary>
+        /// <typeparam name="TKey">Type of the element based on which sorting is applied</typeparam>
+        /// <param name="searchFor">Lookup word</param>
+        /// <param name="categories">List of categories that need to be included in lookup</param>
+        /// <param name="sortKeySelector">Function that says how to get element based on which sorting is applied</param>
+        /// <param name="asc">Direction of order</param>
+        /// <returns>List of detailed study materials or empty list</returns>
+        public async Task<List<DetailedStudyMaterialDTO>> GetDetailedStudyMaterials<TKey>(int courseId, int offset, int itemsCount, string searchFor = null, int[] categories = null, Func<DetailedStudyMaterialDTO, TKey> sortKeySelector = null, bool asc = true)
+        {
+            IQueryable<DetailedStudyMaterialDTO> detailedStudyMaterialDTOs = await GetDetailedStudyMaterialDTOs<TKey>(courseId, searchFor, categories);
+
+            // Sort
+            if (asc && sortKeySelector != null)
+                detailedStudyMaterialDTOs = detailedStudyMaterialDTOs.OrderBy(x => sortKeySelector(x));
+            else if (sortKeySelector != null)
+                detailedStudyMaterialDTOs = detailedStudyMaterialDTOs.OrderByDescending(x => sortKeySelector(x));
+            else
+                detailedStudyMaterialDTOs = detailedStudyMaterialDTOs.OrderByDescending(x => x.UploadDate);
+
+            // Page
+            return detailedStudyMaterialDTOs.Skip(offset).Take(itemsCount).ToList();
+        }
+
+        /// <summary>
+        /// Returns total number of items that satisfy certain criteria.
+        /// </summary>
+        /// <param name="courseId">Unique identifier of course where materials belong</param>
+        /// <param name="searchFor">Lookup word (optional)</param>
+        /// <param name="categories">Unique identifiers of categories (optional)</param>
+        /// <returns>Total number of items</returns>
+        public async Task<int> Count(int courseId, string searchFor = null, int[] categories = null)
+          => (await GetDetailedStudyMaterialDTOs<NoSorting>(courseId, searchFor, categories)).Count();
+
+        private async Task<IQueryable<DetailedStudyMaterialDTO>> GetDetailedStudyMaterialDTOs<TKey>(int courseId, string searchFor = null, int[] categories = null)
+        {
+            if (categories == null || categories.Count() == 0)
+                categories = (await _categoryService.GetAll<NoSorting>(x => x.CourseId == courseId && !x.Deleted)).Select(x => x.CategoryId).ToArray();
+
+            string trimmedSearchFor = searchFor == null ? string.Empty : searchFor.Trim();
+
+            IQueryable<DetailedStudyMaterialDTO> detailedStudyMaterialDTOs =
+                      _context.StudyMaterials
+                      .Where(x => !x.Deleted && categories.Contains(x.CategoryId))
+                      // Get the name of an author
+                      .Join(_context.Students,
+                             studyMaterial => studyMaterial.StudentId,
+                             student => student.StudentId,
+                             (studyMaterial, student) => new { StudyMaterial = studyMaterial, AuthorFullName = string.Format("{0} {1}", student.Name, student.LastName) })
+                      // Get the name of a category
+                      .Join(_context.Categories,
+                             studyMaterialWithAuthor => studyMaterialWithAuthor.StudyMaterial.CategoryId,
+                             category => category.CategoryId,
+                             (studyMaterialWithAuthor, category) => new DetailedStudyMaterialDTO(Mapping.Mapper.Map<StudyMaterialDTO>(studyMaterialWithAuthor.StudyMaterial))
+                             {
+                                 AuthorFullName = studyMaterialWithAuthor.AuthorFullName,
+                                 CategoryName = category.Name
+                             })
+                     // Apply filter by the given lookup word
+                     .Where(x => x.AuthorFullName.Trim().Contains(trimmedSearchFor, StringComparison.CurrentCultureIgnoreCase)
+                                                               || x.Name.Trim().Contains(trimmedSearchFor, StringComparison.CurrentCultureIgnoreCase)
+                                                               || x.TotalRating.ToString().Contains(trimmedSearchFor, StringComparison.CurrentCultureIgnoreCase)
+                                                               || x.UploadDate.Date.ToString().Contains(trimmedSearchFor, StringComparison.CurrentCultureIgnoreCase));
+            return detailedStudyMaterialDTOs;
         }
     }
 }

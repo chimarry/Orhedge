@@ -17,8 +17,28 @@ namespace Orhedge.AutoMapper
     {
         public MappingProfile()
         {
+            MapStudyMaterials();
+            MapStudents();
+            MapForum();
+        }
+
+        public void MapStudyMaterials()
+        {
+            CreateMap<CourseDTO, IndexCourseViewModel>();
+            CreateMap<DetailedSemesterDTO, SemesterViewModel>().ForMember(dest => dest.Courses, conf => conf.MapFrom(src => src.Courses)).ReverseMap();
+            CreateMap<CategoryDTO, CategoryViewModel>();
+            CreateMap<CourseCategoryDTO, CourseCategoryViewModel>()
+                .ForMember(dest => dest.CourseId, opts => opts.MapFrom(courseCat => courseCat.Course.CourseId))
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(courseCat => courseCat.Course.Name))
+                .ForMember(dest => dest.Categories, opts => opts.MapFrom(courseCat => courseCat.Categories));
+            CreateMap<DetailedStudyMaterialDTO, StudyMaterialViewModel>();
+            CreateMap<EditStudyMaterialViewModel, StudyMaterialDTO>();
+        }
+
+        private void MapStudents()
+        {
             CreateMap<RegisterFormViewModel, RegisterFormDTO>()
-                .ForMember(dest => dest.Index, opts => opts.MapFrom(src => src.IndexNumber));
+               .ForMember(dest => dest.Index, opts => opts.MapFrom(src => src.IndexNumber));
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<StudentDTO, EditProfileViewModel>()
@@ -33,14 +53,8 @@ namespace Orhedge.AutoMapper
             CreateMap<ChangePasswordViewModel, UpdatePasswordDTO>();
             CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ReverseMap();
             CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
-            CreateMap<CourseDTO, IndexCourseViewModel>();
-            CreateMap<DetailedSemesterDTO, SemesterViewModel>().ForMember(dest => dest.Courses, conf => conf.MapFrom(src => src.Courses)).ReverseMap();
-            CreateMap<CategoryDTO, CategoryViewModel>();
-            CreateMap<CourseCategoryDTO, CourseCategoryViewModel>()
-                .ForMember(dest => dest.CourseId, opts => opts.MapFrom(courseCat => courseCat.Course.CourseId))
-                .ForMember(dest => dest.Name, opts => opts.MapFrom(courseCat => courseCat.Course.Name))
-                .ForMember(dest => dest.Categories, opts => opts.MapFrom(courseCat => courseCat.Categories));
         }
+
         public void MapForum()
         {
             CreateMap<TopicListDTO, TopicSelectionViewModel[]>()

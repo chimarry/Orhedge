@@ -16,6 +16,8 @@ namespace ServiceLayer.DTO
 
         public int CategoryId { get; set; }
 
+        public double TotalRating { get; set; }
+
         public bool Deleted { get; set; }
 
         public override bool Equals(object obj)
