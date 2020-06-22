@@ -140,7 +140,10 @@
                             @foreach (StudyMaterialViewModel st in Model.StudyMaterials)
                             {
                                 <tr>
-                                    <th scope="row"><a href="#" style=" padding-top: 10px; padding-bottom: 10px;">@st.Name</a></th>
+                                    <td>
+                                        @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
+                                    </td>
+                                    @*<th scope="row"><a href="#" onclick="downloadMaterial(@st.StudyMaterialId)" style=" padding-top: 10px; padding-bottom: 10px;">@st.Name</a></th>*@
                                     <td><p>@st.CategoryName</p></td>
                                     <td>@st.AuthorFullName</td>
                                     <td>@st.UploadDate</td>

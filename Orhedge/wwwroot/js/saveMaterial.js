@@ -20,7 +20,7 @@
     });
     $.ajax({
         type: "POST",
-        url: "/api/UploadMaterialApi",
+        url: "/api/StudyMaterialApi",
         data: model,
         async: false,
         contentType: "application/json; charset=utf-8",
@@ -39,4 +39,4 @@ var openFile = function (event) {
         output.href = dataURL;
     };
     reader.readAsDataURL(input.files[0]);
-};
+}

@@ -141,5 +141,19 @@ namespace ServiceLayer.Services
                                                                || x.UploadDate.Date.ToString().Contains(trimmedSearchFor, StringComparison.CurrentCultureIgnoreCase));
             return detailedStudyMaterialDTOs;
         }
+
+        /// <summary>
+        /// Downloads specified study material.
+        /// </summary>
+        /// <param name="studyMaterialId">Unique identifier used for specifying study material</param>
+        /// <returns>Basic information about file wrapped with result</returns>
+        public async Task<ResultMessage<BasicFileInfo>> DownloadStudyMaterial(int studyMaterialId)
+        {
+            ResultMessage<StudyMaterialDTO> studyMaterialDTO = await _studyMaterialService.GetSingleOrDefault
+                                                      (x => x.StudyMaterialId == studyMaterialId && !x.Deleted);
+            if (!studyMaterialDTO.IsSuccess)
+                return new ResultMessage<BasicFileInfo>(studyMaterialDTO.Status, studyMaterialDTO.Message);
+            return await _documentService.DownloadFromStorage(studyMaterialDTO.Result.Uri);
+        }
     }
 }

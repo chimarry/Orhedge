@@ -8,9 +8,18 @@ namespace ServiceLayer.Services
 {
     public class LocalDocumentService : IDocumentService
     {
-        public Task<ResultMessage<BasicFileInfo>> DownloadFromStorage(string storagePath)
+        public async Task<ResultMessage<BasicFileInfo>> DownloadFromStorage(string storagePath)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string fileName = Path.GetFileName(storagePath);
+                byte[] fileData = await File.ReadAllBytesAsync(storagePath);
+                return new ResultMessage<BasicFileInfo>(new BasicFileInfo(fileName, fileData), OperationStatus.Success);
+            }
+            catch (IOException ex)
+            {
+                return new ResultMessage<BasicFileInfo>(OperationStatus.FileSystemError, ex.Message);
+            }
         }
 
         public async Task<ResultMessage<bool>> UploadDocumentToStorage(string storagePath, byte[] file)

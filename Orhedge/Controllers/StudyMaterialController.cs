@@ -10,6 +10,7 @@ using ServiceLayer.DTO.Materials;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
+using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +87,21 @@ namespace Orhedge.Controllers
             CourseStudyMaterialsViewModel mainModel = new CourseStudyMaterialsViewModel(courseId, detailedStudyMaterialViewModels, pageinformation);
             await SetViewInformation(courseId, searchFor, sortCriteria, categories);
             return View("Course", mainModel);
+        }
+
+        /// <summary>
+        /// Downloads specified study material.
+        /// </summary>
+        /// <param name="studyMaterialId">Unique identifier for the study material</param>
+        /// <returns></returns>
+        public async Task<IActionResult> DownloadStudyMaterial(int studyMaterialId)
+        {
+            ResultMessage<BasicFileInfo> basicFileInformation = await _studyMaterialManagementService.DownloadStudyMaterial(studyMaterialId);
+            HttpContext.Response.Headers.Add("Content-Disposition", $"attachment; filename=\"{basicFileInformation.Result.FileName}\"");
+            return new FileContentResult(basicFileInformation.Result.FileData, System.Net.Mime.MediaTypeNames.Application.Octet)
+            {
+                FileDownloadName = basicFileInformation.Result.FileName
+            };
         }
 
         private async Task<List<StudyMaterialViewModel>> GetDetailedStudyMaterials(int courseId, int pageNumber
