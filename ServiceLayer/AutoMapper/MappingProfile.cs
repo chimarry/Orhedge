@@ -9,6 +9,7 @@ namespace ServiceLayer.AutoMapper
     {
         public MappingProfile()
         {
+            CreateMap<ChatMessage, ChatMessageDTO>().ReverseMap();
             CreateMap<StudentDTO, Student>().ForAllOtherMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<Student, Student>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             CreateMap<Student, StudentDTO>();

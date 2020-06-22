@@ -1,0 +1,96 @@
+﻿@model Orhedge.ViewModels.TechnicalSupport.TechnicalSupportViewModel
+@{
+    ViewData["Title"] = "Chat";
+}
+@using Orhedge.ViewModels.TechnicalSupport;
+@section Stylesheet{
+    <link rel="stylesheet" href="~/css/avatar.css">
+    <link rel="stylesheet" href="~/css/chat.css">
+}
+
+@Html.Hidden("PageRedirect", Url.Action("Page", "TechnicalSupport"))
+@Html.Hidden("MessageDeleteRedirect", Url.Action("DeleteMessage", "TechnicalSupport"))
+<div class="container" style="margin-left:10px">
+    <div class="row">&nbsp;</div>
+    <div class="row" style="align-items:center">
+        <input type="text" hidden="hidden" id="userInput" placeholder="Korisničko ime" />
+        <textarea type="text" id="messageInput" placeholder="Poruka" style="width:70%"></textarea>
+        <input class="btn btn-primary" style="max-height:30px;font-size:1em,; align-content:center" type="button" id="sendButton" value="Pošalji" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+
+<div class="container content row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+                <div class="card">
+                    <div class="card-body height3">
+                        <ul class="chat-list" id="messagesList">
+                            @foreach (ChatMessageViewModel message in Model.ChatMessages)
+                            {
+                                <li class="in">
+                                    <div class="chat-img">
+                                        <div class="avatar-circle"><span class="initials">@message.StudentInitials</span></div>
+                                    </div>
+                                    <div class="chat-body">
+                                        <div class="chat-message">
+                                            <h5>@message.Username</h5>
+                                            <p>@message.Message</p>
+                                        </div>
+                                    </div>
+                                    <span class="close" onclick="deleteMessage(@message.ChatMessageId)">x</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <nav aria-label="Page navigation example">
+                            <div class="container-fluid padding">
+                                <ul class="pagination justify-content-center">
+                                    @if (!Model.PageInformation.IsFirst)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.FirstPageNumber)">Prva</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.PreviousPageNumber)">Prethodna</a>
+                                        </li>
+                                    }
+                                    <li class="page-header">
+                                        Stranica @(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)
+                                    </li>
+                                    @if (!Model.PageInformation.IsLast)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.NextPageNumber)">Sljedeća</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.LastPageNumber)">Posljednja</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery("#messageInput").on("keydown keyup", function () {
+                this.style.height = "1px";
+                this.style.height = (this.scrollHeight) + "px";
+            });
+        });</script>
+}

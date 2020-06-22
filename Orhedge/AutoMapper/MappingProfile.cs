@@ -4,11 +4,13 @@ using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
 using Orhedge.ViewModels.Student;
 using Orhedge.ViewModels.StudyMaterial;
+using Orhedge.ViewModels.TechnicalSupport;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Forum;
 using ServiceLayer.DTO.Materials;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Orhedge.AutoMapper
@@ -19,7 +21,13 @@ namespace Orhedge.AutoMapper
         {
             MapStudyMaterials();
             MapStudents();
+            MapTechnicalSupport();
             MapForum();
+        }
+
+        private void MapTechnicalSupport()
+        {
+            CreateMap<ChatMessageDTO, ChatMessageViewModel>();
         }
 
         public void MapStudyMaterials()

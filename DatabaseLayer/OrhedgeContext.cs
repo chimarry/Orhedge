@@ -40,6 +40,8 @@ namespace DatabaseLayer
 
         public DbSet<CourseStudyProgram> CourseStudyPrograms { get; set; }
 
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
@@ -56,6 +58,7 @@ namespace DatabaseLayer
             modelBuilder.ApplyConfiguration(new TopicRatingConfiguration());
             modelBuilder.ApplyConfiguration(new AnswerRatingConfiguration());
             modelBuilder.ApplyConfiguration(new CourseStudyProgramConfiguration());
+            modelBuilder.ApplyConfiguration(new ChatMessageConfiguration());
         }
     }
 }

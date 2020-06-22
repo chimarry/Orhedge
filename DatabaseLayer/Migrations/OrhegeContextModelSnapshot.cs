@@ -93,6 +93,30 @@ namespace DatabaseLayer.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("DatabaseLayer.Entity.ChatMessage", b =>
+                {
+                    b.Property<int>("ChatMessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Deleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Message")
+                        .IsRequired();
+
+                    b.Property<DateTime>("SentOn");
+
+                    b.Property<int>("StudentId");
+
+                    b.HasKey("ChatMessageId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ChatMessages");
+                });
+
             modelBuilder.Entity("DatabaseLayer.Entity.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -462,6 +486,14 @@ namespace DatabaseLayer.Migrations
                     b.HasOne("DatabaseLayer.Entity.Course", "Course")
                         .WithMany("Categories")
                         .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DatabaseLayer.Entity.ChatMessage", b =>
+                {
+                    b.HasOne("DatabaseLayer.Entity.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Orhedge.Hubs;
 using Orhedge.IoC;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,7 @@ namespace Orhedge
                 opts.DataAnnotationLocalizerProvider =
                 (type, factory) => factory.Create(typeof(SharedResource)));
 
+            services.AddSignalR();
             return DependencyInjectionConfiguration.Configure(services);
         }
 
@@ -115,8 +117,11 @@ namespace Orhedge
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<TechnicalSupportHub>("/chathub");
+            });
             app.UseAuthentication();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

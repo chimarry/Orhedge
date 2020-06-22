@@ -40,6 +40,7 @@ namespace Orhedge.IoC
             builder.RegisterType<TopicService>().InstancePerLifetimeScope().As<ITopicService>();
             builder.RegisterType<ForumManagmentService>().InstancePerLifetimeScope().As<IForumManagmentService>();
             builder.RegisterType<StudyMaterialMenagementService>().InstancePerLifetimeScope().As<IStudyMaterialManagementService>();
+            builder.RegisterType<ChatMessageService>().InstancePerLifetimeScope().As<IChatMessageService>();
 
             // IMapper is thread safe, hence we register it as singleton
             builder.Register(ctx => MappingConfiguration.CreateMapping());
