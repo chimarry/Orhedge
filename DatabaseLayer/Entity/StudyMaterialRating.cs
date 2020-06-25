@@ -3,7 +3,6 @@
     public class StudyMaterialRating
     {
         public int StudyMaterialId { get; set; }
-        public int AuthorId { get; set; }
         public int StudentId { get; set; }
         public double Rating { get; set; }
 

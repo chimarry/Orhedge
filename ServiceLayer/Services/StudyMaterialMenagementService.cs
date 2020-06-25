@@ -1,6 +1,7 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using ServiceLayer.AutoMapper;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Materials;
@@ -21,15 +22,19 @@ namespace ServiceLayer.Services
         private readonly IStudyMaterialService _studyMaterialService;
         private readonly IDocumentService _documentService;
         private readonly ICategoryService _categoryService;
+        private readonly IStudentService _studentService;
+        private readonly IErrorHandler _errorHandler;
         private readonly OrhedgeContext _context;
 
-        public StudyMaterialMenagementService(ICourseService courseService, IStudyMaterialService studyMaterialService, IDocumentService documentService,
-                                              ICategoryService categoryService, OrhedgeContext context)
+        public StudyMaterialMenagementService(IErrorHandler errorHandler, ICourseService courseService, IStudyMaterialService studyMaterialService, IDocumentService documentService,
+                                              ICategoryService categoryService, IStudentService studentService, OrhedgeContext context)
         {
+            _errorHandler = errorHandler;
             _courseService = courseService;
             _studyMaterialService = studyMaterialService;
             _documentService = documentService;
             _categoryService = categoryService;
+            _studentService = studentService;
             _context = context;
         }
 
@@ -73,6 +78,15 @@ namespace ServiceLayer.Services
             if (!studyMaterialResult.IsSuccess)
                 return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
             return await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
+        }
+
+        public async Task<List<DetailedStudyMaterialDTO>> AppendRating(int studentId, List<DetailedStudyMaterialDTO> studyMaterials)
+        {
+            foreach (DetailedStudyMaterialDTO detailedStudyMaterialDTO in studyMaterials)
+                detailedStudyMaterialDTO.GivenRating = (int?)(await _context.StudyMaterialRatings.
+                                                                      FirstOrDefaultAsync(x => x.StudentId == studentId
+                                                                      && x.StudyMaterialId == detailedStudyMaterialDTO.StudyMaterialId))?.Rating;
+            return studyMaterials;
         }
 
         /// <summary>
@@ -154,6 +168,55 @@ namespace ServiceLayer.Services
             if (!studyMaterialDTO.IsSuccess)
                 return new ResultMessage<BasicFileInfo>(studyMaterialDTO.Status, studyMaterialDTO.Message);
             return await _documentService.DownloadFromStorage(studyMaterialDTO.Result.Uri);
+        }
+
+        /// <summary>
+        /// With this method, specific student has option to rate specific study material.
+        /// This method uses transactions.
+        /// </summary>
+        /// <param name="studyMaterialId">Unique identifier for the study material</param>
+        /// <param name="authorId">Unique identifier for the author</param>
+        /// <param name="rating">Given rating</param>
+        /// <returns></returns>
+        public async Task<ResultMessage<bool>> Rate(int studyMaterialId, int studentId, int authorId, int rating)
+        {
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
+            {
+                StudyMaterialRating smr = await _context.StudyMaterialRatings.FirstOrDefaultAsync(x => x.StudyMaterialId == studyMaterialId && x.StudentId == studentId);
+                if (smr == null)
+                    await _context.StudyMaterialRatings.AddAsync(smr = new StudyMaterialRating()
+                    {
+                        StudentId = studentId,
+                        StudyMaterialId = studyMaterialId,
+                        Rating = rating
+                    });
+                else
+                    smr.Rating = rating;
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    double totalRatingForMaterial = await _context.StudyMaterialRatings
+                                                       .Where(x => x.StudyMaterialId == studyMaterialId)
+                                                       .AverageAsync(x => x.Rating);
+                    ResultMessage<bool> updatedMaterial = await _studyMaterialService.ChangeRating(studyMaterialId, totalRatingForMaterial);
+                    if (!updatedMaterial.IsSuccess)
+                        return new ResultMessage<bool>(updatedMaterial.Status, updatedMaterial.Message);
+                    double totalRatingForAuthor = await _context.StudyMaterialRatings
+                                                                  .Where(x => x.StudyMaterial.StudentId == authorId)
+                                                                  .AverageAsync(x => x.Rating);
+                    ResultMessage<bool> updatedStudent = await _studentService.ChangeRating(authorId, totalRatingForAuthor);
+                    if (!updatedStudent.IsSuccess)
+                        return new ResultMessage<bool>(updatedStudent.Status, updatedStudent.Message);
+                    transaction.Commit();
+                    return new ResultMessage<bool>(true, OperationStatus.Success);
+                }
+                catch (DbUpdateException ex)
+                {
+                    transaction.Rollback();
+                    OperationStatus operationStatus = _errorHandler.Handle(ex);
+                    return new ResultMessage<bool>(false, operationStatus);
+                }
+            }
         }
     }
 }

@@ -17,5 +17,8 @@ namespace ServiceLayer.Services
         Task<int> Count(int courseId, string searchFor = null, int[] categories = null);
         Task<List<DetailedStudyMaterialDTO>> GetDetailedStudyMaterials<TKey>(int courseId, int offset, int itemsCount, string searchFor = null, int[] categories = null,
                                                                              Func<DetailedStudyMaterialDTO, TKey> sortKeySelector = null, bool asc = true);
+
+        Task<ResultMessage<bool>> Rate(int studyMaterialId, int studentId, int authorId, int rating);
+        Task<List<DetailedStudyMaterialDTO>> AppendRating(int studentId, List<DetailedStudyMaterialDTO> studyMaterials);
     }
 }

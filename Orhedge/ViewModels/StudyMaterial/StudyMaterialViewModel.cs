@@ -17,10 +17,14 @@ namespace Orhedge.ViewModels.StudyMaterial
 
         public string AuthorFullName { get; set; }
 
-        public int TotalRating { get; set; }
+        public double TotalRating { get; set; }
 
         public string CategoryName { get; set; }
 
         public int CategoryId { get; set; }
+
+        public int GivenRating { get; set; }
+
+        public int StudentId { get; set; }
     }
 }

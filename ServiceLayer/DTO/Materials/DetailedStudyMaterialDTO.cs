@@ -6,6 +6,8 @@
 
         public string CategoryName { get; set; }
 
+        public int? GivenRating { get; set; }
+
         public DetailedStudyMaterialDTO(StudyMaterialDTO baseDTO)
         {
             Uri = baseDTO.Uri;

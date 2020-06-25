@@ -10,11 +10,18 @@
     <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="~/css/styleCourseMaterial.css">
+    <style>
+        .fa {
+            font-size: 10px;
+            margin: 0px 0px 0px 0px;
+        }
+    </style>
 }
 @section HeadScripts {
     <script src="~/js/materials/material.js" type="text/javascript" defer></script>
     <script src="~/js/saveMaterial.js" type="text/javascript" defer></script>
     <script src="~/js/filereader.js" type="text/javascript" defer></script>
+    <script src="~/js/rating.js" type="text/javascript" defer></script>
 }
 @section Scripts{
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -71,9 +78,9 @@
     }
     <div class="row">
         <!--Populate-->
-        <div class="container-fluid col-9">
+        <div class="container-fluid col-10">
             <div class="container-fluid">
-                <div class="d-flex flex-row justify-content-between  rounded-top" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px; border-style: solid;border-width: 5px;">
+                <div class="d-flex flex-row justify-content-between  rounded-top" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px; border-style: solid; border-width: 5px;">
                     <!--Sort-->
                     <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@paramsSearchSortFilter)" style="margin-bottom:20px">
                         @switch (ViewBag.SortingCriteria)
@@ -134,8 +141,10 @@
                                 <th scope="col">@Localizer["UploadDate"]</th>
                                 <th scope="col">@Localizer["Rating"]</th>
                                 <th scope="col"> </th>
-                            </tr>
+                                <th scope="col"> </th>
                         </thead>
+                        @{string ratingStarFormat = "{{studentId:{0},studyMaterialId:{1},rating:{2}}}";
+                        }
                         <tbody>
                             @foreach (StudyMaterialViewModel st in Model.StudyMaterials)
                             {
@@ -143,7 +152,6 @@
                                     <td>
                                         @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
                                     </td>
-                                    @*<th scope="row"><a href="#" onclick="downloadMaterial(@st.StudyMaterialId)" style=" padding-top: 10px; padding-bottom: 10px;">@st.Name</a></th>*@
                                     <td><p>@st.CategoryName</p></td>
                                     <td>@st.AuthorFullName</td>
                                     <td>@st.UploadDate</td>
@@ -152,8 +160,22 @@
                                         @{
                                             string param = Json.Serialize(st).ToString();
                                         }
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
+                                        <button type="button" class="btn btn-primary btn-sm" style="background:#3b8080" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                        <button type="button" class="btn btn-primary btn-sm" style="background:#3b8080" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
+                                    </td>
+                                    <td>
+                                        @for (int i = 1; i < st.GivenRating + 1; ++i)
+                                        {
+                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:#4facac" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </button>
+                                        }
+                                        @for (int i = st.GivenRating + 1; i < 6; ++i)
+                                        {
+                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:transparent" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </button>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -162,7 +184,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid col-3">
+        <div class="container-fluid col-2">
             <div class="d-flex flex-column justify-content-between rounded-top" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px; border-style: solid;border-width: 5px;">
                 <!--Filter-->
                 <p>
@@ -178,7 +200,11 @@
                     {
                         CategoryViewModel cat = allCategories[i];
                         <div class="form-check filteri">
-                            @Html.CheckBox(cat.CategoryId + "filter", selectedCategories?.Contains(cat.CategoryId), new { @id = i + "filter", @value = cat.CategoryId })
+                            @Html.CheckBox(cat.CategoryId + "filter", selectedCategories?.Contains(cat.CategoryId), new
+                            {
+                                @id = i + "filter",
+                                @value = cat.CategoryId
+                        })
                             <label for=@(cat.CategoryId + "filter")>
                                 @Localizer[cat.Name]
                             </label>

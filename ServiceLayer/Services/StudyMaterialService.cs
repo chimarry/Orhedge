@@ -1,4 +1,6 @@
-﻿using DatabaseLayer.Entity;
+﻿using DatabaseLayer;
+using DatabaseLayer.Entity;
+using Microsoft.EntityFrameworkCore;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
@@ -17,6 +19,15 @@ namespace ServiceLayer.Services
         public async Task<ResultMessage<StudyMaterialDTO>> Add(StudyMaterialDTO studyMaterialDTO)
              => await _servicesExecutor.Add(studyMaterialDTO, x => x.Name == studyMaterialDTO.Name && x.StudentId == studyMaterialDTO.StudentId
                                                                      && x.UploadDate == studyMaterialDTO.UploadDate && x.Deleted == false);
+
+        public async Task<ResultMessage<bool>> ChangeRating(int studyMaterialId, double rating)
+        {
+            StudyMaterial studyMaterial = await _servicesExecutor.GetSingleOrDefault((StudyMaterial x) => x.StudyMaterialId == studyMaterialId && !x.Deleted);
+            if (studyMaterial == null)
+                return new ResultMessage<bool>(false, OperationStatus.NotFound);
+            studyMaterial.TotalRating = rating;
+            return await _servicesExecutor.SaveChanges();
+        }
 
         public async Task<ResultMessage<bool>> Delete(int id)
             => await _servicesExecutor.Delete((StudyMaterial x) => x.StudyMaterialId == id && !x.Deleted, x => { x.Deleted = true; return x; });

@@ -39,7 +39,7 @@ namespace Orhedge.AutoMapper
                 .ForMember(dest => dest.CourseId, opts => opts.MapFrom(courseCat => courseCat.Course.CourseId))
                 .ForMember(dest => dest.Name, opts => opts.MapFrom(courseCat => courseCat.Course.Name))
                 .ForMember(dest => dest.Categories, opts => opts.MapFrom(courseCat => courseCat.Categories));
-            CreateMap<DetailedStudyMaterialDTO, StudyMaterialViewModel>();
+            CreateMap<DetailedStudyMaterialDTO, StudyMaterialViewModel>().ForMember(dest => dest.GivenRating, conf => { conf.MapFrom(src => src.GivenRating); conf.NullSubstitute(0); });
             CreateMap<EditStudyMaterialViewModel, StudyMaterialDTO>();
         }
 

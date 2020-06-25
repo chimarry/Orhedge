@@ -139,6 +139,24 @@ namespace ServiceLayer.Helpers
             return filter == null ? await stream.CountAsync() : await stream.Where(x => filter(Mapping.Mapper.Map<TDto>(x))).CountAsync();
         }
 
+        /// <summary>
+        /// Saves current changes on context and handles errors.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResultMessage<bool>> SaveChanges()
+        {
+            try
+            {
+                await _context.SaveChangesAsync();
+                return new ResultMessage<bool>(true, OperationStatus.Success);
+            }
+            catch (DbUpdateException ex)
+            {
+                OperationStatus status = _errorHandler.Handle(ex);
+                return new ResultMessage<bool>(false, status);
+            }
+        }
+
         private IQueryable<TEntity> FilterSort<TKey>(Predicate<TDto> dtoCondition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true)
         {
             Predicate<TEntity> entityCondition = null;

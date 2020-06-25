@@ -94,6 +94,14 @@ namespace Orhedge.Controllers
             return RedirectToMainController(model.CourseId);
         }
 
+        [HttpPut("rate")]
+        public async Task<IActionResult> Rate([FromBody]RateStudyMaterialViewModel rateStudyMaterial)
+        {
+            int logginStudentId = 1;
+            ResultMessage<bool> ratingResult = await _studyMaterialManagementService.Rate(rateStudyMaterial.StudyMaterialId, logginStudentId, rateStudyMaterial.AuthorId, rateStudyMaterial.Rating);
+            return Ok(JsonConvert.SerializeObject(ratingResult));
+        }
+
         private ActionResult RedirectToMainController(int courseId)
             => Ok(JsonConvert.SerializeObject(Url.Link("Default", new
             {

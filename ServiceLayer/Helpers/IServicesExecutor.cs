@@ -75,5 +75,11 @@ namespace ServiceLayer.Helpers
         /// </summary>
         /// <returns>Number of elements</returns>
         Task<int> Count(Predicate<TDto> filter = null);
+
+        /// <summary>
+        /// Saves current changes on entities;
+        /// </summary>
+        /// <returns></returns>
+        Task<ResultMessage<bool>> SaveChanges();
     }
 }
