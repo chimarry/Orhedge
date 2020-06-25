@@ -38,7 +38,7 @@
                     <div class="modal fade" tabindex="-1" id="passModal" data-backdrop="static">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                    <form id="passform">
+                                    <form id="passform" class="modal-design">
                                         <h4 class="modal-title">@Localizer["ChangePassword"]</h4> <br>
                                         <div class="form-group">
                                             <input id="oldpass" name="oldpass" type="password" placeholder="@Localizer["OldPassword"]" class="form-control" required /><br>
@@ -50,9 +50,10 @@
                                         <div class="form-group">
                                             <input id="confirmpass" name="confirmpass" type="password" placeholder="@Localizer["ConfirmPassword"]" class="form-control" required /><br>
                                         </div>
-
-                                    <button type="reset" id="cancel" class="btn btn-primary button button4" formnovalidate>@Localizer["Cancel"]</button>
-                                    <button type="button" id="save" class="btn btn-primary button button4">@Localizer["Save"]</button>
+                                    <div class="container">
+                                        <button type="button" id="save" class="submitbtn btn btn-primary button button4">@Localizer["Save"]</button>
+                                        <button type="reset" id="cancel" class="cancelbtn btn btn-primary button button4" formnovalidate>@Localizer["Cancel"]</button>
+                                    </div>
                                     </form>
                             </div>
                         </div>
@@ -88,5 +89,6 @@
 @section Stylesheet
 {
     <link rel="stylesheet" href="~/css/studentProfile.css" />
+    <link rel="stylesheet" href="~/css/modalDesign.css" />
 }
 

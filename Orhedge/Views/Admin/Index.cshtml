@@ -12,6 +12,7 @@
 @section Stylesheet
 {
     <link rel="stylesheet" href="~/css/admin.css">
+    <link rel="stylesheet" href="~/css/modalDesign.css">
 }
 
 @section Scripts
@@ -137,50 +138,52 @@
                                     <td>
                                         @{
                                             string param = Json.Serialize(student).ToString();
-                                            <button onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                            <button class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
                                         }
                                     </td>
                                     <td>
-                                        <button onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
+                                        <button class="btn btn-secondary btn-sm" onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
                                     </td>
                                 </tr>
                             }
                         </tbody>
-                        <!--Paging-->
-                        <tfoot>
-                            <tr>
-                                @if (!Model.PageInformation.IsFirst)
-                                {
-                                    <td>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.FirstPageNumber))">
-                                            <i class="fa fa-angle-double-left prev-next"></i>
-                                        </a>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.PreviousPageNumber))">
-                                            <i class="fa fa-angle-left prev-next"></i>
-                                        </a>
-                                    </td>
-                                }
-                                <td>
-                                    <div id="pageFooter">Stranica @(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)</div>
-                                </td>
-                                @if (!Model.PageInformation.IsLast)
-                                {
-                                    <td>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.NextPageNumber))">
-                                            <i class="fa fa-angle-right prev-next"></i>
-                                        </a>
-                                        <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.LastPageNumber))">
-                                            <i class="fa fa-angle-double-right prev-next"></i>
-                                        </a>
-                                    </td>
-                                }
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
-                        </tfoot>
                     </table>
+
+                        <!--Paging-->
+                    <div id="paging">
+                        <ul class="pagination" style="margin:20px 0">
+                            @if (!Model.PageInformation.IsFirst)
+                            {
+                                <li class="page-item">
+                                    <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.FirstPageNumber))">
+                                        <i class="fa fa-angle-double-left prev-next"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.PreviousPageNumber))">
+                                        <i class="fa fa-angle-left prev-next"></i>
+                                    </a>
+                                </li>
+                            }
+
+                            <div id="pageFooter"><label>@(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)</label></div>
+                            
+                            @if (!Model.PageInformation.IsLast)
+                            {
+                                <li class="page-item">
+                                    <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.NextPageNumber))">
+                                        <i class="fa fa-angle-right prev-next"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#nav-users" onclick="return searchSortFilter(@string.Format(format, Enum.GetValues(typeof(StudentPrivilege)).Length, @Model.PageInformation.LastPageNumber))">
+                                        <i class="fa fa-angle-double-right prev-next"></i>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
 
                 </div>
             </div>
@@ -203,7 +206,13 @@
                             </div>
                         }
                         <br><br>
-                        <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)">Osvježi</button>
+                        <button type="submit" class="btn btn-secondary" onclick="searchSortFilter(@paramsSearchSortFilter)">
+                            <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
+                                <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                            Osvježi
+                        </button>
                     </div>
                     <hr>
                 </div>
@@ -245,24 +254,25 @@
     </div>
 </div>
 <div id="modalEditId" class="modal">
-    <form id="editFormId" class="modal-content animate">
+    <form id="editFormId" class="modal-content animate modal-design">
         <div class="imgcontainer">
             <span onclick="document.getElementById('modalEditId').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
         <div class="container">
+            <br>
             <div class="row">
                 <input type="number" hidden="hidden" id="studentId" name="studentId" />
                 <label for="name" class="col-6"><b>@Localizer["Name"]</b></label>
                 <input type="text" class="col-6" id="nameId" name="name" required>
-            </div>
+            </div><br>
             <div class="row">
                 <label for="lastname" class="col-6"><b>@Localizer["LastName"]</b></label>
                 <input type="text" class="col-6" id="lastNameId" name="lastName" required>
-            </div>
+            </div><br>
             <div class="row">
                 <label for="indexNumber" class="col-6"><b>@Localizer["Index"]</b></label>
                 <input type="text" class="col-6" id="indexNumberId" name="indexNumber" required>
-            </div>
+            </div><br>
             <div class="row">
                 <b class="col-6">@Localizer["Privileges"]</b>
                 <select class="form-control form-control-sm col-6" name="privilege">
@@ -273,24 +283,26 @@
                     }
                 </select>
             </div>
-            <div class="row">
-                <button type="submit" class="col-6" onclick="editUser()">@Localizer["Save"]</button>
-                <button type="button" class="cancelbtn col-6" onclick="document.getElementById('modalEditId').style.display='none'">@Localizer["Cancel"]</button>
+                <br>
+            <div class="container">
+                <button type="submit" class="submitbtn btn btn-primary button button4" onclick="editUser()">@Localizer["Save"]</button>
+                <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalEditId').style.display='none'">@Localizer["Cancel"]</button>
             </div>
         </div>
     </form>
 </div>
 <div id="modalDeleteId" class="modal">
-    <form id="deleteFormId" class="modal-content animate">
+    <form id="deleteFormId" class="modal-content animate modal-design">
         <div class="imgcontainer">
             <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
         </div>
+        <br>
         <label><b>@Localizer["ConfirmDelete"]</b></label>
-        <br />
+        <br><br>
         <div class="container">
             <input type="number" hidden="hidden" id="deleteStudentId" name="studentId" />
-            <button type="submit" onclick="deleteUser()">@Localizer["Delete"]</button>
-            <button type="button" onclick="document.getElementById('modalDeleteId').style.display='none'" class="cancelbtn">@Localizer["Cancel"]</button>
+            <button type="submit" class="submitbtn btn btn-primary button button4" onclick="deleteUser()">@Localizer["Delete"]</button>
+            <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteId').style.display='none'">@Localizer["Cancel"]</button>
         </div>
     </form>
 </div>

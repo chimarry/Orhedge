@@ -21,12 +21,3 @@
     align-content:center;
     margin-left: 10px;
 }
-
-#passform {
-    background-color: #083839;
-    padding: 30px;
-}
-
-#passform, h4 {
-    color: aliceblue;
-}

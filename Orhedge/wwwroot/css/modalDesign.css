@@ -1,0 +1,17 @@
+﻿.modal-design {
+    background-color: #083839;
+    padding: 30px;
+}
+
+    .modal-design h4, b {
+        color: aliceblue;
+    }
+
+.cancelbtn {
+    width: auto;
+    background-color: #006666;
+}
+
+.submitbtn {
+    background-color: #339999;
+}
