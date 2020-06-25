@@ -7,6 +7,7 @@ using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Models;
+using ServiceLayer.Services.Interfaces;
 using ServiceLayer.Shared;
 using System;
 using System.Threading.Tasks;
@@ -20,13 +21,11 @@ namespace ServiceLayer.Services.Student
         private readonly IEmailSenderService _emailSender;
         private readonly IStudentService _studentService;
         private readonly IRegistrationService _registrationService;
-        private readonly IDocumentService _docService;
+        private readonly IProfileImageService _imgService;
         private readonly Uri _baseUrl;
         private readonly string _fromEmailAddress;
         private readonly string _emailLinkEndpoint;
         private readonly string _regEmailTemplateId;
-        // TODO: Replace this with text/html once we design looks of registration email
-        private const string CONTENT_TYPE = "text/plain";
         private const int REGISTRATION_CODE_SIZE = 16; // In bytes
 
         public StudentManagmentService(
@@ -34,10 +33,10 @@ namespace ServiceLayer.Services.Student
             IStudentService studentService,
             IRegistrationService registrationService,
             IConfiguration config,
-            IDocumentService docService)
+            IProfileImageService imgService)
         {
-            (_emailSender, _studentService, _registrationService, _docService) =
-                (emailSender, studentService, registrationService, docService);
+            (_emailSender, _studentService, _registrationService, _imgService) =
+                (emailSender, studentService, registrationService, imgService);
             (_baseUrl, _fromEmailAddress) =
                 (new Uri(config["BaseUrl"]), config["RegisterEmail:From"]);
             _emailLinkEndpoint = config["RegisterEmail:LinkEndpoint"];
@@ -151,9 +150,12 @@ namespace ServiceLayer.Services.Student
 
             if (profile.Photo != null)
             {
-                string path = PathBuilder.BuildPathForProfilePictures(id);
-                await _docService.UploadDocumentToStorage(path, await profile.Photo.GetFileDataAsync());
-                stud.Photo = path;
+                ResultMessage<string> result = await _imgService.SaveProfileImage(profile.Photo);
+                if (result.IsSuccess)
+                {
+                    stud.Photo = result.Result;
+                    stud.PhotoVersion++;
+                }
             }
 
             stud.Username = profile.Username;

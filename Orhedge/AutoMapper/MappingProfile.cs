@@ -50,7 +50,8 @@ namespace Orhedge.AutoMapper
             CreateMap<RegisterViewModel, RegisterUserDTO>();
             CreateMap<LoginViewModel, LoginRequest>();
             CreateMap<StudentDTO, EditProfileViewModel>()
-                .ForMember(dest => dest.Photo, opts => opts.Ignore());
+                .ForMember(dest => dest.Photo, opts => opts.Ignore())
+                .ForMember(dest => dest.PhotoVersion, opts => opts.Condition(s => s.Photo != null));
             CreateMap<EditProfileViewModel, ProfileUpdateDTO>()
                 .ForMember(dest => dest.Photo, opts =>
                 {

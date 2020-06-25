@@ -13,5 +13,10 @@ namespace Orhedge.ViewModels.Student
         // Used only when transfering data from view to controller
         [PhotoFile("jpg", "jpeg", ErrorMessage = "InvalidImageFile")]
         public IFormFile Photo { get; set; }
+
+        /// <summary>
+        /// Current photo version, null if user does not have a photo
+        /// </summary>
+        public int? PhotoVersion { get; set; }
     }
 }

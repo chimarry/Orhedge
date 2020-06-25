@@ -1,8 +1,14 @@
 ﻿@model EditProfileViewModel;
 @inject IStringLocalizer<SharedResource> Localizer
+@inject Microsoft.Extensions.Configuration.IConfiguration Config; 
 @{
     //TODO: Specify proper layout
     Layout = "_Layout";
+    string profileImageUrl = $"/images/{Config["ProfileImageSettings:Placeholder"]}";
+    if (Model.PhotoVersion.HasValue)
+    {
+        profileImageUrl = Url.Action("Profile", "Photo", new { id = User.GetUserId(), version = Model.PhotoVersion });
+    }
 }
 
     <div class="container">
@@ -15,7 +21,7 @@
                     <form asp-action="Edit" enctype="multipart/form-data">
                         <div class="profile-userpic">
                             <label asp-for="Photo">@Localizer["ProfilePicture"]</label><br>
-                            <a href="https://placeholder.com"><img src="https://via.placeholder.com/150"></a><br><br>
+                            <a href="https://placeholder.com"><img src="@profileImageUrl"></a><br><br>
                             <input asp-for="Photo" /><br><br>
                         </div>
                         <label asp-for="Username">@Localizer["Username"]</label>

@@ -7,6 +7,7 @@ using ServiceLayer.Common.Services;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
 using ServiceLayer.Services.Forum;
+using ServiceLayer.Services.Interfaces;
 using ServiceLayer.Services.Student;
 using System;
 
@@ -41,6 +42,7 @@ namespace Orhedge.IoC
             builder.RegisterType<ForumManagmentService>().InstancePerLifetimeScope().As<IForumManagmentService>();
             builder.RegisterType<StudyMaterialMenagementService>().InstancePerLifetimeScope().As<IStudyMaterialManagementService>();
             builder.RegisterType<ChatMessageService>().InstancePerLifetimeScope().As<IChatMessageService>();
+            builder.RegisterType<ProfileImageService>().InstancePerLifetimeScope().As<IProfileImageService>();
 
             // IMapper is thread safe, hence we register it as singleton
             builder.Register(ctx => MappingConfiguration.CreateMapping());

@@ -12,6 +12,7 @@ namespace DatabaseLayer.Entity
         public string Username { get; set; }
         public string Index { get; set; }
         public string Photo { get; set; }
+        public int PhotoVersion { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
         public double Rating { get; set; }

@@ -8,5 +8,6 @@ namespace ServiceLayer.Helpers
         long Size { get; }
         Task CopyToAsync(Stream target);
         Task<byte[]> GetFileDataAsync();
+        Stream OpenReadStream();
     }
 }

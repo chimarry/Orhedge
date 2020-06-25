@@ -24,5 +24,7 @@ namespace Orhedge.Helpers
                 return stream.ToArray();
             }
         }
+
+        public Stream OpenReadStream() => _formFile.OpenReadStream();
     }
 }

@@ -19,9 +19,8 @@ namespace ServiceLayer.Shared
                          BuildName(studyMaterialsCategoryNamePrefix, categoryId),
                          DateTime.Now.ToString(fileNameDataFormat) + IdSeparator + fileName);
 
-        public static string BuildPathForProfilePictures(int studentId) =>
-            Path.Combine(profilePictureRootDirectoryName,
-                         BuildName(profilePictureNamePrefix, studentId));
+        public static string BuildPathForProfileImage() =>
+            Path.Combine(profilePictureRootDirectoryName, Path.GetRandomFileName());
 
 
         public static string BuildName(string prefix, long id) => prefix + IdSeparator + id;

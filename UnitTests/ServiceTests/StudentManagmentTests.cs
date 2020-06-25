@@ -12,6 +12,7 @@ using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Models;
 using ServiceLayer.Services;
+using ServiceLayer.Services.Interfaces;
 using ServiceLayer.Services.Student;
 using System;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace UnitTests.ServiceTests
         private Mock<IEmailSenderService> _emailMock = new Mock<IEmailSenderService>();
         private Mock<IRegistrationService> _regMock = new Mock<IRegistrationService>();
         private Mock<IErrorHandler> _handlerMock = new Mock<IErrorHandler>();
-        private Mock<IDocumentService> _docMock = new Mock<IDocumentService>();
+        private Mock<IProfileImageService> _imgMock = new Mock<IProfileImageService>();
         private OrhedgeContext _context;
 
         [TestInitialize]
@@ -73,7 +74,7 @@ namespace UnitTests.ServiceTests
                 studService.Object,
                 regMock.Object,
                 _sharedConfigMock.Object,
-                _docMock.Object);
+                _imgMock.Object);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -170,9 +171,10 @@ namespace UnitTests.ServiceTests
                 .Setup(file => file.GetFileDataAsync())
                 .ReturnsAsync(mockImgData);
 
-            _docMock
-                .Setup(doc => doc.UploadDocumentToStorage(It.IsAny<string>(), mockImgData))
-                .ReturnsAsync(new ResultMessage<bool>(OperationStatus.Success));
+            IUploadedFile mockedFile = fileMock.Object;
+            _imgMock
+                .Setup(imgService => imgService.SaveProfileImage(mockedFile))
+                .ReturnsAsync(new ResultMessage<string>("testpath"));
 
             IServicesExecutor<StudentDTO, Student> executor
                 = new ServiceExecutor<StudentDTO, Student>(_context, _handlerMock.Object);
@@ -183,7 +185,7 @@ namespace UnitTests.ServiceTests
                     studentService,
                     _regMock.Object,
                     _sharedConfigMock.Object,
-                    _docMock.Object);
+                    _imgMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync();
             string newUsername = "New username";
@@ -199,7 +201,7 @@ namespace UnitTests.ServiceTests
             stud = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == stud.StudentId);
             Assert.AreEqual(newUsername, stud.Username);
             Assert.AreEqual(newDescription, stud.Description);
-            _docMock.Verify(doc => doc.UploadDocumentToStorage(It.IsAny<string>(), mockImgData), Times.Once);
+            _imgMock.Verify(imgService => imgService.SaveProfileImage(mockedFile), Times.Once);
 
         }
 
@@ -222,7 +224,7 @@ namespace UnitTests.ServiceTests
                     studentService,
                     mockReg.Object,
                     _sharedConfigMock.Object,
-                    _docMock.Object);
+                    _imgMock.Object);
 
             Student stud = await _context.Students.FirstOrDefaultAsync(s => s.Username == "light");
             const string studOldPassword = "lightPassword";

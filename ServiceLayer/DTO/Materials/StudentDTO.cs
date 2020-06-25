@@ -17,6 +17,7 @@ namespace ServiceLayer.DTO
         public string Index { get; set; }
 
         public string Photo { get; set; }
+        public int PhotoVersion { get; set; }
 
         public string Description { get; set; }
 
