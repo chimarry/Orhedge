@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Orhedge.Helpers;
 using Orhedge.ViewModels;
 using ServiceLayer.Models;
 using System.Security.Claims;
@@ -61,16 +62,7 @@ namespace Orhedge.Controllers
         }
 
         private ClaimsPrincipal GetClaimsPrincipal(LoginResponse loginResponse)
-        {
-            ClaimsIdentity identity = new ClaimsIdentity(
-                new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, loginResponse.Id.ToString()),
-                    new Claim(ClaimTypes.Role, loginResponse.Privilege.ToString())
-                }, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return new ClaimsPrincipal(identity);
-        }
+            => AuthenticationHelpers.GetClaimsPrincipal(loginResponse.Id, loginResponse.Privilege);
 
     }
 }

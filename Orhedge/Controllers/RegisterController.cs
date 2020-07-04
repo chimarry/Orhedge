@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Orhedge.Helpers;
 using Orhedge.ViewModels;
 using ServiceLayer.DTO;
+using ServiceLayer.ErrorHandling;
 using ServiceLayer.Services;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
@@ -12,9 +17,10 @@ namespace Orhedge.Controllers
 
         private readonly IStudentManagmentService _studentManagmentService;
         private readonly IMapper _mapper;
+        private readonly IStudentService _studentService;
 
-        public RegisterController(IStudentManagmentService studentManagmentService, IMapper mapper)
-            => (_studentManagmentService, _mapper) = (studentManagmentService, mapper);
+        public RegisterController(IStudentManagmentService studentManagmentService, IMapper mapper, IStudentService studentService)
+            => (_studentManagmentService, _mapper, _studentService) = (studentManagmentService, mapper, studentService);
 
         public async Task<IActionResult> ShowRegisterForm([FromQuery] string code)
         {
@@ -45,12 +51,23 @@ namespace Orhedge.Controllers
 
                 await _studentManagmentService.RegisterStudent(registerData);
 
-                // TODO: Display success view or redirect to home page
-                return Content("Registration succesfull");
+                ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.Username == registration.Username);
+                if (result.IsSuccess)
+                {
+                    ClaimsPrincipal claimsPrincipal = GetClaimsPrincipal(result.Result);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
+                    return RedirectToAction("Index", "StudyMaterial");
+                }
+                else
+                    // MAybe eturn error page
+                    return Content("Internal server error");
             }
             else
                 return RedirectToAction("Index", "Home");
         }
+
+        private ClaimsPrincipal GetClaimsPrincipal(StudentDTO student)
+            => AuthenticationHelpers.GetClaimsPrincipal(student.StudentId, student.Privilege);
 
     }
 }
