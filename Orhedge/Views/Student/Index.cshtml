@@ -1,1 +1,76 @@
-﻿
+﻿@inject IStringLocalizer<SharedResource> Localizer
+@{
+    //TODO: Specify proper layout
+    Layout = "_Layout";
+}
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="~/js/studentProfile.js" defer></script>
+}
+
+@section Stylesheet
+{
+    <link rel="stylesheet" href="~/css/studentProfile.css" />
+}
+
+
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-xl-4">
+
+            <div class="panel widget light-widget panel-bd-top">
+                <div class="panel-heading no-title"> </div>
+                <div class="panel-body">
+                    <div class="text-center vd_info-parent"> <a href="https://placeholder.com"><img src="https://via.placeholder.com/200"></a> </div>
+                    @* Add Name and Lastname *@
+                    <h2 class="font-semibold mgbt-xs-5">Milica Vasić</h2>
+                    @* Add privilege *@
+                    <h4>Standardni korisnik</h4>
+                    @* Add description *@
+                    <p>Ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                    <div class="mgtp-20">
+                        @* This look nice but I don't know how will you implement this hehe *@
+                        <table class="table table-striped table-hover">
+                            <tbody>
+                                <tr>
+                                    <td>User Rating</td>
+                                    <td><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i><i class="fa fa-star vd_yellow fa-fw"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-8">
+            <div class="panel widget light-widget panel-bd-top">
+                <div class="panel-heading no-title"> </div>
+                <div class="panel-body">
+                    <h2>User details:</h2><br><br>
+                    <div class="row">
+                        <div class="col-4">
+                            <h5><b>Name</b></h5>
+                            <h5><b>Last name</b></h5>
+                            <h5><b>Username</b></h5>
+                            <h5><b>Index</b></h5>
+                            <h5><b>Email</b></h5>
+                        </div>
+                        <div class="col-8">
+                            <h5>Milica</h5>
+                            <h5>Vasic</h5>
+                            <h5>milvas</h5>
+                            <h5>1121/16</h5>
+                            <h5>milvas@mail.com</h5>
+                        </div>
+                    </div>
+                        <hr><br>
+                        <button class="editProfileBtn btn btn-primary btn-block btn-lg">Izmijeni profil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -21,3 +21,153 @@
     align-content:center;
     margin-left: 10px;
 }
+
+#passform {
+    background-color: #083839;
+    padding: 30px;
+}
+
+#passform, h4 {
+    color: aliceblue;
+}
+
+/*.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+}*/
+
+/*-----------------Student profile view------------------*/
+
+.panel-bd-top {
+    border-top: 3px solid #1fae66;
+}
+
+.widget {
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.10);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    position: relative;
+    /*background-color: #336666;*/
+}
+
+.panel {
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-top-color: transparent;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    border-color: #336666;
+    border-bottom-width:medium;
+    height:98%;
+}
+
+.light-widget .panel-heading {
+    /*background: #FFFFFF;*/
+    /*background-color: #336666;*/
+}
+
+.panel .panel-heading {
+    position: relative;
+    padding: 7px 15px;
+}
+
+.panel .no-title {
+    height: 30px;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.panel .panel-body {
+    /*padding: 15px 25px 25px;*/
+}
+
+.panel .panel-body, .panel .panel-body-list {
+    /*background: #fff;*/
+    position: relative;
+}
+
+.panel-body {
+    padding: 15px;
+}
+
+.vd_info-parent {
+    position: relative;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.vd_content-section .row {
+    margin-bottom: 20px;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.mgbt-xs-5 {
+    margin-bottom: 5px !important;
+}
+
+.font-semibold {
+    font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 10px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    font-family: 'Open Sans','arial';
+    color: inherit;
+    text-rendering: optimizelegibility;
+}
+
+h2, .h2 {
+    font-size: 30px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+.mgtp-20 {
+    margin-top: 20px !important;
+}
+
+h5 {
+    margin-bottom: 30px;
+}
+
+.editProfileBtn {
+    /*margin:10px;*/
+    width: 95%;
+}
