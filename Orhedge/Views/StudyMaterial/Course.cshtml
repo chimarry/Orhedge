@@ -19,7 +19,6 @@
 }
 @section HeadScripts {
     <script src="~/js/materials/material.js" type="text/javascript" defer></script>
-    <script src="~/js/saveMaterial.js" type="text/javascript" defer></script>
     <script src="~/js/filereader.js" type="text/javascript" defer></script>
     <script src="~/js/rating.js" type="text/javascript" defer></script>
 }
@@ -42,11 +41,15 @@
                 <p style="text-align: right; margin-right: 15px; font-weight: bold;">Pažljivo popunite formu!</p>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding-top: 40px; padding-bottom: 20px;">
-                <input type='file' accept='.pdf,.doc,.jpeg' onchange='openFile(event)'><br>
-                <a id='output' hidden="hidden"></a>
-                <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" asp-controller="StudyMaterial" asp-action="UploadFile">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>@Localizer["UploadFileInputMessage"]</p>
+                            <input type="file" accept='.pdf,.doc,.jpeg,.zip' name="files" multiple />
+                        </div>
+                    </div>
                     <br>
-                    <select class="form-control form-control-lg" name="category" id="year-input" required">
+                    <select class="form-control form-control-lg" name="year" id="year-input" required">
                         <option value="">Izaberite... </option>
                         <option value="1">Prva godina</option>
                         <option value="2">Druga godina</option>
@@ -59,7 +62,11 @@
                     <select class="form-control form-control-lg" name="category" id="category-input" required">
                     </select>
                     <br>
-                    <button id="buttonSave" name="buttonSave" class="btn btn-primary btn-outline-light" onclick="saveMaterial()"> Pošalji nam materijal</button>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" class="btn btn-primary btn-outline-light" value="Pošalji nam materijal" />
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

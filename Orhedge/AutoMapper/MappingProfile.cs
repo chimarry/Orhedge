@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Orhedge.Helpers;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Forum;
@@ -10,6 +11,7 @@ using ServiceLayer.DTO.Forum;
 using ServiceLayer.DTO.Materials;
 using ServiceLayer.DTO.Student;
 using ServiceLayer.Models;
+using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
 
@@ -41,6 +43,7 @@ namespace Orhedge.AutoMapper
                 .ForMember(dest => dest.Categories, opts => opts.MapFrom(courseCat => courseCat.Categories));
             CreateMap<DetailedStudyMaterialDTO, StudyMaterialViewModel>().ForMember(dest => dest.GivenRating, conf => { conf.MapFrom(src => src.GivenRating); conf.NullSubstitute(0); });
             CreateMap<EditStudyMaterialViewModel, StudyMaterialDTO>();
+            CreateMap<IFormFile, BasicFileInfo>().ConvertUsing<FormFileToBasicFileInfoConverter>();
         }
 
         private void MapStudents()

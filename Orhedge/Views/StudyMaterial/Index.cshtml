@@ -16,7 +16,6 @@
 
 @section HeadScripts {
     <script src="~/js/materials/material.js" type="text/javascript" defer></script>
-    <script src="~/js/saveMaterial.js" type="text/javascript" defer></script>
     <script src="~/js/filereader.js" type="text/javascript" defer></script>
 }
 
@@ -32,7 +31,7 @@
     </div>
 </div>
 
-<!--Posalji materijal-->
+<!--Send material-->
 <div class="container-fluid main-content" style="background-color:#04001D; color: white;">
     <div class="row padding">
         <div class="col-xs-12 col-sm-12 col-md-8">
@@ -44,12 +43,15 @@
             <p style="text-align: right; margin-right: 15px; font-weight: bold;">Pažljivo popunite formu!</p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4" style="padding-top: 40px; padding-bottom: 20px;">
-            <input type='file' accept='.pdf,.doc,.jpeg' onchange='openFile(event)'><br><!--Koji fajlovi se mogu da se salju-->
-            <a id='output' hidden="hidden"></a>
-            <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
-                <!--Dodati potrebnu akciju-->
+            <form method="post" enctype="multipart/form-data" asp-controller="StudyMaterial" asp-action="UploadFile">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <p>@Localizer["UploadFileInputMessage"]</p>
+                        <input type="file" accept='.pdf,.doc,.jpeg,.zip' name="files" multiple />
+                    </div>
+                </div>
                 <br>
-                <select class="form-control form-control-lg" name="category" id="year-input" required">
+                <select class="form-control form-control-lg" name="year" id="year-input" required">
                     <option value="">Izaberite... </option>
                     <option value="1">Prva godina</option>
                     <option value="2">Druga godina</option>
@@ -57,18 +59,21 @@
                     <option value="4">Četvrta godina</option>
                 </select>
                 <br>
-                <!--<select class="form-control form-control-lg" id="validationCustom04" name="course" required></select>-->
                 <input id="course-input" class="form-control form-control-lg" name="course" required />
                 <br>
                 <select class="form-control form-control-lg" name="category" id="category-input" required">
                 </select>
                 <br>
-                <button id="buttonSave" name="buttonSave" class="btn btn-primary btn-outline-light" onclick="saveMaterial()"> Pošalji nam materijal</button>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input type="submit" class="btn btn-primary btn-outline-light" value="Pošalji nam materijal" />
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
-<!--Prikaz predmeta i materijala-->
+<!--Show courses-->
 <div class="conatainer-fluid" style="color: white;">
     <div class="row text-center">
         @{ List<SemesterViewModel> semesters = Model.Semesters;
@@ -79,10 +84,9 @@
 
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <h1 class="display-4">@Localizer[semester.Semester.ToString()]</h1>
-                        <hr> <!--Treba stajlovati hr!!-->
                         @foreach (IndexCourseViewModel indexCourse in semester.Courses[0])
                         {
-                            <a href="#" class="btn btn-link linkpredmeta">@indexCourse.Name</a>
+                            @Html.ActionLink(indexCourse.Name, "Course", "StudyMaterial", new { @courseId = indexCourse.CourseId }, new { @class = "btn btn-link linkpredmeta" })
                         }
                     </div>
                 }
@@ -90,7 +94,6 @@
                 {
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <h1 class="display-4">@Localizer[semester.Semester.ToString()]</h1>
-                        <hr> <!--Treba stajlovati hr!!-->
                         @foreach (StudyProgram sp in Enum.GetValues(typeof(StudyProgram)))
                         {
                             if (sp != StudyProgram.CommonYear)
@@ -102,7 +105,7 @@
                                     @foreach (IndexCourseViewModel indexCourse in semester.Courses[sp])
                                     {
                                         <div class="dropdown-menu linkpredmeta" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="#">@indexCourse.Name</a>
+                                            @Html.ActionLink(indexCourse.Name, "Course", "StudyMaterial", new { @courseId = indexCourse.CourseId }, new { @class = "dropdown-item" })
                                         </div>
                                     }
                                 </div>

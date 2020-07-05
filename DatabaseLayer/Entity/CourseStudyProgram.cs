@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer.Enums;
+using System;
 
 namespace DatabaseLayer.Entity
 {

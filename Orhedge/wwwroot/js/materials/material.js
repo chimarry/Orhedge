@@ -12,8 +12,6 @@ function updateCategories(selectedCourse) {
     $("#category-input").empty().append(opts);
 }
 
-
-
 $("#course-input")
     .autocomplete({
         minLength: 0,
@@ -50,12 +48,12 @@ $("#year-input").change(ev => {
     courseInput.autocomplete("enable");
 });
 
-for (let year = 0; year < 4; ++year) {
+for (let i = 0; i < 4; ++i) {
     $.ajax({
-        url: `/api/StudyMaterialApi/courses/${year + 1}`,
+        url: `/api/StudyMaterialApi/courses/${i}`,
         method: "GET",
         success: response => {
-            coursesByYear[year] = response.map(course => { course.value = course.name; return course });
+            coursesByYear[i] = response.map(course => { course.value = course.name; return course });
             if (coursesByYear[0] && coursesByYear[1] && coursesByYear[2] && coursesByYear[3]) {
                 $(".spinner-wrapper").hide();
                 console.log("Spinner hidden");

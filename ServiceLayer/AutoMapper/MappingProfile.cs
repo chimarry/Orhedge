@@ -24,7 +24,7 @@ namespace ServiceLayer.AutoMapper
                 .ForMember(dest => dest.StudentId, conf =>
                   {
                       conf.PreCondition(src => src.StudentId != default);
-                      conf.MapFrom(src => src.UploadDate);
+                      conf.MapFrom(src => src.StudentId);
                   })
                 .ForMember(dest => dest.TotalRating, conf => conf.Ignore())
                 .ForAllOtherMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)); ;

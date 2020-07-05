@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Orhedge.AutoMapper;
 using Orhedge.Enums;
@@ -13,6 +14,7 @@ using ServiceLayer.Services;
 using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,6 +50,16 @@ namespace Orhedge.Controllers
             indexModel.Semesters = semesters.ToList();
             indexModel.Semesters = indexModel.Semesters.OrderBy(x => x.Semester).ToList();
             return View(indexModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(List<IFormFile> files, int category)
+        {
+            List<BasicFileInfo> basicFileInfos = new List<BasicFileInfo>();
+            foreach (IFormFile file in files)
+                basicFileInfos.Add(_mapper.Map<BasicFileInfo>(file));
+            ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveStudyMaterials(category, 1, basicFileInfos);
+            return RedirectToAction("Index");
         }
 
         /// <summary>

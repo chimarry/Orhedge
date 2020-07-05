@@ -345,4 +345,7 @@
   <data name="UserRating" xml:space="preserve">
     <value>Ocjena</value>
   </data>
+  <data name="UploadFileInputMessage" xml:space="preserve">
+    <value>Odaberite fajl(ove):</value>
+  </data>
 </root>

@@ -56,28 +56,55 @@ namespace ServiceLayer.Services
         }
 
         public async Task<List<CourseCategoryDTO>> GetCoursesByYear(int year)
+          => await _context.CourseStudyPrograms
+                           .Where(csp => csp.StudyYear == year)
+                           .Select(csp => new CourseCategoryDTO
+                           {
+                               Course = Mapping.Mapper.Map<CourseDTO>(csp.Course),
+                               Categories = csp.Course.Categories.Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
+                           })
+                           .Distinct()
+                           .ToListAsync();
+
+        /// <summary>
+        /// Saves list of study materials in specified category within specific course, relating those study materials with
+        /// specific student.
+        /// </summary>
+        /// <param name="categoryId">Unique identifier for the category</param>
+        /// <param name="studentId">Unique identifier for the student</param>
+        /// <param name="fileInfos">List of file information</param>
+        /// <returns>True if upload succeeds, false if not</returns>
+        public async Task<ResultMessage<bool>> SaveStudyMaterials(int categoryId, int studentId, List<BasicFileInfo> fileInfos)
         {
-            List<CourseCategoryDTO> courses = await _context
-                .CourseStudyPrograms
-                .Where(csp => csp.StudyYear == year)
-                .Select(csp => new CourseCategoryDTO
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
+            {
+                foreach (BasicFileInfo fileInfo in fileInfos)
                 {
-                    Course = Mapping.Mapper.Map<CourseDTO>(csp.Course),
-                    Categories = csp.Course.Categories.Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
+                    ResultMessage<CategoryDTO> choosenCategory = await _categoryService
+                                                                .GetSingleOrDefault(x => x.CategoryId == categoryId);
+                    if (!choosenCategory.IsSuccess)
+                        return new ResultMessage<bool>(false, choosenCategory.Status, choosenCategory.Message);
+
+                    StudyMaterialDTO data = new StudyMaterialDTO()
+                    {
+                        StudentId = studentId,
+                        CategoryId = categoryId,
+                        Name = fileInfo.FileName,
+                        UploadDate = DateTime.Now,
+                        Uri = PathBuilder.BuildPathForStudyMaterial(choosenCategory.Result.CourseId, categoryId, fileInfo.FileName)
+                    };
+
+                    ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
+
+                    if (!studyMaterialResult.IsSuccess)
+                        return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
+                    ResultMessage<bool> fsUploadResult = await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
+                    if (!fsUploadResult.IsSuccess)
+                        return new ResultMessage<bool>(false, fsUploadResult.Status, fsUploadResult.Message);
                 }
-                ).ToListAsync();
-
-
-            return courses;
-        }
-
-        public async Task<ResultMessage<bool>> SaveMaterial(StudyMaterialDTO data, BasicFileInfo fileInfo)
-        {
-            data.Uri = PathBuilder.BuildPathForStudyMaterial(data.CategoryId, data.CategoryId, fileInfo.FileName);
-            ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
-            if (!studyMaterialResult.IsSuccess)
-                return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
-            return await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
+                transaction.Commit();
+            }
+            return new ResultMessage<bool>(OperationStatus.Success);
         }
 
         public async Task<List<DetailedStudyMaterialDTO>> AppendRating(int studentId, List<DetailedStudyMaterialDTO> studyMaterials)
