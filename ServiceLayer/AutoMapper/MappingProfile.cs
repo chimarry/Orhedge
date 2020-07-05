@@ -32,22 +32,12 @@ namespace ServiceLayer.AutoMapper
             CreateMap<StudyMaterial, StudyMaterialDTO>();
             CreateMap<StudyMaterialRating, StudyMaterialRatingDTO>().ReverseMap();
             CreateMap<Registration, RegistrationDTO>().ReverseMap();
-            CreateMap<Answer, AnswerDTO>().ReverseMap();
-            CreateMap<AnswerRating, AnswerRatingDTO>().ReverseMap();
-            CreateMap<Discussion, DiscussionDTO>().ReverseMap();
-            CreateMap<DiscussionPost, DiscussionPostDTO>().ReverseMap();
-            CreateMap<ForumCategory, ForumCategoryDTO>().ReverseMap();
-            CreateMap<Question, QuestionDTO>().ReverseMap();
-            CreateMap<Topic, TopicDTO>().ReverseMap();
-            CreateMap<TopicRating, TopicRatingDTO>().ReverseMap();
             CreateMap<RegisterFormDTO, RegistrationDTO>();
             CreateMap<RegisterUserDTO, StudentDTO>();
             CreateMap<RegistrationDTO, StudentDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
             CreateMap<RegisterRootDTO, StudentDTO>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FirstName));
-            // CreateMap<Source,Destination>();
-            // Additional mappings here...
         }
     }
 }

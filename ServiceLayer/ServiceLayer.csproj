@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\QuestionService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="7.20.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
