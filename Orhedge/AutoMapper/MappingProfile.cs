@@ -60,7 +60,7 @@ namespace Orhedge.AutoMapper
                 });
 
             CreateMap<ChangePasswordViewModel, UpdatePasswordDTO>();
-            CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ReverseMap();
+            CreateMap<StudentDTO, ViewModels.Admin.StudentViewModel>().ForMember(dest => dest.PhotoVersion, opts => opts.Condition(src => src.Photo != null)).ReverseMap();
             CreateMap<ViewModels.Admin.EditStudentViewModel, StudentDTO>().ReverseMap();
         }
 

@@ -336,4 +336,13 @@
   <data name="Registration" xml:space="preserve">
     <value>Registracija</value>
   </data>
+  <data name="UpdateProfile" xml:space="preserve">
+    <value>Izmijeni profil</value>
+  </data>
+  <data name="UserDetails" xml:space="preserve">
+    <value>Informacije o korisniku</value>
+  </data>
+  <data name="UserRating" xml:space="preserve">
+    <value>Ocjena</value>
+  </data>
 </root>
