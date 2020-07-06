@@ -34,8 +34,8 @@
 
     public enum SendConfirmEmailStatus
     {
-        Success,
-        AlreadyExists
+        EmailAlreadyExists,
+        IndexAlreadyExists
     };
 
     public enum StudyMaterialSortingCriteria

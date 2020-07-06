@@ -12,6 +12,7 @@ namespace ServiceLayer.Services
         Task<ResultMessage<bool>> GenerateRegistrationEmail(RegisterFormDTO registerFormData);
 
         Task<bool> IsStudentRegistered(string email);
+        Task<bool> IsStudentRegisteredIndex(string index);
 
         Task<bool> ValidateRegistrationCode(string code);
 

@@ -50,12 +50,13 @@ namespace Orhedge.Controllers
         [HttpPost("send-confirmation-email")]
         public async Task<ActionResult> SendConfirmationEmail(RegisterFormViewModel registration)
         {
-            bool isRegistered = await _studMngService.IsStudentRegistered(registration.Email);
+            bool isEmailRegistered = await _studMngService.IsStudentRegistered(registration.Email);
+            bool isIndexRegistered = await _studMngService.IsStudentRegisteredIndex(registration.IndexNumber);
 
-            if (isRegistered)
-            {
-                return BadRequest(new { error = nameof(SendConfirmEmailStatus.AlreadyExists) });
-            }
+            if (isEmailRegistered)
+                return BadRequest(new { error = nameof(SendConfirmEmailStatus.EmailAlreadyExists) });
+            else if (isIndexRegistered)
+                return BadRequest(new { error = nameof(SendConfirmEmailStatus.IndexAlreadyExists) });
             else
             {
                 RegisterFormDTO registerFormDTO = _mapper.Map<RegisterFormDTO>(registration);

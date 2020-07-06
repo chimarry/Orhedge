@@ -204,5 +204,11 @@ namespace ServiceLayer.Services.Student
             StudentDTO st = await _studentService.GetSingleOrDefault(s => s.StudentId == id);
             return VerifyOldPassword(password, st.Salt, st.PasswordHash);
         }
+
+        public async Task<bool> IsStudentRegisteredIndex(string index)
+        {
+            ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.Index == index && !s.Deleted);
+            return result.IsSuccess;
+        }
     }
 }

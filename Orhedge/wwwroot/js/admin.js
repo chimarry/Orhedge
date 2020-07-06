@@ -104,9 +104,10 @@ let regFormValidator = $("#regForm").validate(
                 statusCode: {
                     400: xhr => {
                         console.log(xhr.responseJSON);
-                        if (xhr.responseJSON.error === "AlreadyExists")
+                        if (xhr.responseJSON.error === "EmailAlreadyExists")
                             regFormValidator.showErrors({ email: "Korisnik sa datom email adresom već postoji" });
-
+                        else if (xhr.responseJSON.error === "IndexAlreadyExists")
+                            regFormValidator.showErrors({indexnumber: "Korisnik sa datim indeksom već postoji"});
                         $("#sendEmailBttn").prop("disabled", false);
                     }
                 },
