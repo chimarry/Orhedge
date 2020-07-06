@@ -23,7 +23,7 @@
     <script src="~/js/admin.js"></script>
 }
 
-
+@Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "Admin"))
 <section id="nav-admin">
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -149,7 +149,7 @@
                         </tbody>
                     </table>
 
-                        <!--Paging-->
+                    <!--Paging-->
                     <div id="paging">
                         <ul class="pagination" style="margin:20px 0">
                             @if (!Model.PageInformation.IsFirst)
@@ -167,7 +167,7 @@
                             }
 
                             <div id="pageFooter"><label>@(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)</label></div>
-                            
+
                             @if (!Model.PageInformation.IsLast)
                             {
                                 <li class="page-item">
@@ -283,9 +283,9 @@
                     }
                 </select>
             </div>
-                <br>
+            <br>
             <div class="container">
-                <button type="submit" class="submitbtn btn btn-primary button button4" onclick="editUser()">@Localizer["Save"]</button>
+                <button type="button" class="submitbtn btn btn-primary button button4" onclick="editUser()">@Localizer["Save"]</button>
                 <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalEditId').style.display='none'">@Localizer["Cancel"]</button>
             </div>
         </div>
@@ -301,7 +301,7 @@
         <br><br>
         <div class="container">
             <input type="number" hidden="hidden" id="deleteStudentId" name="studentId" />
-            <button type="submit" class="submitbtn btn btn-primary button button4" onclick="deleteUser()">@Localizer["Delete"]</button>
+            <button type="button" class="submitbtn btn btn-primary button button4" onclick="deleteUser()">@Localizer["Delete"]</button>
             <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteId').style.display='none'">@Localizer["Cancel"]</button>
         </div>
     </form>

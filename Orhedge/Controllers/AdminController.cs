@@ -40,13 +40,17 @@ namespace Orhedge.Controllers
 
         private async Task<AdminIndexViewModel> GetStudents(int pageNumber = 0, StudentPrivilege[] privileges = null, string searchFor = null, StudentSortingCriteria sortCriteria = StudentSortingCriteria.NoSorting)
         {
-            int offset = pageNumber * MaxNumberOfItemsPerPage;
             List<StudentDTO> students = null;
             if (privileges == null || privileges.Count() == 0)
                 privileges = Enum.GetValues(typeof(StudentPrivilege)).Cast<StudentPrivilege>().ToArray();
             Predicate<StudentDTO> filterFunction = (x) => !x.Deleted && privileges.Contains(x.Privilege);
             if (searchFor != null)
-                filterFunction = (x) => !x.Deleted && privileges.Contains(x.Privilege) && ((x.Name + x.LastName).Contains(searchFor.Trim()) || ((int)Math.Truncate(x.Rating)).ToString() == searchFor.Trim());
+                filterFunction = (x) => !x.Deleted && privileges.Contains(x.Privilege)
+                                                   && ((x.Name + x.LastName).Contains(searchFor.Trim())
+                                                          || ((int)Math.Truncate(x.Rating)).ToString() == searchFor.Trim());
+            PageInformation pageInformation = new PageInformation(pageNumber, await _studentService.Count(filterFunction), MaxNumberOfItemsPerPage);
+            int offset = pageInformation.PageNumber * MaxNumberOfItemsPerPage;
+
             switch (sortCriteria)
             {
                 case StudentSortingCriteria.NoSorting: students = await _studentService.GetRange<string>(offset, MaxNumberOfItemsPerPage, filterFunction, asc: true); break;
@@ -60,7 +64,6 @@ namespace Orhedge.Controllers
             if (students == null)
                 students = await _studentService.GetAll<NoSorting>(x => !x.Deleted);
 
-            PageInformation pageInformation = new PageInformation(pageNumber, await _studentService.Count(filterFunction), MaxNumberOfItemsPerPage);
             AdminIndexViewModel adminIndexViewModel = new AdminIndexViewModel(_mapper.Map<List<StudentDTO>, List<StudentViewModel>>(students), pageInformation);
             ViewBag.SearchFor = searchFor;
             ViewBag.SortingCriteria = sortCriteria;

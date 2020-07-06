@@ -1,4 +1,4 @@
-﻿function sh(studentParam) {
+﻿function showEditModal(studentParam) {
     document.getElementById('studentId').value = studentParam.studentId;
     document.getElementById('nameId').value = studentParam.name;
     document.getElementById('lastNameId').value = studentParam.lastName;
@@ -26,7 +26,13 @@ function editUser() {
         data: model,
         async: false,
         contentType: "application/json; charset=utf-8",
-        dataType: "json"
+        dataType: "json",
+        success: response => {
+            window.location.href = response;
+        },
+        error: response => {
+            console.log(response);
+        }
     })
 }
 function deleteUser() {
@@ -40,7 +46,13 @@ function deleteUser() {
         data: model,
         async: false,
         contentType: "application/json; charset=utf-8",
-        dataType: "json"
+        dataType: "json",
+        success: response => {
+            window.location.href = response;
+        },
+        error: response => {
+            console.log(response);
+        }
     })
 }
 
@@ -50,13 +62,8 @@ function searchSortFilter(paramsArray) {
     var searchFor = document.getElementById("search").value;
     var selectBox = document.getElementById("sort");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-    var url = "SearchSortFilter?privileges=";
 
-    // Check if redirected
-    var pathname = window.location.pathname;
-    if (pathname.indexOf("Admin") < 0)
-        url = "Admin/" + url;
-
+    url = $("#SearchSortFilterRedirect").val() + "?privileges=";
     for (i = 0; i < numberOfElements; ++i)
         if (document.getElementById(i + "filter").checked)
             url = url.concat("&privileges=", document.getElementById(i + "filter").value);
@@ -107,7 +114,7 @@ let regFormValidator = $("#regForm").validate(
                         if (xhr.responseJSON.error === "EmailAlreadyExists")
                             regFormValidator.showErrors({ email: "Korisnik sa datom email adresom već postoji" });
                         else if (xhr.responseJSON.error === "IndexAlreadyExists")
-                            regFormValidator.showErrors({indexnumber: "Korisnik sa datim indeksom već postoji"});
+                            regFormValidator.showErrors({ indexnumber: "Korisnik sa datim indeksom već postoji" });
                         $("#sendEmailBttn").prop("disabled", false);
                     }
                 },

@@ -60,8 +60,11 @@ namespace ServiceLayer.Services
                            .Where(csp => csp.StudyYear == year)
                            .Select(csp => new CourseCategoryDTO
                            {
-                               Course = Mapping.Mapper.Map<CourseDTO>(csp.Course),
-                               Categories = csp.Course.Categories.Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
+                               Course = csp.Course.Deleted ? null : Mapping.Mapper.Map<CourseDTO>(csp.Course),
+                               Categories = csp.Course
+                                               .Categories
+                                               .Where(x => !x.Deleted)
+                                               .Select(cat => Mapping.Mapper.Map<CategoryDTO>(cat)).ToList()
                            })
                            .Distinct()
                            .ToListAsync();

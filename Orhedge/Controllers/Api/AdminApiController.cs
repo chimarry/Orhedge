@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Orhedge.Enums;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Admin;
@@ -24,27 +25,17 @@ namespace Orhedge.Controllers
             = (studentService, mapper, studMngService);
 
         [HttpPut]
-        public async Task<ActionResult> Edit([FromBody]EditStudentViewModel model)
+        public async Task<ActionResult> Edit([FromBody] EditStudentViewModel model)
         {
             await _studentService.Update(_mapper.Map<StudentDTO>(model));
-            string newUrl = Url.Link("Default", new
-            {
-                Controller = "Admin",
-                Action = "Index"
-            });
-            return Redirect(newUrl);
+            return RedirectToIndexController();
         }
 
         [HttpPut("delete")]
-        public async Task<ActionResult> Delete([FromBody]DeleteStudentViewModel model)
+        public async Task<ActionResult> Delete([FromBody] DeleteStudentViewModel model)
         {
             await _studentService.Delete(model.StudentId);
-            string newUrl = Url.Link("Default", new
-            {
-                Controller = "Admin",
-                Action = "Index"
-            });
-            return Redirect(newUrl);
+            return RedirectToIndexController();
         }
 
         [HttpPost("send-confirmation-email")]
@@ -64,5 +55,12 @@ namespace Orhedge.Controllers
                 return NoContent();
             }
         }
+
+        private ActionResult RedirectToIndexController()
+                 => Ok(JsonConvert.SerializeObject(Url.Link("Default", new
+                 {
+                     Controller = "Admin",
+                     Action = "Index",
+                 })));
     }
 }
