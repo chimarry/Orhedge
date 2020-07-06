@@ -5,6 +5,7 @@ using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
@@ -37,6 +38,18 @@ namespace ServiceLayer.Services
 
         public async Task<ResultMessage<StudyMaterialDTO>> Update(StudyMaterialDTO studyMaterialDTO)
              => await _servicesExecutor.Update(studyMaterialDTO, x => x.StudyMaterialId == studyMaterialDTO.StudyMaterialId && x.Deleted == false);
+
+        public async Task<ResultMessage<bool>> DeleteFromCategory(int categoryId)
+        {
+            List<StudyMaterialDTO> studyMaterialDTOs = await _servicesExecutor.GetAll<NoSorting>(x => x.CategoryId == categoryId && !x.Deleted);
+            foreach (StudyMaterialDTO dto in studyMaterialDTOs)
+            {
+                ResultMessage<bool> deletedMaterial = await Delete(dto.StudyMaterialId);
+                if (!deletedMaterial.IsSuccess)
+                    return new ResultMessage<bool>(false, deletedMaterial.Status, deletedMaterial.Message);
+            }
+            return new ResultMessage<bool>(true, OperationStatus.Success);
+        }
     }
 }
 

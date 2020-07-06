@@ -33,6 +33,7 @@ namespace Orhedge.IoC
             builder.RegisterType<StudyMaterialMenagementService>().InstancePerLifetimeScope().As<IStudyMaterialManagementService>();
             builder.RegisterType<ChatMessageService>().InstancePerLifetimeScope().As<IChatMessageService>();
             builder.RegisterType<ProfileImageService>().InstancePerLifetimeScope().As<IProfileImageService>();
+            builder.RegisterType<CourseCategoryManagementService>().InstancePerLifetimeScope().As<ICourseCategoryManagementService>();
 
             // IMapper is thread safe, hence we register it as singleton
             builder.Register(ctx => MappingConfiguration.CreateMapping());

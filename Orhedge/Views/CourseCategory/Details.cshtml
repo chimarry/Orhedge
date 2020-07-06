@@ -1,0 +1,189 @@
+﻿@model Orhedge.ViewModels.CourseCategory.DetailsViewModel
+@using Orhedge.ViewModels.CourseCategory
+@using Orhedge.ViewModels.StudyMaterial
+@using DatabaseLayer.Enums
+@{
+    ViewData["Title"] = "Details";
+}
+@inject IStringLocalizer<SharedResource> Localizer
+
+@section Stylesheet
+{
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="~/css/courses.css">
+    <link rel="stylesheet" href="~/css/modalDesign.css">
+}
+
+@section HeadScripts{
+    <script src="~/js/courses/categories.js" defer></script>
+    <script src="~/js/courses/studyPrograms.js" defer></script>
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+}
+<div class="container col">
+
+    <div class="row flex-row justify-content-between">
+        <h2 style="margin:20px;color:#7ac7c7">@Model.DetailedCourseViewModel.Name</h2>
+        <div>
+            <a class="btn btn-back btn-sm mt-3" style="background:#7ac7c7; color:white" href="@Url.Action("Index")"><i class="fas fa-arrow-alt-circle-left"></i> Vrati se na prethodnu stranicu</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <div class="table-responsive  listaKorisnika">
+                <table class="table">
+                    <thead style="background: #3b8080;color: white;">
+                        <tr>
+                            <th>@Localizer["StudyProgram"]</th>
+                            <th>@Localizer["Semester"]</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ((Semester semester, StudyProgram sp) in Model.SemesterAndStudyPrograms)
+                        {
+                            <tr class="align-items-center">
+                                <td>@Localizer[sp.ToString()]</td>
+                                <td>@Localizer[semester.ToString()]</td>
+                                <td>
+                                    @{
+                                        string formatSp = "{{semesterEnum:{0},studyProgramEnum:{1}}}";
+                                        string paramDeleteFromSp = string.Format(formatSp, (int)semester, (int)sp);
+                                    }
+                                    <button class="btn btn-secondary btn-sm" style="background:#3b8080" onclick="showDeleteFromStudyProgramModal(@paramDeleteFromSp)">@Localizer["Delete"]</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-secondary btn-sm" style="background:#3b8080" onclick="showAddInStudyProgramModal()">@Localizer["Add"]</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+
+            <div class="table-responsive  listaKorisnika">
+                <table class="table">
+                    <thead style="background: #3b8080;color:white">
+                        <tr>
+                            <th>@Localizer["Category"]</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (CategoryViewModel cat in Model.DetailedCourseViewModel.Categories)
+                        {
+                            <tr class="align-items-center">
+                                <td>@cat.Name</td>
+                                <td></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" style="background:#3b8080" onclick="showDeleteCategoryModal(@cat.CategoryId)">@Localizer["Delete"]</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-secondary btn-sm" style="background:#3b8080" onclick="showAddCategoryModal()">@Localizer["Add"]</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalDeleteSpId" class="modal">
+    <form id="deleteFromStudyProgramFormId" class="modal-content animate modal-design">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('modalDeleteSpId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+        <br>
+        <label><b>@Localizer["ConfirmDelete"]</b></label>
+        <br><br>
+        <div class="container">
+            <input type="text" hidden="hidden" id="deleteSemesterId" name="deleteSemester" />
+            <input type="text" hidden="hidden" id="deleteStudyProgramId" name="deleteStudyProgram" />
+            <button type="button" class="submitbtn btn btn-primary button button4" onclick="deleteFromStudyProgram(@Model.DetailedCourseViewModel.CourseId)">@Localizer["Delete"]</button>
+            <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteSpId').style.display='none'">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+</div>
+<div id="modalDeleteCategoryId" class="modal">
+    <form id="deleteCategoryFormId" class="modal-content animate modal-design">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('modalDeleteCategoryId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+        <br>
+        <label><b>@Localizer["ConfirmDelete"]</b></label>
+        <br><br>
+        <div class="container">
+            <input type="number" hidden="hidden" id="deleteCategoryId" name="categoryId" />
+            <button type="button" class="submitbtn btn btn-primary button button4" onclick="deleteCategory(@Model.DetailedCourseViewModel.CourseId)">@Localizer["Delete"]</button>
+            <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteCategoryId').style.display='none'">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+</div>
+<div id="modalAddSpId" class="modal">
+    <form id="addInSpFormId" class="modal-content animate modal-design">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('modalAddSpId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <label for="name" class="col-6"><b>@Localizer["Semester"]</b></label>
+                <select class="form-control form-control-sm col-6" name="semesterName">
+
+                    @foreach (string semester in Enum.GetNames(typeof(Semester)))
+                    {
+                        <option id=@semester value="@semester">@Localizer[semester]</option>
+                    }
+                </select>
+            </div><br>
+            <div class="row">
+                <label for="lastname" class="col-6"><b>@Localizer["StudyProgram"]</b></label>
+                <select class="form-control form-control-sm col-6" name="studyProgramName">
+
+                    @foreach (string studyProgram in Enum.GetNames(typeof(StudyProgram)))
+                    {
+                        <option id=@studyProgram value="@studyProgram">@Localizer[studyProgram]</option>
+                    }
+                </select>
+            </div><br>
+            <br>
+            <div class="container">
+                <button type="button" class="submitbtn btn btn-primary button button4" onclick="addInStudyProgram(@Model.DetailedCourseViewModel.CourseId)">@Localizer["Save"]</button>
+                <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalAddSpId').style.display='none'">@Localizer["Cancel"]</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="modalAddCategoryId" class="modal">
+    <form id="addCategoryFormId" class="modal-content animate modal-design">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('modalAddCategoryId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+        <div class="container">
+            <br>
+            <div class="row">
+                <label for="name" class="col-6"><b>@Localizer["NameObject"]</b></label>
+                <input type="text" class="col-6" id="categoryNameId" name="categoryName" required>
+            </div><br>
+            <div class="container">
+                <button type="button" class="submitbtn btn btn-primary button button4" onclick="addCategory(@Model.DetailedCourseViewModel.CourseId)">@Localizer["Save"]</button>
+                <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalCategoryId').style.display='none'">@Localizer["Cancel"]</button>
+            </div>
+        </div>
+    </form>
+</div>

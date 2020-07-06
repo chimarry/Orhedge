@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Orhedge.Helpers;
 using Orhedge.ViewModels;
+using Orhedge.ViewModels.CourseCategory;
 using Orhedge.ViewModels.Student;
 using Orhedge.ViewModels.StudyMaterial;
 using Orhedge.ViewModels.TechnicalSupport;
@@ -22,6 +23,14 @@ namespace Orhedge.AutoMapper
             MapStudyMaterials();
             MapStudents();
             MapTechnicalSupport();
+            MapCourseCategories();
+        }
+
+        private void MapCourseCategories()
+        {
+            CreateMap<DetailedCourseCategoryDTO, DetailedCourseViewModel>().ForMember(dest => dest.Name, opts => opts.MapFrom(x => x.Course.Name))
+                                                                          .ForMember(dest => dest.CourseId, opts => opts.MapFrom(x => x.Course.CourseId))
+                                                                          .ForMember(dest => dest.Categories, src => src.MapFrom(x => x.Categories));
         }
 
         private void MapTechnicalSupport()

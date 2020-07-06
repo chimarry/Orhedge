@@ -13,7 +13,7 @@ namespace ServiceLayer.Services
              : base(servicesExecutor) { }
 
         public async Task<ResultMessage<CourseDTO>> Add(CourseDTO courseDTO)
-             => await _servicesExecutor.Add(courseDTO, x => x.Name != courseDTO.Name && x.Deleted == false);
+             => await _servicesExecutor.Add(courseDTO, x => x.Name == courseDTO.Name);
 
         public async Task<ResultMessage<bool>> Delete(int id)
             => await _servicesExecutor.Delete((Course x) => x.CourseId == id && !x.Deleted, x => { x.Deleted = true; return x; });

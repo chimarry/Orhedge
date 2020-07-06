@@ -1,4 +1,4 @@
-﻿function showEditModal(studentParam) {
+﻿function sh(studentParam) {
     document.getElementById('studentId').value = studentParam.studentId;
     document.getElementById('nameId').value = studentParam.name;
     document.getElementById('lastNameId').value = studentParam.lastName;

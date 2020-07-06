@@ -1,0 +1,253 @@
+﻿@model Orhedge.ViewModels.CourseCategory.CourseCategoryIndexViewModel
+@using DatabaseLayer.Enums;
+@using Orhedge.ViewModels.CourseCategory;
+@using Orhedge.ViewModels.StudyMaterial;
+@inject IStringLocalizer<SharedResource> Localizer
+
+@section Title
+{
+    AdminTitle
+}
+
+@section Stylesheet
+{
+    <link rel="stylesheet" href="~/css/courses.css">
+    <link rel="stylesheet" href="~/css/modalDesign.css">
+}
+
+@section HeadScripts {
+    <script src="~/js/courses/courses.js" defer></script>
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/baffle@0.3.6/dist/baffle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/additional-methods.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+}
+
+@Html.Hidden("SearchFilterRedirect", Url.Action("SearchFilter", "CourseCategory"))
+<section id="nav-admin">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link nav-item active" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" tabindex="0"
+               aria-controls="nav-courses" aria-selected="true">Lista predmeta</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-item" id="nav-addCourse-tab" data-toggle="tab" href="#nav-addCourse" role="tab" tabindex="-1"
+               aria-controls="nav-addCourse" aria-selected="false">Dodavanje predmeta</a>
+        </li>
+    </ul>
+</section>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-courses" role="tabpanel" aria-labelledby="nav-courses-tab">
+        @{
+            string format = "{{itemCount:{0},pageNumber:{1}}}";
+            string paramsSearchSortFilter = string.Format(format, Enum.GetValues(typeof(StudyProgram)).Length, Model.PageInformation.PageNumber); //@Model.PageInformation.PageNumber);
+        }
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="table-responsive  listaKorisnika">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>@Localizer["NameObject"]</th>
+                                <th>@Localizer["StudyMaterialsCount"]</th>
+                                <th></th>
+                                <th>
+                                    <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
+                                    <button type="submit" onclick="searchFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DetailedCourseViewModel course in Model.Courses)
+                            {
+                                <tr class="align-items-center">
+                                    <td>@course.Name</td>
+                                    <td>@course.StudyMaterialsCount</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary btn-sm" style="background:#3b8080">@Localizer["Categories"]</button>
+                                            <div class="dropdown-content">
+                                                @foreach (CategoryViewModel category in course.Categories)
+                                                {
+                                                    <p>@category.Name</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            object param = Json.Serialize(course);
+                                            @Html.ActionLink(Localizer["Details"], "Details", "CourseCategory", new { courseId = course.CourseId }, new { @class = "btn btn-secondary btn-sm", @style = "background:#3b8080" })
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-secondary btn-sm" onclick="showDeleteModal(@course.CourseId)" style="background:#3b8080">@Localizer["Delete"]</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!--Paging-->
+                    <div id="paging">
+                        <ul class="pagination" style="margin:20px 0">
+                            @if (!Model.PageInformation.IsFirst)
+                            {
+                                <li class="page-item">
+                                    <a href="#nav-courses" onclick="return searchFilter(@string.Format(format, Enum.GetValues(typeof(StudyProgram)).Length, @Model.PageInformation.FirstPageNumber))">
+                                        <i class="fa fa-angle-double-left prev-next"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#nav-courses" onclick="return searchFilter(@string.Format(format, Enum.GetValues(typeof(StudyProgram)).Length, @Model.PageInformation.PreviousPageNumber))">
+                                        <i class="fa fa-angle-left prev-next"></i>
+                                    </a>
+                                </li>
+                            }
+
+                            <div id="pageFooter"><label>@(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)</label></div>
+
+                            @if (!Model.PageInformation.IsLast)
+                            {
+                                <li class="page-item">
+                                    <a href="#nav-courses" onclick="return searchFilter(@string.Format(format, Enum.GetValues(typeof(StudyProgram)).Length, @Model.PageInformation.NextPageNumber))">
+                                        <i class="fa fa-angle-right prev-next"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a href="#nav-courses" onclick="return searchFilter(@string.Format(format, Enum.GetValues(typeof(StudyProgram)).Length, @Model.PageInformation.LastPageNumber))">
+                                        <i class="fa fa-angle-double-right prev-next"></i>
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xl-auto">
+                <div class="filter listaKorisnika">
+                    <p>
+                        <b>Prikaz predmeta po studijskim programima</b>
+                    </p>
+                    <div>
+                        @{var filters = ViewBag.StudyPrograms as StudyProgram[];}
+
+                        @foreach (StudyProgram sp in Enum.GetValues(typeof(StudyProgram)))
+                        {
+                            <div class="form-check filteri">
+                                @Html.CheckBox((int)sp + "filter", filters?.Contains(sp), new { @id = (int)sp + "filter", @value = sp.ToString() })
+                                <label for=@((int)sp + "filter")>
+                                    @Localizer[sp.ToString()]
+                                </label>
+                            </div>
+                        }
+                        <br><br>
+                        <button type="submit" class="btn btn-secondary" onclick="searchFilter(@paramsSearchSortFilter)">
+                            <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
+                                <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                            Osvježi
+                        </button>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-addCourse" role="tabpanel" aria-labelledby="nav-addCourse-tab">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <div id="form-ui">
+                        <h2 class="text-center">@Localizer["AddCourse"]</h2>
+                        <form id="addForm">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="name">@Localizer["NameCourse"]</label>
+                                    <input class="form-control" style="max-width:200px" id="regNameId" name="firstname" type="text" required /><br>
+                                </div>
+                            </div>
+                            <hr />
+                            <h3 class="text-center" style="color:white">@Localizer["Categories"]</h3>
+                            <br />
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="category">@Localizer["NameObject"]</label>
+                                    <input class="form-control" style="max-width:200px" id="regCategoryId" type="text" /><br>
+                                    <button type="button" class="btn btn-primary btn-sm btn-block" style="max-width:200px;background:white;color:#339999" id="addCategoryBtn" onclick="appendCategory()">@Localizer["Add"]</button>
+                                </div>
+                                <div class="col-6">
+                                    <label style="color:white;font-size:16px">Dodane kategorije: </label>
+                                    <br />
+                                    <label id="addedCategoriesId" for="categories" style="color:white;font-size:16px"></label>
+                                </div>
+                            </div>
+                            <!--Specify study program-->
+                            <hr />
+                            <div class="row flex-row">
+                                <b class="col-6">
+                                    @Localizer["Semester"]
+                                </b>
+                                <select class="form-control form-control-sm col-6" name="semesterName">
+
+                                    @foreach (string semester in Enum.GetNames(typeof(Semester)))
+                                    {
+                                        <option id=@semester value="@semester">@Localizer[semester]</option>
+                                    }
+                                </select>
+                                <b class="col-6">
+                                    @Localizer["StudyProgram"]
+                                </b>
+                                <select class="form-control form-control-sm col-6" name="studyProgramName">
+
+                                    @foreach (string studyProgram in Enum.GetNames(typeof(StudyProgram)))
+                                    {
+                                        <option id=@studyProgram value="@studyProgram">@Localizer[studyProgram]</option>
+                                    }
+                                </select>
+                            </div>
+                            <hr />
+                            <div class="row flex-row">
+                                <div class="col-6">
+                                    <button class="btn btn-primary btn-sm btn-block text-center" type="button" style="max-width:200px;background:white;color:#339999" id="saveBtn" onclick="saveCourse()">@Localizer["Save"]</button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-primary btn-sm btn-block text-center" type="reset" style="max-width:200px;background:white;color:#339999" id="cancelBtn">@Localizer["Cancel"]</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDeleteId" class="modal">
+    <form id="deleteFormId" class="modal-content animate modal-design">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+        <br>
+        <label><b>@Localizer["ConfirmDelete"]</b></label>
+        <br><br>
+        <div class="container">
+            <input type="number" hidden="hidden" id="deleteCourseId" name="courseId" />
+            <button type="submit" class="submitbtn btn btn-primary button button4" onclick="deleteCourse()">@Localizer["Delete"]</button>
+            <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteId').style.display='none'">@Localizer["Cancel"]</button>
+        </div>
+    </form>
+</div>
+

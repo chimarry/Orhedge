@@ -32,6 +32,7 @@ namespace ServiceLayer.Helpers
                     return new ResultMessage<TDto>(OperationStatus.Exists);
                 await _context.Set<TEntity>().AddAsync(Mapping.Mapper.Map<TEntity>(dto));
                 await _context.SaveChangesAsync();
+                entity = await GetSingleOrDefault(condition);
                 return new ResultMessage<TDto>(Mapping.Mapper.Map<TDto>(entity));
             }
             catch (DbUpdateException ex)

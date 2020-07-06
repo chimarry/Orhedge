@@ -348,4 +348,31 @@
   <data name="UploadFileInputMessage" xml:space="preserve">
     <value>Odaberite fajl(ove):</value>
   </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Kategorije</value>
+  </data>
+  <data name="StudyMaterialsCount" xml:space="preserve">
+    <value>Broj materijala</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Detalji</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Kategorija</value>
+  </data>
+  <data name="Semester" xml:space="preserve">
+    <value>Semestar</value>
+  </data>
+  <data name="StudyProgram" xml:space="preserve">
+    <value>Studijski program</value>
+  </data>
+  <data name="AddCourse" xml:space="preserve">
+    <value>Dodavanje predmeta</value>
+  </data>
+  <data name="NameCourse" xml:space="preserve">
+    <value>Naziv predmeta</value>
+  </data>
 </root>
