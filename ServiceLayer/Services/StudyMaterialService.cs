@@ -21,7 +21,7 @@ namespace ServiceLayer.Services
              => await _servicesExecutor.Add(studyMaterialDTO, x => x.Name == studyMaterialDTO.Name && x.StudentId == studyMaterialDTO.StudentId
                                                                      && x.UploadDate == studyMaterialDTO.UploadDate && x.Deleted == false);
 
-        public async Task<ResultMessage<bool>> ChangeRating(int studyMaterialId, double rating)
+        public async Task<ResultMessage<bool>> UpdateRating(int studyMaterialId, double rating)
         {
             StudyMaterial studyMaterial = await _servicesExecutor.GetSingleOrDefault((StudyMaterial x) => x.StudyMaterialId == studyMaterialId && !x.Deleted);
             if (studyMaterial == null)

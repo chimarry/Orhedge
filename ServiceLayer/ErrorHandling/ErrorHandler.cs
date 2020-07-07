@@ -5,6 +5,10 @@ using System.Data.SqlClient;
 
 namespace ServiceLayer.ErrorHandling
 {
+    /// <summary>
+    /// This class should be used to, based on the type of the exception, logg certain information about the event 
+    /// that occured, and return appropriate error code with detailed message.
+    /// </summary>
     public class ErrorHandler : IErrorHandler
     {
         private readonly ILogger<ErrorHandler> _logger;

@@ -24,23 +24,11 @@ namespace ServiceLayer.Services
             _studentService = studentService;
         }
 
-        public async Task<ResultMessage<ChatMessageDTO>> Add(ChatMessageDTO dto)
-        {
-            int numberOfMessagePerDay = _context.ChatMessages.Count(x => x.StudentId == dto.StudentId && x.SentOn.Date == dto.SentOn.Date);
-            if (numberOfMessagePerDay >= MaxNumberOfMessagesPerDay)
-                return new ResultMessage<ChatMessageDTO>(OperationStatus.NotSupported);
-            return await _servicesExecutor.Add(dto, x => x.StudentId != dto.StudentId && x.Message != dto.Message && x.SentOn != dto.SentOn);
-        }
-        public async Task<ResultMessage<bool>> Delete(int id)
-           => await _servicesExecutor.Delete((ChatMessage x) => x.ChatMessageId == id && !x.Deleted, x => { x.Deleted = true; return x; });
-
-
-        public async Task<ResultMessage<ChatMessageDTO>> GetSingleOrDefault(Predicate<ChatMessageDTO> condition)
-            => await _servicesExecutor.GetSingleOrDefault(condition);
-
-        public async Task<ResultMessage<ChatMessageDTO>> Update(ChatMessageDTO dto)
-           => await _servicesExecutor.Update(dto, x => x.ChatMessageId == dto.ChatMessageId);
-
+        /// <summary>
+        /// Retuns list of chat messages with specific details.
+        /// </summary>
+        /// <param name="offset">Number of elements to skip</param>
+        /// <param name="limit">Number of elements to take</param>
         public async Task<List<ChatMessageDTO>> GetWithDetails(int offset, int limit)
         {
             List<ChatMessageDTO> messages = await GetRange(offset, limit, condition: x => !x.Deleted, sortKeySelector: x => x.SentOn);
@@ -52,5 +40,26 @@ namespace ServiceLayer.Services
             }
             return messages;
         }
+
+        /// <summary>
+        /// Saves chat message in database, only if user has not exceeded daily limit <see cref="MaxNumberOfMessagesPerDay"/>.
+        /// </summary>
+        public async Task<ResultMessage<ChatMessageDTO>> Add(ChatMessageDTO dto)
+        {
+            int numberOfMessagePerDay = _context.ChatMessages.Count(x => x.StudentId == dto.StudentId && x.SentOn.Date == dto.SentOn.Date);
+            if (numberOfMessagePerDay >= MaxNumberOfMessagesPerDay)
+                return new ResultMessage<ChatMessageDTO>(OperationStatus.NotSupported);
+            return await _servicesExecutor.Add(dto, x => x.StudentId != dto.StudentId && x.Message != dto.Message && x.SentOn != dto.SentOn);
+        }
+
+        public async Task<ResultMessage<bool>> Delete(int id)
+           => await _servicesExecutor.Delete((ChatMessage x) => x.ChatMessageId == id && !x.Deleted, x => { x.Deleted = true; return x; });
+
+
+        public async Task<ResultMessage<ChatMessageDTO>> GetSingleOrDefault(Predicate<ChatMessageDTO> condition)
+            => await _servicesExecutor.GetSingleOrDefault(condition);
+
+        public async Task<ResultMessage<ChatMessageDTO>> Update(ChatMessageDTO dto)
+           => await _servicesExecutor.Update(dto, x => x.ChatMessageId == dto.ChatMessageId);
     }
 }

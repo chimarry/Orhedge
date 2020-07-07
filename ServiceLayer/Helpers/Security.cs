@@ -3,12 +3,14 @@ using System.Security.Cryptography;
 
 namespace ServiceLayer.Helpers
 {
-    public static class Crypto
+    /// <summary>
+    /// This class provides static methods that do the work related to security mechanisms, 
+    /// such as generating random bytes or creating the hash.
+    /// </summary>
+    public static class Security
     {
-
         public static byte[] DeriveKey(string password, byte[] salt, int hashSize, int iterations = 5000)
         {
-
             using (Rfc2898DeriveBytes rfc2898 = new Rfc2898DeriveBytes(password, salt, iterations))
             {
                 return rfc2898.GetBytes(hashSize);
@@ -18,7 +20,7 @@ namespace ServiceLayer.Helpers
         /// <summary>
         /// Generates cryptographically secure sequence of random bytes
         /// </summary>
-        /// <param name="size"></param>
+        /// <param name="size">Length of the result (in bytes)</param>
         /// <returns>Random bytes</returns>
         public static byte[] GenerateRandomBytes(int size)
         {

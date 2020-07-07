@@ -79,7 +79,7 @@ namespace ServiceLayer.Services.Student
 
 
         private string GenerateRegistrationCode()
-            => Convert.ToBase64String(Crypto.GenerateRandomBytes(REGISTRATION_CODE_SIZE));
+            => Convert.ToBase64String(Security.GenerateRandomBytes(REGISTRATION_CODE_SIZE));
 
         /// <summary>
         /// Checks whether registration code is valid
@@ -96,7 +96,7 @@ namespace ServiceLayer.Services.Student
             return registration != null && !await IsStudentRegistered(registration.Email);
         }
 
-        public async Task<ResultMessage<RegistrationDTO>> RegisterStudent(RegisterUserDTO registerData)
+        public async Task<ResultMessage<RegistrationDTO>> FinishRegistrationProcess(RegisterUserDTO registerData)
         {
 
             StudentDTO student = Mapping.Mapper.Map<StudentDTO>(registerData);
@@ -107,9 +107,9 @@ namespace ServiceLayer.Services.Student
             RegistrationDTO registration = res.Result;
             Mapping.Mapper.Map(registration, student);
 
-            byte[] salt = Crypto.GenerateRandomBytes(Constants.SALT_SIZE);
+            byte[] salt = Security.GenerateRandomBytes(Constants.SALT_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
-            string hash = Crypto.CreateHash(registerData.Password, salt,
+            string hash = Security.CreateHash(registerData.Password, salt,
                 Constants.PASSWORD_HASH_SIZE);
             student.PasswordHash = hash;
             student.Salt = saltBase64;
@@ -130,9 +130,9 @@ namespace ServiceLayer.Services.Student
         public async Task RegisterRootUser(RegisterRootDTO rootData)
         {
             StudentDTO studentDTO = Mapping.Mapper.Map<StudentDTO>(rootData);
-            byte[] salt = Crypto.GenerateRandomBytes(Constants.SALT_SIZE);
+            byte[] salt = Security.GenerateRandomBytes(Constants.SALT_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
-            string hash = Crypto.CreateHash(rootData.Password, salt,
+            string hash = Security.CreateHash(rootData.Password, salt,
                 Constants.PASSWORD_HASH_SIZE);
             studentDTO.PasswordHash = hash;
             studentDTO.Salt = saltBase64;
@@ -180,10 +180,10 @@ namespace ServiceLayer.Services.Student
             else if (passwordDTO.NewPassword != passwordDTO.ConfirmPassword)
                 return PassChangeStatus.PassNoMatch;
 
-            byte[] salt = Crypto.GenerateRandomBytes(Constants.SALT_SIZE);
+            byte[] salt = Security.GenerateRandomBytes(Constants.SALT_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
             student.Salt = saltBase64;
-            student.PasswordHash = Crypto.CreateHash(
+            student.PasswordHash = Security.CreateHash(
                 passwordDTO.NewPassword,
                 salt,
                 Constants.PASSWORD_HASH_SIZE);
@@ -195,7 +195,7 @@ namespace ServiceLayer.Services.Student
         }
 
         private bool VerifyOldPassword(string oldPassword, string salt, string oldPasswordHash)
-            => Crypto.CreateHash(oldPassword,
+            => Security.CreateHash(oldPassword,
                 Convert.FromBase64String(salt),
                 Constants.PASSWORD_HASH_SIZE) == oldPasswordHash;
 
@@ -205,7 +205,7 @@ namespace ServiceLayer.Services.Student
             return VerifyOldPassword(password, st.Salt, st.PasswordHash);
         }
 
-        public async Task<bool> IsStudentRegisteredIndex(string index)
+        public async Task<bool> IsStudentRegisteredWithIndex(string index)
         {
             ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.Index == index && !s.Deleted);
             return result.IsSuccess;

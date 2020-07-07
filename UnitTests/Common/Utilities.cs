@@ -22,9 +22,9 @@ namespace UnitTests.Common
 
         public static (string hash, string salt) CreateHashAndSalt(string password)
         {
-            byte[] salt = Crypto.GenerateRandomBytes(Constants.PASSWORD_HASH_SIZE);
+            byte[] salt = Security.GenerateRandomBytes(Constants.PASSWORD_HASH_SIZE);
             string saltBase64 = Convert.ToBase64String(salt);
-            return (Crypto.CreateHash(password, salt, Constants.PASSWORD_HASH_SIZE), saltBase64);
+            return (Security.CreateHash(password, salt, Constants.PASSWORD_HASH_SIZE), saltBase64);
         }
     }
 }

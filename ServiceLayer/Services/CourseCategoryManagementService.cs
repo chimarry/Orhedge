@@ -10,7 +10,6 @@ using ServiceLayer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
@@ -31,6 +30,13 @@ namespace ServiceLayer.Services
             _orhedgeContext = orhedgeContext;
         }
 
+        /// <summary>
+        /// Related specific course with specific study program, and semester.
+        /// </summary>
+        /// <param name="courseId">Unique identifer for the course</param>
+        /// <param name="studyProgram">Study program that needs to be related with specified course</param>
+        /// <param name="semester">Semester that needs to be related with specified course</param>
+        /// <returns>True if added, false if not</returns>
         public async Task<ResultMessage<bool>> AddInStudyProgram(int courseId, StudyProgram studyProgram, Semester semester)
         {
             try
@@ -58,9 +64,15 @@ namespace ServiceLayer.Services
         /// <param name="searchFor">Lookup word (optional)</param>
         /// <param name="studyPrograms">Unique identifiers of studyPrograms (optional)</param>
         /// <returns>Total number of items</returns>
-        public async Task<int> Count(string searchFor = null, StudyProgram[] studyPrograms = null)
-          => (await GetDetailedCourses(searchFor, studyPrograms)).Count();
+        public int Count(string searchFor = null, StudyProgram[] studyPrograms = null)
+             => GetDetailedCourses(searchFor, studyPrograms).Count();
 
+        /// <summary>
+        /// Deletes course, and related categories, study materials and connections with study programs.
+        /// This method is exectuted in transaction scope.
+        /// </summary>
+        /// <param name="courseId">Unique identifier for the course</param>
+        /// <returns>True if deleted, false if not</returns>
         public async Task<ResultMessage<bool>> DeleteCourse(int courseId)
         {
             using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
@@ -89,6 +101,13 @@ namespace ServiceLayer.Services
             }
         }
 
+        /// <summary>
+        /// Deletes course from study program and within certain semester.
+        /// </summary>
+        /// <param name="courseId">Unique identifer for the course</param>
+        /// <param name="studyProgram">Study program from which course is being deleted</param>
+        /// <param name="semester">Semester from which course if being deleted</param>
+        /// <returns>True if deleted, false if not</returns>
         public async Task<ResultMessage<bool>> DeleteFromStudyProgram(int courseId, StudyProgram studyProgram, Semester semester)
         {
             try
@@ -109,6 +128,11 @@ namespace ServiceLayer.Services
             }
         }
 
+        /// <summary>
+        /// Returns list of study programs and semesters that are related with specified course.
+        /// </summary>
+        /// <param name="courseId">Unique identifer for the course</param>
+        /// <returns>List of tuples, where first item is semester, and second is study program</returns>
         public async Task<List<(Semester semester, StudyProgram studyProgram)>> GetCourseUsage(int courseId)
              => (await _orhedgeContext.CourseStudyPrograms
                                       .Where(x => x.CourseId == courseId)
@@ -117,29 +141,50 @@ namespace ServiceLayer.Services
                                       .Select(x => (x.Semester, x.StudyProgram))
                                       .ToList();
 
+        /// <summary>
+        /// Returns filtered and naturally sorted list of courses, with items' count limit.
+        /// </summary>
+        /// <param name="offset">Number of elements to skip</param>
+        /// <param name="itemsCount">Max number of elements to return</param>
+        /// <param name="searchFor">Word used as search criteria</param>
+        /// <param name="studyPrograms">List of allowed study programs</param>
+        /// <returns>List of detailed courses</returns>
         public async Task<List<DetailedCourseCategoryDTO>> GetDetailedCourses(int offset, int itemsCount, string searchFor = null, StudyProgram[] studyPrograms = null)
         {
-            List<DetailedCourseCategoryDTO> detailedCourses = (await GetDetailedCourses(searchFor, studyPrograms))
-                                    .Skip(offset)
-                                    .Take(itemsCount)
-                                    .ToList();
+            List<DetailedCourseCategoryDTO> detailedCourses = GetDetailedCourses(searchFor, studyPrograms)
+                                                                .Skip(offset)
+                                                                .Take(itemsCount)
+                                                                .ToList();
 
             foreach (DetailedCourseCategoryDTO dto in detailedCourses)
             {
                 dto.Categories = await _categoryService.GetAll<NoSorting>(x => x.CourseId == dto.Course.CourseId && !x.Deleted);
                 dto.StudyMaterialsCount = await _studyMaterialService.Count(x => !x.Deleted && dto.Categories.Select(z => z.CategoryId).Contains(x.CategoryId));
             }
-
-            // Page
             return detailedCourses;
         }
 
+        /// <summary>
+        /// Returns name of a course based on its identifier.
+        /// </summary>
+        /// <param name="courseId">Unique identifier for the course</param>
+        /// <returns>Name of the course</returns>
         public async Task<string> GetName(int courseId)
         {
             CourseDTO course = await _courseService.GetSingleOrDefault(x => !x.Deleted && x.CourseId == courseId);
             return course.Name;
         }
 
+        /// <summary>
+        /// Adds course in database, as well as specified categories that need to be related to added course. 
+        /// It also relates course with specific study program and semester.
+        /// This method is defined in transaction scope.
+        /// </summary>
+        /// <param name="name">Name of the course to add</param>
+        /// <param name="categories">List of the names of the categories that needs be added</param>
+        /// <param name="semester">Belonging semester</param>
+        /// <param name="studyProgram">Belonging study program</param>
+        /// <returns>True if added, false if not.</returns>
         public async Task<ResultMessage<bool>> SaveCourse(string name, string[] categories, Semester semester, StudyProgram studyProgram)
         {
             using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
@@ -169,7 +214,7 @@ namespace ServiceLayer.Services
             }
         }
 
-        private async Task<IQueryable<DetailedCourseCategoryDTO>> GetDetailedCourses(string searchFor = null, StudyProgram[] studyPrograms = null)
+        private IQueryable<DetailedCourseCategoryDTO> GetDetailedCourses(string searchFor = null, StudyProgram[] studyPrograms = null)
         {
             string trimmedSearchFor = searchFor == null ? string.Empty : searchFor.Trim();
 

@@ -8,6 +8,10 @@ namespace ServiceLayer.Services
 {
     public class LocalDocumentService : IDocumentService
     {
+        /// <summary>
+        /// Based on specified path, this methods reads file data from local filesystem and returns array of bytes, wrapped with filename.
+        /// </summary>
+        /// <param name="storagePath">Path that indicates where file is located</param>
         public async Task<ResultMessage<BasicFileInfo>> DownloadFromStorage(string storagePath)
         {
             try
@@ -22,6 +26,13 @@ namespace ServiceLayer.Services
             }
         }
 
+        /// <summary>
+        /// Saves array of bytes permanently on local filesystem  and relates
+        /// that file with provided path on  aunique way - creates corresponding folder structure.
+        /// </summary>
+        /// <param name="storagePath">Path that indicates directory structure with a file</param>
+        /// <param name="fileInfo">File's bytes</param>
+        /// <returns>True if uploaded, false if not</returns>
         public async Task<ResultMessage<bool>> UploadDocumentToStorage(string storagePath, byte[] file)
         {
             try

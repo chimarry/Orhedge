@@ -5,6 +5,9 @@ using System;
 
 namespace ServiceLayer.AutoMapper
 {
+    /// <summary>
+    /// When creating MappingProfile instance, all maps are created.
+    /// </summary>
     internal class MappingProfile : Profile
     {
         public MappingProfile()

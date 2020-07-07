@@ -48,7 +48,7 @@ namespace Orhedge.Controllers
             if (studyPrograms == null || studyPrograms.Count() == 0)
                 studyPrograms = Enum.GetValues(typeof(StudyProgram)).Cast<StudyProgram>().ToArray();
             List<DetailedCourseCategoryDTO> detailedCourses = await _courseCategoryManagementService.GetDetailedCourses(offset, MaxNumberOfItemsPerPage, searchFor, studyPrograms);
-            PageInformation pageInformation = new PageInformation(pageNumber, await _courseCategoryManagementService.Count(searchFor, studyPrograms), MaxNumberOfItemsPerPage);
+            PageInformation pageInformation = new PageInformation(pageNumber, _courseCategoryManagementService.Count(searchFor, studyPrograms), MaxNumberOfItemsPerPage);
             CourseCategoryIndexViewModel mainModel = new CourseCategoryIndexViewModel(_mapper.Map<List<DetailedCourseCategoryDTO>, List<DetailedCourseViewModel>>(detailedCourses), pageInformation);
             ViewBag.SearchFor = searchFor;
             ViewBag.StudyPrograms = studyPrograms;

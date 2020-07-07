@@ -25,6 +25,12 @@ namespace ServiceLayer.Services
             _studentService = studentService;
             (_resizeWidth, _resizeHeight) = (config.GetValue<int>("ProfileImageSettings:ResizeWidth"), config.GetValue<int>("ProfileImageSettings:ResizeHeight"));
         }
+
+        /// <summary>
+        /// Returns profile image bytes that belong to specific student.
+        /// </summary>
+        /// <param name="studentId">Unique identifier for the student</param>
+        /// <returns>Array of bytes wrapped with file name</returns>
         public async Task<ResultMessage<BasicFileInfo>> GetStudentProfileImage(int studentId)
         {
             ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.StudentId == studentId && !s.Deleted);
@@ -33,18 +39,23 @@ namespace ServiceLayer.Services
                 string photoPath = result.Result.Photo;
                 if (photoPath == null)
                     return new ResultMessage<BasicFileInfo>(OperationStatus.NotFound);
-                
+
                 return await _docService.DownloadFromStorage(photoPath);
             }
             else
                 return new ResultMessage<BasicFileInfo>(OperationStatus.NotFound);
         }
 
+        /// <summary>
+        /// Saves student's profile image.
+        /// </summary>
+        /// <param name="file">Information about file</param>
+        /// <returns>Uri of the image</returns>
         public async Task<ResultMessage<string>> SaveProfileImage(IUploadedFile file)
         {
 
             byte[] processedImage;
-            using(Stream imgStream = file.OpenReadStream())
+            using (Stream imgStream = file.OpenReadStream())
             {
                 processedImage = PreprocessImage(imgStream);
             }
@@ -57,6 +68,9 @@ namespace ServiceLayer.Services
                 return new ResultMessage<string>(OperationStatus.FileSystemError);
         }
 
+        /// <summary>
+        /// Image gets resized.
+        /// </summary>
         private byte[] PreprocessImage(Stream imgStream)
         {
             using (MagickImage img = new MagickImage(imgStream))

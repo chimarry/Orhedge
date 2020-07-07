@@ -5,6 +5,11 @@ namespace DatabaseLayer.Configurations
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
+        /// <summary>
+        /// Adds configuration for Student, where all attributes accept Description, Photo and PhotoVersion are required.
+        /// Attibutes Username, Email, Index all come with unique constraint. 
+        /// Attribute Deleted has default value false, while attribute Description is by default empty string.
+        /// </summary>
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Student> builder)
         {
             builder.HasIndex(x => x.Username).IsUnique();

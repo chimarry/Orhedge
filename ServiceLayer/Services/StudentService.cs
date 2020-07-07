@@ -24,7 +24,7 @@ namespace ServiceLayer.Services
         public async Task<ResultMessage<StudentDTO>> GetSingleOrDefault(Predicate<StudentDTO> condition)
             => await _servicesExecutor.GetSingleOrDefault(condition);
 
-        public async Task<ResultMessage<bool>> ChangeRating(int studentId, double rating)
+        public async Task<ResultMessage<bool>> UpdateRating(int studentId, double rating)
         {
             StudentEntity student = await _servicesExecutor.GetSingleOrDefault((StudentEntity x) => x.StudentId == studentId && !x.Deleted);
             if (student == null)

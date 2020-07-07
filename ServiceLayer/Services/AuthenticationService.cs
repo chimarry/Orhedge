@@ -8,18 +8,16 @@ namespace ServiceLayer.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-
         private readonly IStudentService _studentService;
 
         public AuthenticationService(IStudentService studentService)
             => _studentService = studentService;
 
-
         /// <summary>
-        /// Performs login
+        /// Enables user to log in.
         /// </summary>
-        /// <param name="loginRequest"></param>
-        /// <returns>null if credentials are not valid, otherwise a instance of LoginResponse</returns>
+        /// <param name="loginRequest">Must be not null value</param>
+        /// <returns>Null if credentials are not valid, otherwise an instance of LoginResponse</returns>
         public async Task<LoginResponse> Login(LoginRequest loginRequest)
         {
             StudentDTO student = await _studentService.GetSingleOrDefault(st => st.Username == loginRequest.Username);
@@ -27,7 +25,7 @@ namespace ServiceLayer.Services
                 return null;
 
             byte[] salt = Convert.FromBase64String(student.Salt);
-            string hash = Crypto.CreateHash(loginRequest.Password, salt, Constants.PASSWORD_HASH_SIZE);
+            string hash = Security.CreateHash(loginRequest.Password, salt, Constants.PASSWORD_HASH_SIZE);
 
             if (hash == student.PasswordHash)
                 return new LoginResponse { Id = student.StudentId, Privilege = student.Privilege };

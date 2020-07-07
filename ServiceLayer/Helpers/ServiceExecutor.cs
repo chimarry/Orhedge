@@ -143,7 +143,6 @@ namespace ServiceLayer.Helpers
         /// <summary>
         /// Saves current changes on context and handles errors.
         /// </summary>
-        /// <returns></returns>
         public async Task<ResultMessage<bool>> SaveChanges()
         {
             try
@@ -158,6 +157,16 @@ namespace ServiceLayer.Helpers
             }
         }
 
+        /// <summary>
+        /// This function applies filter on collection specified with <see cref="TEntity"/> type, then sorts it in certain direction 
+        /// based on specified key.
+        /// </summary>
+        /// <typeparam name="TKey">Type of key that is used in sorting</typeparam>
+        /// <param name="dtoCondition">Filter function that can be applied on correspoding <see cref="TDto"/> collection of objects</param>
+        /// <param name="sortKeySelector">Function that gived one property from an <see cref="TEntity"/> object that represents sorting criteria</param>
+        /// <param name="asc">If there is sorting, this flag indicates the direction.
+        /// If true, than collection will be sorted ascending, else descending</param>
+        /// <returns><see cref="IQueryable"/> collection of objects</returns>
         private IQueryable<TEntity> FilterSort<TKey>(Predicate<TDto> dtoCondition = null, Func<TDto, TKey> sortKeySelector = null, bool asc = true)
         {
             Predicate<TEntity> entityCondition = null;

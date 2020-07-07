@@ -24,6 +24,9 @@ namespace DatabaseLayer
 
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
+        /// <summary>
+        /// Applies configurations for each entity class.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new StudentConfiguration());

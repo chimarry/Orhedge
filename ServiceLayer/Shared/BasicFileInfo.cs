@@ -2,6 +2,9 @@
 
 namespace ServiceLayer.Students.Shared
 {
+    /// <summary>
+    /// This class represents basic information about files.
+    /// </summary>
     public class BasicFileInfo
     {
         public long UploadUniqueId { get; set; }

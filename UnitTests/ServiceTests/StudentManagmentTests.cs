@@ -151,7 +151,7 @@ namespace UnitTests.ServiceTests
                 RegistrationCode = registrationCode
             };
 
-            await studMng.RegisterStudent(regData);
+            await studMng.FinishRegistrationProcess(regData);
 
             studServiceMock.Verify(service => service.Add(
                 It.Is<StudentDTO>(dto => dto.Username == regData.Username)));

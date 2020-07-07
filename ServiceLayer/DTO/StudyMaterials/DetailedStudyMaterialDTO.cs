@@ -1,4 +1,4 @@
-﻿namespace ServiceLayer.DTO.Materials
+﻿namespace ServiceLayer.DTO
 {
     public class DetailedStudyMaterialDTO : StudyMaterialDTO
     {

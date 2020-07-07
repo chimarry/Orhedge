@@ -42,7 +42,7 @@ namespace Orhedge.Controllers
         public async Task<ActionResult> SendConfirmationEmail(RegisterFormViewModel registration)
         {
             bool isEmailRegistered = await _studMngService.IsStudentRegistered(registration.Email);
-            bool isIndexRegistered = await _studMngService.IsStudentRegisteredIndex(registration.IndexNumber);
+            bool isIndexRegistered = await _studMngService.IsStudentRegisteredWithIndex(registration.IndexNumber);
 
             if (isEmailRegistered)
                 return BadRequest(new { error = nameof(SendConfirmEmailStatus.EmailAlreadyExists) });

@@ -14,9 +14,18 @@ namespace ServiceLayer.Common.Services
     {
         private SendGridClient _client;
 
+        /// <summary>
+        /// Sets up client based on saved SendGrid Api key, that is expected to be saved in configuration.
+        /// </summary>
+        /// <param name="config"></param>
         public EmailSenderService(IConfiguration config)
             => _client = new SendGridClient(config["SendGridApiKey"]);
 
+        /// <summary>
+        /// Sends email on specified address with proper design.
+        /// </summary>
+        /// <param name="sendEmailData">Details about email, such as sender's email, receiver's email...</param>
+        ///<exception cref="EmailSenderException"></exception>
         public async Task SendTemplateEmailAsync(TemplateEmail sendEmailData)
         {
             EmailAddress fromAddress = new EmailAddress(sendEmailData.From);

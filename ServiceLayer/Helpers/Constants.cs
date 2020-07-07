@@ -2,11 +2,18 @@
 namespace ServiceLayer.Helpers
 {
     /// <summary>
-    /// Store constants used in multiple classes here
+    /// Class that contains constants used in ServiceLayer <see cref="ServiceLayer"/>
     /// </summary>
     public class Constants
     {
-        public const int PASSWORD_HASH_SIZE = 16; // in bytes
+        /// <summary>
+        /// Defines password hash size in bytes
+        /// </summary>
+        public const int PASSWORD_HASH_SIZE = 16;
+
+        /// <summary>
+        /// Defines salt size in bytes
+        /// </summary>
         public const int SALT_SIZE = 16;
     }
 }

@@ -49,7 +49,7 @@ namespace Orhedge.Controllers
 
                 RegisterUserDTO registerData = _mapper.Map<RegisterUserDTO>(registration);
 
-                await _studentManagmentService.RegisterStudent(registerData);
+                await _studentManagmentService.FinishRegistrationProcess(registerData);
 
                 ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.Username == registration.Username);
                 if (result.IsSuccess)

@@ -1,7 +1,7 @@
 ﻿namespace ServiceLayer.ErrorHandling
 {
     /// <summary>
-    /// Data class that enables sharing result, status and detailed message of some method 
+    /// Data class that enables sharing result, status and detailed message of some method.
     /// </summary>
     /// <typeparam name="T">Type of result</typeparam>
     public class ResultMessage<T>

@@ -228,13 +228,13 @@ namespace ServiceLayer.Services
                     double totalRatingForMaterial = await _context.StudyMaterialRatings
                                                        .Where(x => x.StudyMaterialId == studyMaterialId)
                                                        .AverageAsync(x => x.Rating);
-                    ResultMessage<bool> updatedMaterial = await _studyMaterialService.ChangeRating(studyMaterialId, totalRatingForMaterial);
+                    ResultMessage<bool> updatedMaterial = await _studyMaterialService.UpdateRating(studyMaterialId, totalRatingForMaterial);
                     if (!updatedMaterial.IsSuccess)
                         return new ResultMessage<bool>(updatedMaterial.Status, updatedMaterial.Message);
                     double totalRatingForAuthor = await _context.StudyMaterialRatings
                                                                   .Where(x => x.StudyMaterial.StudentId == authorId)
                                                                   .AverageAsync(x => x.Rating);
-                    ResultMessage<bool> updatedStudent = await _studentService.ChangeRating(authorId, totalRatingForAuthor);
+                    ResultMessage<bool> updatedStudent = await _studentService.UpdateRating(authorId, totalRatingForAuthor);
                     if (!updatedStudent.IsSuccess)
                         return new ResultMessage<bool>(updatedStudent.Status, updatedStudent.Message);
                     transaction.Commit();
