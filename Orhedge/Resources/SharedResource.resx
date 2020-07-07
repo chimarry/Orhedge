@@ -375,4 +375,25 @@
   <data name="NameCourse" xml:space="preserve">
     <value>Naziv predmeta</value>
   </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>Prva</value>
+  </data>
+  <data name="InputFileLink" xml:space="preserve">
+    <value>Unesite link materijala...</value>
+  </data>
+  <data name="InputFileName" xml:space="preserve">
+    <value>Unesite ime dokumenta...</value>
+  </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>Posljednja</value>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>Sljedeća</value>
+  </data>
+  <data name="PreviousPage" xml:space="preserve">
+    <value>Prethodna</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Osvježi</value>
+  </data>
 </root>

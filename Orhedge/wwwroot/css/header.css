@@ -17,7 +17,7 @@ body
     min-height: 85px;
     top: 0;
     z-index: 10;
-    background-image: linear-gradient(to right, #ccffff, #336666);
+    background-image: linear-gradient(to right, #ccffff, #339999);
 }
 .navbar
 {
@@ -35,7 +35,7 @@ body
 .navbar-nav li a
 {
     color: #000000 !important;
-    font-weight: 500;
+    font-weight: 550;
     float: right;
     text-align: left;
 }
@@ -48,3 +48,14 @@ body
 {
     outline: none !important;
 }
+
+#language 
+{
+    text-align: right;
+    margin-right: 20px;
+    font-size: 18px;
+}
+#language a
+    {
+        color:black !important;
+    }

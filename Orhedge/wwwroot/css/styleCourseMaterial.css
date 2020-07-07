@@ -16,18 +16,18 @@
     text-decoration: underline;
 }
 hr {
-    border-top: 2px solid red;
-    width: 70%;
+    border-top: 1px solid white;
+    width: 100%;
 }
 body {
     max-width: 100%;
     overflow-x: hidden;
     
-    background: 
+    /*background: 
     linear-gradient(
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5)
-    ), url('/img/libary.jpg');
+    ), url('/img/libary.jpg');*/
     
   
 
@@ -45,4 +45,35 @@ footer {
 .padding {
     padding-bottom: 1rem;
     padding-top:1rem;
+}
+
+.filter {
+    border: solid rgba(87, 84, 84, 0.691) 1px;
+    width: max-content;
+    text-align: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-bottom: 15px;
+    margin: 20px;
+    margin-top: 0;
+    /* min-height: 360px;
+    max-height: 380px; */
+}
+
+    .filter p {
+        margin: 15px;
+    }
+
+    .filter b {
+        color: #336666;
+    }
+
+.page-header
+{
+    margin:10px;
+}
+
+.categories
+{
+    text-align: left;
 }
