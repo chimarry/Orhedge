@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using DatabaseLayer.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Orhedge.Enums;
 using Orhedge.Helpers;
-using Orhedge.ViewModels;
 using Orhedge.ViewModels.Admin;
 using ServiceLayer.DTO;
+using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
 using System;
@@ -18,16 +19,17 @@ namespace Orhedge.Controllers
     public class AdminController : Controller
     {
         private readonly IStudentService _studentService;
+        private readonly IStringLocalizer<SharedResource> _stringLocalizer;
         private readonly IMapper _mapper;
 
-        public const int MaxNumberOfItemsPerPage = 2;
+        public AdminController(IStudentService studentService, IStringLocalizer<SharedResource> stringLocalizer, IMapper mapper)
+            => (_studentService, _stringLocalizer, _mapper) = (studentService, stringLocalizer, mapper);
 
-        public AdminController(IStudentService studentService, IMapper mapper) => (_studentService, _mapper) = (studentService, mapper);
 
-
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(HttpReponseStatusCode statusCode = HttpReponseStatusCode.NoStatus)
         {
             AdminIndexViewModel adminIndexViewModel = await GetStudents();
+            ViewBag.InfoMessage = new InfoMessage(_stringLocalizer, statusCode);
             return View(adminIndexViewModel);
         }
 
@@ -48,18 +50,18 @@ namespace Orhedge.Controllers
                 filterFunction = (x) => !x.Deleted && privileges.Contains(x.Privilege)
                                                    && ((x.Name + x.LastName).Contains(searchFor.Trim())
                                                           || ((int)Math.Truncate(x.Rating)).ToString() == searchFor.Trim());
-            PageInformation pageInformation = new PageInformation(pageNumber, await _studentService.Count(filterFunction), MaxNumberOfItemsPerPage);
-            int offset = pageInformation.PageNumber * MaxNumberOfItemsPerPage;
+            PageInformation pageInformation = new PageInformation(pageNumber, await _studentService.Count(filterFunction), WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE);
+            int offset = pageInformation.PageNumber * WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE;
 
             switch (sortCriteria)
             {
-                case StudentSortingCriteria.NoSorting: students = await _studentService.GetRange<string>(offset, MaxNumberOfItemsPerPage, filterFunction, asc: true); break;
-                case StudentSortingCriteria.NameAsc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Name, asc: true); break;
-                case StudentSortingCriteria.NameDesc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Name, asc: false); break;
-                case StudentSortingCriteria.RatingAsc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Rating, asc: true); break;
-                case StudentSortingCriteria.RatingDesc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Rating, asc: false); break;
-                case StudentSortingCriteria.PrivilegeAsc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Privilege, asc: true); break;
-                case StudentSortingCriteria.PrivilegeDesc: students = await _studentService.GetRange(offset, MaxNumberOfItemsPerPage, filterFunction, sortKeySelector: x => x.Privilege, asc: false); break;
+                case StudentSortingCriteria.NoSorting: students = await _studentService.GetRange<string>(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, asc: true); break;
+                case StudentSortingCriteria.NameAsc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Name, asc: true); break;
+                case StudentSortingCriteria.NameDesc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Name, asc: false); break;
+                case StudentSortingCriteria.RatingAsc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Rating, asc: true); break;
+                case StudentSortingCriteria.RatingDesc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Rating, asc: false); break;
+                case StudentSortingCriteria.PrivilegeAsc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Privilege, asc: true); break;
+                case StudentSortingCriteria.PrivilegeDesc: students = await _studentService.GetRange(offset, WebConstants.MAX_NUMBER_OF_STUDENTS_PER_PAGE, filterFunction, sortKeySelector: x => x.Privilege, asc: false); break;
             }
             if (students == null)
                 students = await _studentService.GetAll<NoSorting>(x => !x.Deleted);

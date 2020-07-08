@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Orhedge.Enums;
 using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Materials;
@@ -51,7 +52,7 @@ namespace Orhedge.Controllers
         public async Task<ActionResult> Edit([FromBody] EditStudyMaterialViewModel model)
         {
             ResultMessage<StudyMaterialDTO> updated = await _studyMaterialService.Update(_mapper.Map<StudyMaterialDTO>(model));
-            return RedirectToMainController(model.CourseId);
+            return RedirectToMainController(model.CourseId, updated.Status);
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Orhedge.Controllers
         public async Task<ActionResult> Delete([FromBody] DeleteStudyMaterialViewModel model)
         {
             ResultMessage<bool> isDeleted = await _studyMaterialService.Delete(model.StudyMaterialId);
-            return RedirectToMainController(model.CourseId);
+            return RedirectToMainController(model.CourseId, isDeleted.Status);
         }
 
         [HttpPut("rate")]
@@ -74,12 +75,13 @@ namespace Orhedge.Controllers
             return Ok(JsonConvert.SerializeObject(ratingResult));
         }
 
-        private ActionResult RedirectToMainController(int courseId)
+        private ActionResult RedirectToMainController(int courseId, OperationStatus operationStatus)
             => Ok(JsonConvert.SerializeObject(Url.Link("Default", new
             {
                 Controller = "StudyMaterial",
                 Action = "Course",
-                courseId = courseId
+                courseId = courseId,
+                statusCode = operationStatus.Map()
             })));
     }
 }

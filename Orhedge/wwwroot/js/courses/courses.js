@@ -20,50 +20,6 @@ function searchFilter(paramsArray) {
     url = url + "&searchFor=" + searchFor + "&pageNumber=" + pageNumber;
     location.href = url;
 }
-function editStudyMaterial(courseId) {
-    var formData = $("#editFormId").serializeArray();
-    var model = JSON.stringify({
-        'StudyMaterialId': formData[0].value,
-        'Name': formData[1].value,
-        'CategoryId': formData[2].value,
-        'CourseId': courseId
-    });
-    $.ajax({
-        type: "PUT",
-        url: "/api/StudyMaterialApi",
-        data: model,
-        async: false,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: response => {
-            window.location.href = response;
-        },
-        error: response => {
-            console.log(response);
-        }
-    })
-}
-function deleteStudyMaterial(courseId) {
-    var formData = $("#deleteFormId").serializeArray();
-    var model = JSON.stringify({
-        'StudyMaterialId': formData[0].value,
-        'CourseId': courseId
-    });
-    $.ajax({
-        type: "PUT",
-        url: `/api/StudyMaterialApi/delete`,
-        data: model,
-        async: false,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: response => {
-            window.location.href = response;
-        },
-        error: response => {
-            console.log(response);
-        }
-    })
-}
 
 function appendCategory() {
     var name = document.getElementById('regCategoryId').value;
@@ -100,6 +56,7 @@ function deleteCourse() {
         type: "PUT",
         url: `/api/CourseCategoryApi/delete/${courseId}`,
         async: false,
+        dataType: "json",
         success: response => {
             window.location.href = response;
         },

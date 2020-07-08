@@ -27,6 +27,13 @@
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
 }
+@if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
+{
+    <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewBag.InfoMessage.Message
+    </div>
+}
 <div class="container col">
 
     <div class="row flex-row justify-content-between">

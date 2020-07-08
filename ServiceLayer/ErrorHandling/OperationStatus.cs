@@ -8,11 +8,10 @@
         Success,
         DatabaseError,
         FileSystemError,
-        NotFound, 
+        NotFound,
         Exists,
         InvalidData,
         UnknownError,
-        NotSupported,
-        Blocked
+        NotSupported
     }
 }

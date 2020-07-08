@@ -2,6 +2,7 @@
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Orhedge.AutoMapper;
+using Orhedge.Helpers;
 using ServiceLayer.Common.Interfaces;
 using ServiceLayer.Common.Services;
 using ServiceLayer.Helpers;

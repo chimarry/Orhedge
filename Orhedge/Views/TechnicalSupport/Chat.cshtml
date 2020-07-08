@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="~/css/chat.css">
 }
 
+@if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
+{
+    <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewBag.InfoMessage.Message
+    </div>
+}
 @Html.Hidden("PageRedirect", Url.Action("Page", "TechnicalSupport"))
 @Html.Hidden("MessageDeleteRedirect", Url.Action("DeleteMessage", "TechnicalSupport"))
 <div class="container" style="margin-left:10px">

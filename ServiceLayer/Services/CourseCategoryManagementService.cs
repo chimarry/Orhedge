@@ -19,14 +19,16 @@ namespace ServiceLayer.Services
         private readonly ICategoryService _categoryService;
         private readonly ICourseService _courseService;
         private readonly IStudyMaterialService _studyMaterialService;
+        private readonly IErrorHandler _errorHandler;
         private readonly OrhedgeContext _orhedgeContext;
 
         public CourseCategoryManagementService(ICategoryService categoryService, ICourseService courseService,
-            IStudyMaterialService studyMaterialService, OrhedgeContext orhedgeContext)
+            IStudyMaterialService studyMaterialService, IErrorHandler errorHandler, OrhedgeContext orhedgeContext)
         {
             _courseService = courseService;
             _categoryService = categoryService;
             _studyMaterialService = studyMaterialService;
+            _errorHandler = errorHandler;
             _orhedgeContext = orhedgeContext;
         }
 
@@ -52,9 +54,13 @@ namespace ServiceLayer.Services
                 await _orhedgeContext.SaveChangesAsync();
                 return new ResultMessage<bool>(true, OperationStatus.Success);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return new ResultMessage<bool>(false, OperationStatus.Exists);
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
+            }
+            catch (Exception ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
             }
         }
 
@@ -63,9 +69,10 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="searchFor">Lookup word (optional)</param>
         /// <param name="studyPrograms">Unique identifiers of studyPrograms (optional)</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns>Total number of items</returns>
-        public int Count(string searchFor = null, StudyProgram[] studyPrograms = null)
-             => GetDetailedCourses(searchFor, studyPrograms).Count();
+        public int Count(StudyProgram[] studyPrograms, string searchFor = null)
+             => GetDetailedCourses(studyPrograms, searchFor).Count();
 
         /// <summary>
         /// Deletes course, and related categories, study materials and connections with study programs.
@@ -122,9 +129,13 @@ namespace ServiceLayer.Services
                 await _orhedgeContext.SaveChangesAsync();
                 return new ResultMessage<bool>(true, OperationStatus.Success);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return new ResultMessage<bool>(false, OperationStatus.Exists);
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
+            }
+            catch (Exception ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
             }
         }
 
@@ -149,19 +160,32 @@ namespace ServiceLayer.Services
         /// <param name="searchFor">Word used as search criteria</param>
         /// <param name="studyPrograms">List of allowed study programs</param>
         /// <returns>List of detailed courses</returns>
-        public async Task<List<DetailedCourseCategoryDTO>> GetDetailedCourses(int offset, int itemsCount, string searchFor = null, StudyProgram[] studyPrograms = null)
+        public async Task<List<DetailedCourseCategoryDTO>> GetDetailedCourses(int offset, int itemsCount, StudyProgram[] studyPrograms, string searchFor = null)
         {
-            List<DetailedCourseCategoryDTO> detailedCourses = GetDetailedCourses(searchFor, studyPrograms)
-                                                                .Skip(offset)
-                                                                .Take(itemsCount)
-                                                                .ToList();
-
-            foreach (DetailedCourseCategoryDTO dto in detailedCourses)
+            try
             {
-                dto.Categories = await _categoryService.GetAll<NoSorting>(x => x.CourseId == dto.Course.CourseId && !x.Deleted);
-                dto.StudyMaterialsCount = await _studyMaterialService.Count(x => !x.Deleted && dto.Categories.Select(z => z.CategoryId).Contains(x.CategoryId));
+                List<DetailedCourseCategoryDTO> detailedCourses = GetDetailedCourses(studyPrograms, searchFor)
+                                                                      .Skip(offset)
+                                                                      .Take(itemsCount)
+                                                                      .ToList();
+
+                foreach (DetailedCourseCategoryDTO dto in detailedCourses)
+                {
+                    dto.Categories = await _categoryService.GetAll<NoSorting>(x => x.CourseId == dto.Course.CourseId && !x.Deleted);
+                    dto.StudyMaterialsCount = await _studyMaterialService.Count(x => !x.Deleted && dto.Categories.Select(z => z.CategoryId).Contains(x.CategoryId));
+                }
+                return detailedCourses;
             }
-            return detailedCourses;
+            catch (ArgumentNullException ex)
+            {
+                _errorHandler.Handle(ex);
+                return new List<DetailedCourseCategoryDTO>();
+            }
+            catch (Exception ex)
+            {
+                _errorHandler.Handle(ex);
+                return new List<DetailedCourseCategoryDTO>();
+            }
         }
 
         /// <summary>
@@ -172,7 +196,7 @@ namespace ServiceLayer.Services
         public async Task<string> GetName(int courseId)
         {
             CourseDTO course = await _courseService.GetSingleOrDefault(x => !x.Deleted && x.CourseId == courseId);
-            return course.Name;
+            return course?.Name;
         }
 
         /// <summary>
@@ -214,7 +238,12 @@ namespace ServiceLayer.Services
             }
         }
 
-        private IQueryable<DetailedCourseCategoryDTO> GetDetailedCourses(string searchFor = null, StudyProgram[] studyPrograms = null)
+        /// <summary>
+        /// Filters, sorts and maps courses.k
+        /// </summary>
+        ///<exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
+        private IQueryable<DetailedCourseCategoryDTO> GetDetailedCourses(StudyProgram[] studyPrograms, string searchFor = null)
         {
             string trimmedSearchFor = searchFor == null ? string.Empty : searchFor.Trim();
 

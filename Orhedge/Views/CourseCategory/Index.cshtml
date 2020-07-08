@@ -27,7 +27,13 @@
             integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
             crossorigin="anonymous"></script>
 }
-
+@if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
+{
+    <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewBag.InfoMessage.Message
+    </div>
+}
 @Html.Hidden("SearchFilterRedirect", Url.Action("SearchFilter", "CourseCategory"))
 <section id="nav-admin">
     <ul class="nav nav-tabs">
@@ -59,7 +65,7 @@
                                 <th></th>
                                 <th>
                                     <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
-                                    <button type="submit" onclick="searchFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                                    <button type="button" onclick="searchFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
                                 </th>
                             </tr>
                         </thead>
@@ -151,7 +157,7 @@
                             </div>
                         }
                         <br><br>
-                        <button type="submit" class="btn btn-secondary" onclick="searchFilter(@paramsSearchSortFilter)">
+                        <button type="button" class="btn btn-secondary" onclick="searchFilter(@paramsSearchSortFilter)">
                             <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
                                 <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
@@ -245,7 +251,7 @@
         <br><br>
         <div class="container">
             <input type="number" hidden="hidden" id="deleteCourseId" name="courseId" />
-            <button type="submit" class="submitbtn btn btn-primary button button4" onclick="deleteCourse()">@Localizer["Delete"]</button>
+            <button type="button" class="submitbtn btn btn-primary button button4" onclick="deleteCourse()">@Localizer["Delete"]</button>
             <button type="button" class="cancelbtn btn btn-primary button button4" onclick="document.getElementById('modalDeleteId').style.display='none'">@Localizer["Cancel"]</button>
         </div>
     </form>

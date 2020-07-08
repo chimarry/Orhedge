@@ -8,6 +8,7 @@ namespace ServiceLayer.Services
     public abstract class BaseService<TDto, TEntity> : ISelectableServiceTemplate<TDto> where TEntity : class
     {
         protected readonly IServicesExecutor<TDto, TEntity> _servicesExecutor;
+
         public BaseService(IServicesExecutor<TDto, TEntity> servicesExecutor)
             => _servicesExecutor = servicesExecutor;
 

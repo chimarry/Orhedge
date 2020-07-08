@@ -5,6 +5,7 @@ using Orhedge.Enums;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Admin;
 using ServiceLayer.DTO;
+using ServiceLayer.ErrorHandling;
 using ServiceLayer.Services;
 using System.Threading.Tasks;
 
@@ -27,15 +28,15 @@ namespace Orhedge.Controllers
         [HttpPut]
         public async Task<ActionResult> Edit([FromBody] EditStudentViewModel model)
         {
-            await _studentService.Update(_mapper.Map<StudentDTO>(model));
-            return RedirectToIndexController();
+            ResultMessage<StudentDTO> addedStudentResult = await _studentService.Update(_mapper.Map<StudentDTO>(model));
+            return RedirectToIndexController(addedStudentResult.Status);
         }
 
         [HttpPut("delete")]
         public async Task<ActionResult> Delete([FromBody] DeleteStudentViewModel model)
         {
-            await _studentService.Delete(model.StudentId);
-            return RedirectToIndexController();
+            ResultMessage<bool> deletedStudentResult = await _studentService.Delete(model.StudentId);
+            return RedirectToIndexController(deletedStudentResult.Status);
         }
 
         [HttpPost("send-confirmation-email")]
@@ -56,11 +57,12 @@ namespace Orhedge.Controllers
             }
         }
 
-        private ActionResult RedirectToIndexController()
+        private ActionResult RedirectToIndexController(OperationStatus operationStatus)
                  => Ok(JsonConvert.SerializeObject(Url.Link("Default", new
                  {
                      Controller = "Admin",
                      Action = "Index",
+                     statusCode = operationStatus.Map()
                  })));
     }
 }

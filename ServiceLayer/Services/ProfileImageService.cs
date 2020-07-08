@@ -16,13 +16,15 @@ namespace ServiceLayer.Services
     {
         private readonly IDocumentService _docService;
         private readonly IStudentService _studentService;
+        private readonly IErrorHandler _errorHandler;
         private readonly int _resizeWidth;
         private readonly int _resizeHeight;
 
-        public ProfileImageService(IDocumentService documentService, IStudentService studentService, IConfiguration config)
+        public ProfileImageService(IDocumentService documentService, IStudentService studentService, IErrorHandler errorHandler, IConfiguration config)
         {
             _docService = documentService;
             _studentService = studentService;
+            _errorHandler = errorHandler;
             (_resizeWidth, _resizeHeight) = (config.GetValue<int>("ProfileImageSettings:ResizeWidth"), config.GetValue<int>("ProfileImageSettings:ResizeHeight"));
         }
 
@@ -59,7 +61,8 @@ namespace ServiceLayer.Services
             {
                 processedImage = PreprocessImage(imgStream);
             }
-
+            if (processedImage == null)
+                return new ResultMessage<string>(OperationStatus.UnknownError);
             string path = PathBuilder.BuildPathForProfileImage();
             ResultMessage<bool> result = await _docService.UploadDocumentToStorage(path, processedImage);
             if (result.IsSuccess)
@@ -73,10 +76,18 @@ namespace ServiceLayer.Services
         /// </summary>
         private byte[] PreprocessImage(Stream imgStream)
         {
-            using (MagickImage img = new MagickImage(imgStream))
+            try
             {
-                img.Resize(_resizeWidth, _resizeHeight);
-                return img.ToByteArray();
+                using (MagickImage img = new MagickImage(imgStream))
+                {
+                    img.Resize(_resizeWidth, _resizeHeight);
+                    return img.ToByteArray();
+                }
+            }
+            catch (MagickException ex)
+            {
+                _errorHandler.Handle(ex);
+                return null;
             }
         }
     }

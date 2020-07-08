@@ -15,7 +15,6 @@ namespace ServiceLayer.Services
     {
         private readonly OrhedgeContext _context;
         private readonly IStudentService _studentService;
-        public const int MaxNumberOfMessagesPerDay = 10;
 
         public ChatMessageService(IServicesExecutor<ChatMessageDTO, ChatMessage> servicesExecutor, IStudentService studentService, OrhedgeContext orhedgeContext) :
             base(servicesExecutor)
@@ -47,7 +46,7 @@ namespace ServiceLayer.Services
         public async Task<ResultMessage<ChatMessageDTO>> Add(ChatMessageDTO dto)
         {
             int numberOfMessagePerDay = _context.ChatMessages.Count(x => x.StudentId == dto.StudentId && x.SentOn.Date == dto.SentOn.Date);
-            if (numberOfMessagePerDay >= MaxNumberOfMessagesPerDay)
+            if (numberOfMessagePerDay >= Constants.MAX_NUMBER_OF_MESSAGES_PER_DAY)
                 return new ResultMessage<ChatMessageDTO>(OperationStatus.NotSupported);
             return await _servicesExecutor.Add(dto, x => x.StudentId != dto.StudentId && x.Message != dto.Message && x.SentOn != dto.SentOn);
         }

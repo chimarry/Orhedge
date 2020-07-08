@@ -38,6 +38,9 @@ namespace ServiceLayer.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Returns semesters with courses organized by study programs.
+        /// </summary>
         public async Task<HashSet<DetailedSemesterDTO>> GetSemestersWithAllInformation()
         {
             HashSet<DetailedSemesterDTO> semesters = new HashSet<DetailedSemesterDTO>();
@@ -55,6 +58,10 @@ namespace ServiceLayer.Services
             return semesters;
         }
 
+        /// <summary>
+        /// Returns courses with categories, that belong to specific study year.
+        /// </summary>
+        /// <param name="year">Value from 0 to 3</param>
         public async Task<List<CourseCategoryDTO>> GetCoursesByYear(int year)
           => await _context.CourseStudyPrograms
                            .Where(csp => csp.StudyYear == year)
@@ -98,9 +105,9 @@ namespace ServiceLayer.Services
                     };
 
                     ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
-
                     if (!studyMaterialResult.IsSuccess)
                         return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
+
                     ResultMessage<bool> fsUploadResult = await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
                     if (!fsUploadResult.IsSuccess)
                         return new ResultMessage<bool>(false, fsUploadResult.Status, fsUploadResult.Message);
@@ -110,6 +117,11 @@ namespace ServiceLayer.Services
             return new ResultMessage<bool>(OperationStatus.Success);
         }
 
+        /// <summary>
+        /// Foreach element of provided list of study materials, this method returns rating that specified student gave for that study material.
+        /// </summary>
+        /// <param name="studentId">Unique identifier of a student</param>
+        /// <param name="studyMaterials">List of study materials</param>
         public async Task<List<DetailedStudyMaterialDTO>> AppendRating(int studentId, List<DetailedStudyMaterialDTO> studyMaterials)
         {
             foreach (DetailedStudyMaterialDTO detailedStudyMaterialDTO in studyMaterials)
@@ -127,6 +139,7 @@ namespace ServiceLayer.Services
         /// <param name="categories">List of categories that need to be included in lookup</param>
         /// <param name="sortKeySelector">Function that says how to get element based on which sorting is applied</param>
         /// <param name="asc">Direction of order</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns>List of detailed study materials or empty list</returns>
         public async Task<List<DetailedStudyMaterialDTO>> GetDetailedStudyMaterials<TKey>(int courseId, int offset, int itemsCount, string searchFor = null, int[] categories = null, Func<DetailedStudyMaterialDTO, TKey> sortKeySelector = null, bool asc = true)
         {
@@ -154,6 +167,8 @@ namespace ServiceLayer.Services
         public async Task<int> Count(int courseId, string searchFor = null, int[] categories = null)
           => (await GetDetailedStudyMaterialDTOs<NoSorting>(courseId, searchFor, categories)).Count();
 
+
+        /// <exception cref="ArgumentNullException"></exception>
         private async Task<IQueryable<DetailedStudyMaterialDTO>> GetDetailedStudyMaterialDTOs<TKey>(int courseId, string searchFor = null, int[] categories = null)
         {
             if (categories == null || categories.Count() == 0)
@@ -243,8 +258,7 @@ namespace ServiceLayer.Services
                 catch (DbUpdateException ex)
                 {
                     transaction.Rollback();
-                    OperationStatus operationStatus = _errorHandler.Handle(ex);
-                    return new ResultMessage<bool>(false, operationStatus);
+                    return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
                 }
             }
         }

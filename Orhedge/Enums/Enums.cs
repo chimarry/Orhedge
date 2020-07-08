@@ -11,27 +11,6 @@
         PrivilegeDesc
     }
 
-    public enum StudyProgramRang
-    {
-        CommonYear,
-        ComputerEngineeringAndInformatics,
-        ElectronicsAndTelecommunications,
-        PowerEngineeringAndIndustrialSystems
-    }
-
-    public enum Semester
-    {
-        First,
-        Second,
-        Third,
-        Forth,
-        Fifth,
-        Sixth,
-        Seventh,
-        Eighth,
-        Unknown
-    }
-
     public enum SendConfirmEmailStatus
     {
         EmailAlreadyExists,
@@ -45,5 +24,18 @@
         RatingDesc,
         UploadDateAsc,
         UploadDateDesc
+    }
+
+    public enum HttpReponseStatusCode
+    {
+        NoStatus,
+        Success,
+        DatabaseError,
+        FileSystemError,
+        NotFound,
+        Exists,
+        InvalidData,
+        UnknownError,
+        NotSupported
     }
 }

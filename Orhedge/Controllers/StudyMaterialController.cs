@@ -1,20 +1,16 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Orhedge.AutoMapper;
+using Microsoft.Extensions.Localization;
 using Orhedge.Enums;
 using Orhedge.Helpers;
-using Orhedge.ViewModels;
 using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO;
-using ServiceLayer.DTO.Materials;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
 using ServiceLayer.Students.Shared;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,29 +22,30 @@ namespace Orhedge.Controllers
         private readonly IStudyMaterialService _studyMaterialService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<SharedResource> _stringLocalizer;
 
-        public const int MaxNumberOfItemsPerPage = 2;
-
-        public StudyMaterialController(IStudyMaterialManagementService studyMaterialManagementService,
+        public StudyMaterialController(IStudyMaterialManagementService studyMaterialManagementService, IStringLocalizer<SharedResource> stringLocalizer,
                                        IStudyMaterialService studyMaterialService, ICategoryService categoryService, IMapper mapper)
         {
             _studyMaterialManagementService = studyMaterialManagementService;
             _studyMaterialService = studyMaterialService;
             _categoryService = categoryService;
             _mapper = mapper;
+            _stringLocalizer = stringLocalizer;
         }
 
         /// <summary>
         /// Renders index page with courses grouped by study program and semester. 
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HttpReponseStatusCode statusCode = HttpReponseStatusCode.NoStatus)
         {
             IndexViewModel indexModel = new IndexViewModel();
             HashSet<DetailedSemesterDTO> detailedSemesterDTOs = await _studyMaterialManagementService.GetSemestersWithAllInformation();
             HashSet<SemesterViewModel> semesters = _mapper.Map<HashSet<DetailedSemesterDTO>, HashSet<SemesterViewModel>>(detailedSemesterDTOs);
             indexModel.Semesters = semesters.ToList();
             indexModel.Semesters = indexModel.Semesters.OrderBy(x => x.Semester).ToList();
+            ViewBag.InfoMessage = new InfoMessage(_stringLocalizer, statusCode);
             return View(indexModel);
         }
 
@@ -59,7 +56,7 @@ namespace Orhedge.Controllers
             foreach (IFormFile file in files)
                 basicFileInfos.Add(_mapper.Map<BasicFileInfo>(file));
             ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveStudyMaterials(category, 1, basicFileInfos);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { statusCode = isSavedResult.Status.Map() });
         }
 
         /// <summary>
@@ -68,16 +65,16 @@ namespace Orhedge.Controllers
         /// </summary>
         /// <param name="courseId"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Course(int courseId)
+        public async Task<IActionResult> Course(int courseId, HttpReponseStatusCode statusCode = HttpReponseStatusCode.NoStatus)
         {
             int totalNumberOfItems = await _studyMaterialManagementService.Count(courseId);
-            PageInformation pageInformation = new PageInformation(0, totalNumberOfItems, MaxNumberOfItemsPerPage);
+            PageInformation pageInformation = new PageInformation(0, totalNumberOfItems, WebConstants.MAX_NUMBER_OF_STUDY_MATERIALS_PER_PAGE);
             List<StudyMaterialViewModel> detailedStudyMaterialViewModels = await GetDetailedStudyMaterials(courseId);
             CourseStudyMaterialsViewModel mainModel = new CourseStudyMaterialsViewModel(courseId, detailedStudyMaterialViewModels, pageInformation);
             int[] selectedCategories = (await _categoryService.GetAll<NoSorting>(x => x.CourseId == courseId && !x.Deleted))
                                                               .Select(x => x.CategoryId)
                                                               .ToArray();
-            await SetViewInformation(courseId, categories: selectedCategories);
+            await SetViewInformation(courseId, statusCode, categories: selectedCategories);
             return View(mainModel);
         }
 
@@ -94,10 +91,10 @@ namespace Orhedge.Controllers
         public async Task<ActionResult> SearchSortFilter(int courseId, int pageNumber, StudyMaterialSortingCriteria sortCriteria, string searchFor, int[] categories)
         {
             int totalNumberOfItems = await _studyMaterialManagementService.Count(courseId, searchFor, categories);
-            PageInformation pageinformation = new PageInformation(pageNumber, totalNumberOfItems, MaxNumberOfItemsPerPage);
+            PageInformation pageinformation = new PageInformation(pageNumber, totalNumberOfItems, WebConstants.MAX_NUMBER_OF_STUDY_MATERIALS_PER_PAGE);
             List<StudyMaterialViewModel> detailedStudyMaterialViewModels = await GetDetailedStudyMaterials(courseId, pageinformation.PageNumber, sortCriteria, searchFor, categories);
             CourseStudyMaterialsViewModel mainModel = new CourseStudyMaterialsViewModel(courseId, detailedStudyMaterialViewModels, pageinformation);
-            await SetViewInformation(courseId, searchFor, sortCriteria, categories);
+            await SetViewInformation(courseId, HttpReponseStatusCode.NoStatus, searchFor, sortCriteria, categories);
             return View("Course", mainModel);
         }
 
@@ -119,8 +116,8 @@ namespace Orhedge.Controllers
         private async Task<List<StudyMaterialViewModel>> GetDetailedStudyMaterials(int courseId, int pageNumber
             = 0, StudyMaterialSortingCriteria sortCriteria = StudyMaterialSortingCriteria.NoSorting, string searchFor = null, int[] categories = null)
         {
-            int itemsCount = MaxNumberOfItemsPerPage;
-            int offset = pageNumber * MaxNumberOfItemsPerPage;
+            int itemsCount = WebConstants.MAX_NUMBER_OF_STUDY_MATERIALS_PER_PAGE;
+            int offset = pageNumber * WebConstants.MAX_NUMBER_OF_STUDY_MATERIALS_PER_PAGE;
             List<DetailedStudyMaterialDTO> studyMaterials = new List<DetailedStudyMaterialDTO>();
             switch (sortCriteria)
             {
@@ -141,11 +138,12 @@ namespace Orhedge.Controllers
         /// <param name="sortCriteria">Choosen sort criteria</param>
         /// <param name="categories">List of selected categories</param>
         /// <returns></returns>
-        private async Task SetViewInformation(int courseId, string searchFor = null, StudyMaterialSortingCriteria sortCriteria = StudyMaterialSortingCriteria.NoSorting, int[] categories = null)
+        private async Task SetViewInformation(int courseId, HttpReponseStatusCode statusCode, string searchFor = null, StudyMaterialSortingCriteria sortCriteria = StudyMaterialSortingCriteria.NoSorting, int[] categories = null)
         {
             ViewBag.SortingCriteria = sortCriteria;
             ViewBag.SelectedCategories = categories;
             ViewBag.SearchFor = searchFor;
+            ViewBag.InfoMessage = new InfoMessage(_stringLocalizer, statusCode);
             ViewBag.AllCategories = _mapper.Map<List<CategoryDTO>, List<CategoryViewModel>>(await _categoryService.GetAll(x => x.CourseId == courseId && !x.Deleted, x => x.Name));
         }
     }

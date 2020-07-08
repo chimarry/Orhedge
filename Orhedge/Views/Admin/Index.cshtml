@@ -23,6 +23,13 @@
     <script src="~/js/admin.js"></script>
 }
 
+@if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
+{
+    <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewBag.InfoMessage.Message
+    </div>
+}
 @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "Admin"))
 <section id="nav-admin">
     <ul class="nav nav-tabs">

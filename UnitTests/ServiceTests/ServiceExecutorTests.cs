@@ -33,7 +33,7 @@ namespace UnitTests.ServiceTests
                 Assert.AreEqual(noStudent, null);
 
                 // Make sure ErrorHandler.Handle method was not called
-                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+                errHandlerMock.Verify(err => err.Log(It.IsAny<Exception>()), Times.Never);
             }
         }
 
@@ -72,7 +72,7 @@ namespace UnitTests.ServiceTests
                 Assert.AreEqual(student.LastName, correctStudent.LastName, "Wrong last name");
 
                 // Make sure ErrorHandler.Handle method was not called
-                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+                errHandlerMock.Verify(err => err.Log(It.IsAny<Exception>()), Times.Never);
             }
         }
 
@@ -107,7 +107,7 @@ namespace UnitTests.ServiceTests
                 Assert.AreEqual(updatedStudent.Result.Description, correctUpdatedStudent.Description, "Wrong description");
 
                 // Make sure ErrorHandler.Handle method was not called
-                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+                errHandlerMock.Verify(err => err.Log(It.IsAny<Exception>()), Times.Never);
             }
         }
 
@@ -128,7 +128,7 @@ namespace UnitTests.ServiceTests
                 Assert.IsTrue(list.Contains(student));
 
                 // Make sure ErrorHandler.Handle method was not called
-                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+                errHandlerMock.Verify(err => err.Log(It.IsAny<Exception>()), Times.Never);
             }
 
         }
@@ -145,7 +145,7 @@ namespace UnitTests.ServiceTests
 
                 Assert.AreEqual(3, await executor.Count());
                 Assert.AreEqual(1, await executor.Count(s => s.Username == "light"));
-                errHandlerMock.Verify(err => err.Handle(It.IsAny<Exception>()), Times.Never);
+                errHandlerMock.Verify(err => err.Log(It.IsAny<Exception>()), Times.Never);
             }
         }
     }

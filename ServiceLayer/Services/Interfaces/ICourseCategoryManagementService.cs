@@ -15,7 +15,7 @@ namespace ServiceLayer.Services
         /// <param name="searchFor">Determines search criteria</param>
         /// <param name="studyPrograms">List of study programs</param>
         /// <returns>number of elements</returns>
-        int Count(string searchFor = null, StudyProgram[] studyPrograms = null);
+        int Count(StudyProgram[] studyPrograms, string searchFor = null);
 
         /// <summary>
         /// Returns name of a course based on its identifier.
@@ -62,7 +62,7 @@ namespace ServiceLayer.Services
         /// <param name="searchFor">Word used as search criteria</param>
         /// <param name="studyPrograms">List of allowed study programs</param>
         /// <returns>List of detailed courses</returns>
-        Task<List<DetailedCourseCategoryDTO>> GetDetailedCourses(int offset, int itemsCount, string searchFor = null, StudyProgram[] studyPrograms = null);
+        Task<List<DetailedCourseCategoryDTO>> GetDetailedCourses(int offset, int itemsCount, StudyProgram[] studyPrograms, string searchFor = null);
 
         /// <summary>
         /// Deletes course, and related categories, study materials and connections with study programs.

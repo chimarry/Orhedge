@@ -396,4 +396,28 @@
   <data name="Refresh" xml:space="preserve">
     <value>Osvježi</value>
   </data>
+  <data name="DatabaseError" xml:space="preserve">
+    <value>Desila se greška u radu sa bazom.</value>
+  </data>
+  <data name="Exists" xml:space="preserve">
+    <value>Podatak već postoji u bazi.</value>
+  </data>
+  <data name="FileSystemError" xml:space="preserve">
+    <value>Desila se greška u radu sa našim fajlsistemom.</value>
+  </data>
+  <data name="InvalidData" xml:space="preserve">
+    <value>Desila se greška jer podaci koje ste unijeli nisu validni.</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Podatak nije pronađen.</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>Operacija nije podržana za Vas u ovom trenutku.</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Operacija je uspješno izvršena.</value>
+  </data>
+  <data name="UnknowError" xml:space="preserve">
+    <value>Desila se greška. Molimo Vas da se obratite našoj tehničkoj podršci.</value>
+  </data>
 </root>
