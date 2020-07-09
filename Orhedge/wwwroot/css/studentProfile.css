@@ -2,6 +2,9 @@
 {
     color: red;
 }
+body {
+    background-color: #DFF1EF;
+}
 
 #form-ui {
     background-color: #336666;
@@ -43,6 +46,7 @@
 
 .panel-bd-top {
     border-top: 3px solid #1fae66;
+    background-color: whitesmoke;
 }
 
 .widget {
