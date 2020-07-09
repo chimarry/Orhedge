@@ -10,6 +10,7 @@ using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Services;
 using ServiceLayer.Students.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,13 +51,25 @@ namespace Orhedge.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(List<IFormFile> files, int category)
+        public async Task<IActionResult> UploadFile(List<IFormFile> files, int category, int? courseId)
         {
             List<BasicFileInfo> basicFileInfos = new List<BasicFileInfo>();
             foreach (IFormFile file in files)
                 basicFileInfos.Add(_mapper.Map<BasicFileInfo>(file));
             ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveStudyMaterials(category, 1, basicFileInfos);
-            return RedirectToAction("Index", new { statusCode = isSavedResult.Status.Map() });
+
+            HttpReponseStatusCode statusCode = isSavedResult.Status.Map();
+
+            if (courseId.HasValue)
+            {
+                var routeData = new { statusCode, courseId = courseId.Value };
+                return RedirectToAction("Course", routeData);
+            }
+            else
+            {
+                var routeData = new { statusCode };
+                return RedirectToAction("Index", routeData);
+            }
         }
 
         /// <summary>
