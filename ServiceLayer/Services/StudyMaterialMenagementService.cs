@@ -12,6 +12,7 @@ using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
@@ -260,6 +261,26 @@ namespace ServiceLayer.Services
                     transaction.Rollback();
                     return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
                 }
+            }
+        }
+
+        public async Task<ResultMessage<bool>> Move(int studyMaterialId, int categoryId)
+        {
+
+            try
+            {
+                StudyMaterial studyMaterial = await _context.StudyMaterials.SingleOrDefaultAsync(sm => sm.StudyMaterialId == studyMaterialId);
+
+                if (studyMaterial == null)
+                    return new ResultMessage<bool>(false, OperationStatus.NotFound);
+                studyMaterial.CategoryId = categoryId;
+                await _context.SaveChangesAsync();
+                return new ResultMessage<bool>(true, OperationStatus.Success);
+            }
+            catch(DbUpdateException ex)
+            {
+                OperationStatus status = _errorHandler.Handle(ex);
+                return new ResultMessage<bool>(false, status);
             }
         }
     }

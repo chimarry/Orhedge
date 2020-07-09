@@ -77,3 +77,7 @@ footer {
 {
     text-align: left;
 }
+
+.ui-autocomplete {
+    z-index: 2000;
+}

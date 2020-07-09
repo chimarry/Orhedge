@@ -9,6 +9,11 @@ function showDeleteModal(studyMaterialId) {
     document.getElementById('deleteStudyMaterialId').value = studyMaterialId;
 }
 
+function showMoveModal(studyMaterialId) {
+    document.getElementById('modalMoveId').style.display = 'block';
+    document.getElementById('moveStudyMaterialId').value = studyMaterialId;
+}
+
 function searchSortFilter(paramsArray) {
     var numberOfElements = paramsArray.itemCount;
     var pageNumber = paramsArray.pageNumber;
@@ -69,3 +74,70 @@ function deleteStudyMaterial(courseId) {
         }
     })
 }
+
+function moveStudyMaterial(courseId) {
+    let model = {
+        "StudyMaterialId": parseInt($("#moveStudyMaterialId").val()),
+        "CourseId": courseId,
+        "CategoryId": parseInt($("#move-category-input").val())
+    };
+
+    $.ajax(
+        {
+            type: "PUT",
+            url: "/api/StudyMaterialApi/move",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: response => {
+                window.location.href = response;
+            },
+            error: response => {
+                console.log(response);
+            }
+        });
+}
+
+function updateMoveCategories(selectedCourse) {
+
+    let year = $("#move-year-input").val();
+    let course = coursesByYear[parseInt(year) - 1].find(el => el.courseId === selectedCourse);
+    if (course === undefined) {
+        $("#move-category-input").empty();
+        return;
+    }
+    opts = course.categories.map(cat => new Option(cat.name, cat.categoryId.toString(), false, false));
+    $("#move-category-input").empty().append(opts);
+}
+
+
+loadCoursesPromise.then(() => {
+    let selectedYear = parseInt($("#move-year-input").val()) - 1;
+    console.log(coursesByYear);
+    $("#move-course-input")
+        .autocomplete({
+            minLength: 0,
+            select: (event, ui) => {
+                $("#move-course-input").attr("data-selected-course-id", ui.item.courseId);
+                updateMoveCategories(ui.item.courseId);
+            },
+            search: (event, ui) => {
+                $("#move-category-input").empty();
+            },
+            source: coursesByYear[selectedYear]
+        })
+        .focus(ev => {
+            $("#move-course-input").autocomplete("search", "");
+        });
+});
+
+
+$("#move-year-input").change(ev => {
+    let year = $("#move-year-input").val();
+
+    $("#move-category-input").empty();
+    let courseInput = $("#move-course-input");
+    courseInput.autocomplete("disable");
+    courseInput.autocomplete("option", "source", coursesByYear[parseInt(year) - 1]);
+    courseInput.autocomplete("enable");
+});

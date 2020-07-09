@@ -1,4 +1,4 @@
-let coursesByYear = [];
+var coursesByYear = [];
 
 function updateCategories(selectedCourse) {
     let year = $("#year-input").val();
@@ -48,20 +48,23 @@ $("#year-input").change(ev => {
     courseInput.autocomplete("enable");
 });
 
-for (let i = 0; i < 4; ++i) {
-    $.ajax({
-        url: `/api/StudyMaterialApi/courses/${i}`,
-        method: "GET",
-        success: response => {
-            coursesByYear[i] = response.map(course => { course.value = course.name; return course });
-            if (coursesByYear[0] && coursesByYear[1] && coursesByYear[2] && coursesByYear[3]) {
-                $(".spinner-wrapper").hide();
-                console.log("Spinner hidden");
-            }
-        },
-        dataType: "json"
-    });
-}
+var loadCoursesPromise = new Promise((resolve, reject) => {
+    for (let i = 0; i < 4; ++i) {
+        $.ajax({
+            url: `/api/StudyMaterialApi/courses/${i}`,
+            method: "GET",
+            success: response => {
+                coursesByYear[i] = response.map(course => { course.value = course.name; return course });
+                if (coursesByYear[0] && coursesByYear[1] && coursesByYear[2] && coursesByYear[3]) {
+                    resolve();
+                    $(".spinner-wrapper").hide();
+                    console.log("Spinner hidden");
+                }
+            },
+            dataType: "json"
+        });
+    }
+});
 
 
 

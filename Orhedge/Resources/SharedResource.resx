@@ -420,4 +420,7 @@
   <data name="UnknowError" xml:space="preserve">
     <value>Desila se greška. Molimo Vas da se obratite našoj tehničkoj podršci.</value>
   </data>
+  <data name="MoveMaterial" xml:space="preserve">
+    <value>Premjesti</value>
+  </data>
 </root>

@@ -75,12 +75,19 @@ namespace Orhedge.Controllers
             return Ok(JsonConvert.SerializeObject(ratingResult));
         }
 
+        [HttpPut("move")]
+        public async Task<IActionResult> Move([FromBody] MoveStudyMaterialViewModel moveVm)
+        {
+            ResultMessage<bool> result = await _studyMaterialManagementService.Move(moveVm.StudyMaterialId, moveVm.CategoryId);
+            return RedirectToMainController(moveVm.CourseId, result.Status);
+        }
+
         private ActionResult RedirectToMainController(int courseId, OperationStatus operationStatus)
             => Ok(JsonConvert.SerializeObject(Url.Link("Default", new
             {
                 Controller = "StudyMaterial",
                 Action = "Course",
-                courseId = courseId,
+                courseId,
                 statusCode = operationStatus.Map()
             })));
     }

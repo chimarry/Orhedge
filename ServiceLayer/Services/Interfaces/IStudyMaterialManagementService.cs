@@ -79,5 +79,13 @@ namespace ServiceLayer.Services
         /// <param name="studentId">Unique identifier of a student</param>
         /// <param name="studyMaterials">List of study materials</param>
         Task<List<DetailedStudyMaterialDTO>> AppendRating(int studentId, List<DetailedStudyMaterialDTO> studyMaterials);
+
+        /// <summary>
+        /// Moves specified study material to new category 
+        /// </summary>
+        /// <param name="studyMaterialId">Unique identifier for the study material</param>
+        /// <param name="categoryId">Unique identifier for the category of course</param>
+        /// <returns></returns>
+        Task<ResultMessage<bool>> Move(int studyMaterialId, int categoryId);
     }
 }
