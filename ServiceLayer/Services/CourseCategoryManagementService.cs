@@ -82,29 +82,36 @@ namespace ServiceLayer.Services
         /// <returns>True if deleted, false if not</returns>
         public async Task<ResultMessage<bool>> DeleteCourse(int courseId)
         {
-            using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
+            try
             {
-
-                ResultMessage<bool> deletedCourse = await _courseService.Delete(courseId);
-
-                if (!deletedCourse.IsSuccess)
-                    return new ResultMessage<bool>(false, deletedCourse.Status, deletedCourse.Message);
-                List<CategoryDTO> categories = await _categoryService.GetAll<NoSorting>(x => x.CourseId == courseId && !x.Deleted);
-                foreach (CategoryDTO cat in categories)
+                using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
                 {
-                    ResultMessage<bool> deleteCat = await _categoryService.DeleteWithoutTransaction(cat.CategoryId);
-                    if (!deleteCat.IsSuccess)
-                        return deleteCat;
+
+                    ResultMessage<bool> deletedCourse = await _courseService.Delete(courseId);
+
+                    if (!deletedCourse.IsSuccess)
+                        return new ResultMessage<bool>(false, deletedCourse.Status, deletedCourse.Message);
+                    List<CategoryDTO> categories = await _categoryService.GetAll<NoSorting>(x => x.CourseId == courseId && !x.Deleted);
+                    foreach (CategoryDTO cat in categories)
+                    {
+                        ResultMessage<bool> deleteCat = await _categoryService.DeleteWithoutTransaction(cat.CategoryId);
+                        if (!deleteCat.IsSuccess)
+                            return deleteCat;
+                    }
+                    List<(Semester semester, StudyProgram sp)> semestersAndStudyPrograms = await GetCourseUsage(courseId);
+                    foreach ((Semester, StudyProgram) semSp in semestersAndStudyPrograms)
+                    {
+                        ResultMessage<bool> sp = await DeleteFromStudyProgram(courseId, semSp.Item2, semSp.Item1);
+                        if (!sp.IsSuccess)
+                            return sp;
+                    }
+                    transaction.Commit();
+                    return new ResultMessage<bool>(true, OperationStatus.Success);
                 }
-                List<(Semester semester, StudyProgram sp)> semestersAndStudyPrograms = await GetCourseUsage(courseId);
-                foreach ((Semester, StudyProgram) semSp in semestersAndStudyPrograms)
-                {
-                    ResultMessage<bool> sp = await DeleteFromStudyProgram(courseId, semSp.Item2, semSp.Item1);
-                    if (!sp.IsSuccess)
-                        return sp;
-                }
-                transaction.Commit();
-                return new ResultMessage<bool>(true, OperationStatus.Success);
+            }
+            catch (DbUpdateException ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
             }
         }
 
@@ -211,30 +218,37 @@ namespace ServiceLayer.Services
         /// <returns>True if added, false if not.</returns>
         public async Task<ResultMessage<bool>> SaveCourse(string name, string[] categories, Semester semester, StudyProgram studyProgram)
         {
-            using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
+            try
             {
-                ResultMessage<CourseDTO> addedCourse = await _courseService.Add(new CourseDTO()
+                using (IDbContextTransaction transaction = await _orhedgeContext.Database.BeginTransactionAsync())
                 {
-                    Name = name
-                });
-                if (!addedCourse.IsSuccess)
-                    return new ResultMessage<bool>(false, addedCourse.Status, addedCourse.Message);
-                foreach (string category in categories)
-                {
-                    ResultMessage<CategoryDTO> addedCategory = await _categoryService.Add(
-                        new CategoryDTO()
-                        {
-                            CourseId = addedCourse.Result.CourseId,
-                            Name = category
-                        });
-                    if (!addedCategory.IsSuccess)
-                        return new ResultMessage<bool>(false, addedCategory.Status, addedCategory.Message);
+                    ResultMessage<CourseDTO> addedCourse = await _courseService.Add(new CourseDTO()
+                    {
+                        Name = name
+                    });
+                    if (!addedCourse.IsSuccess)
+                        return new ResultMessage<bool>(false, addedCourse.Status, addedCourse.Message);
+                    foreach (string category in categories)
+                    {
+                        ResultMessage<CategoryDTO> addedCategory = await _categoryService.Add(
+                            new CategoryDTO()
+                            {
+                                CourseId = addedCourse.Result.CourseId,
+                                Name = category
+                            });
+                        if (!addedCategory.IsSuccess)
+                            return new ResultMessage<bool>(false, addedCategory.Status, addedCategory.Message);
+                    }
+                    ResultMessage<bool> sp = await AddInStudyProgram(addedCourse.Result.CourseId, studyProgram, semester);
+                    if (!sp.IsSuccess)
+                        return sp;
+                    transaction.Commit();
+                    return new ResultMessage<bool>(true, OperationStatus.Success);
                 }
-                ResultMessage<bool> sp = await AddInStudyProgram(addedCourse.Result.CourseId, studyProgram, semester);
-                if (!sp.IsSuccess)
-                    return sp;
-                transaction.Commit();
-                return new ResultMessage<bool>(true, OperationStatus.Success);
+            }
+            catch (DbUpdateException ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
             }
         }
 

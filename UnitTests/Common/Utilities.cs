@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using ServiceLayer.Helpers;
 using System;
 
@@ -14,7 +15,7 @@ namespace UnitTests.Common
         public static OrhedgeContext CreateNewContext()
         {
             DbContextOptionsBuilder<OrhedgeContext> ctxOpts = new DbContextOptionsBuilder<OrhedgeContext>();
-            ctxOpts.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            ctxOpts.UseInMemoryDatabase(Guid.NewGuid().ToString()).ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             var context = new OrhedgeContext(ctxOpts.Options);
             DataGenerator.Initialize(context);
             return context;

@@ -1,6 +1,7 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
 using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using System;
@@ -34,15 +35,13 @@ namespace ServiceLayer.Services
             foreach (ChatMessageDTO message in messages)
             {
                 StudentDTO student = await _studentService.GetSingleOrDefault(x => x.StudentId == message.StudentId);
-                message.Username = student?.Username ?? "NA";
-                message.StudentInitials = string.Format("{0}{1}", student?.Name.First(), student?.LastName.First());
+                if (student.Deleted)
+                    student = new DeletedStudentDTO(student);
+                message.StudentInitials = student.Initials;
             }
             return messages;
         }
 
-        /// <summary>
-        /// Saves chat message in database, only if user has not exceeded daily limit <see cref="MaxNumberOfMessagesPerDay"/>.
-        /// </summary>
         public async Task<ResultMessage<ChatMessageDTO>> Add(ChatMessageDTO dto)
         {
             int numberOfMessagePerDay = _context.ChatMessages.Count(x => x.StudentId == dto.StudentId && x.SentOn.Date == dto.SentOn.Date);

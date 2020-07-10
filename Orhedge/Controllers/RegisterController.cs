@@ -33,7 +33,7 @@ namespace Orhedge.Controllers
             }
             else
                 return RedirectToAction("Index", "Home");
-            
+
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace Orhedge.Controllers
 
                 RegisterUserDTO registerData = _mapper.Map<RegisterUserDTO>(registration);
 
-                await _studentManagmentService.FinishRegistrationProcess(registerData);
+                ResultMessage<bool> finishedRegistration = await _studentManagmentService.FinishRegistrationProcess(registerData);
 
                 ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.Username == registration.Username);
                 if (result.IsSuccess)
@@ -60,7 +60,7 @@ namespace Orhedge.Controllers
                 }
                 else
                     // MAybe eturn error page
-                    return Content("Internal server error");
+                    return Content(finishedRegistration.Message);
             }
             else
                 return RedirectToAction("Index", "Home");

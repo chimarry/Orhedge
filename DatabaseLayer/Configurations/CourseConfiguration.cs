@@ -12,7 +12,7 @@ namespace DatabaseLayer.Configurations
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Course> builder)
         {
             builder.Property(x => x.Deleted).HasDefaultValue(false);
-            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
             builder.HasIndex(x => new { x.Name }).IsUnique();
         }
     }

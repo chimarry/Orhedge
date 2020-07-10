@@ -13,7 +13,7 @@ namespace DatabaseLayer.Configurations
         {
             builder.HasIndex(x => new { x.CourseId, x.Name }).IsUnique();
             builder.Property(x => x.CourseId).IsRequired();
-            builder.Property(x => x.Name).IsRequired();
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Deleted).HasDefaultValue(false);
 
         }

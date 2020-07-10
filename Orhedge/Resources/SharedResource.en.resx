@@ -522,4 +522,10 @@
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="CourseName" xml:space="preserve">
+    <value>Name of the course</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Study year</value>
+  </data>
 </root>

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using ServiceLayer.AutoMapper;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Materials;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using ServiceLayer.Shared;
@@ -12,7 +13,6 @@ using ServiceLayer.Students.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace ServiceLayer.Services
@@ -87,35 +87,42 @@ namespace ServiceLayer.Services
         /// <returns>True if upload succeeds, false if not</returns>
         public async Task<ResultMessage<bool>> SaveStudyMaterials(int categoryId, int studentId, List<BasicFileInfo> fileInfos)
         {
-            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
+            try
             {
-                foreach (BasicFileInfo fileInfo in fileInfos)
+                using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
                 {
-                    ResultMessage<CategoryDTO> choosenCategory = await _categoryService
-                                                                .GetSingleOrDefault(x => x.CategoryId == categoryId);
-                    if (!choosenCategory.IsSuccess)
-                        return new ResultMessage<bool>(false, choosenCategory.Status, choosenCategory.Message);
-
-                    StudyMaterialDTO data = new StudyMaterialDTO()
+                    foreach (BasicFileInfo fileInfo in fileInfos)
                     {
-                        StudentId = studentId,
-                        CategoryId = categoryId,
-                        Name = fileInfo.FileName,
-                        UploadDate = DateTime.Now,
-                        Uri = PathBuilder.BuildPathForStudyMaterial(choosenCategory.Result.CourseId, categoryId, fileInfo.FileName)
-                    };
+                        ResultMessage<CategoryDTO> choosenCategory = await _categoryService
+                                                                    .GetSingleOrDefault(x => x.CategoryId == categoryId);
+                        if (!choosenCategory.IsSuccess)
+                            return new ResultMessage<bool>(false, choosenCategory.Status, choosenCategory.Message);
 
-                    ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
-                    if (!studyMaterialResult.IsSuccess)
-                        return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
+                        StudyMaterialDTO data = new StudyMaterialDTO()
+                        {
+                            StudentId = studentId,
+                            CategoryId = categoryId,
+                            Name = fileInfo.FileName,
+                            UploadDate = DateTime.Now,
+                            Uri = PathBuilder.BuildPathForStudyMaterial(choosenCategory.Result.CourseId, categoryId, fileInfo.FileName)
+                        };
 
-                    ResultMessage<bool> fsUploadResult = await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
-                    if (!fsUploadResult.IsSuccess)
-                        return new ResultMessage<bool>(false, fsUploadResult.Status, fsUploadResult.Message);
+                        ResultMessage<StudyMaterialDTO> studyMaterialResult = await _studyMaterialService.Add(data);
+                        if (!studyMaterialResult.IsSuccess)
+                            return new ResultMessage<bool>(false, studyMaterialResult.Status, studyMaterialResult.Message);
+
+                        ResultMessage<bool> fsUploadResult = await _documentService.UploadDocumentToStorage(data.Uri, fileInfo.FileData);
+                        if (!fsUploadResult.IsSuccess)
+                            return new ResultMessage<bool>(false, fsUploadResult.Status, fsUploadResult.Message);
+                    }
+                    transaction.Commit();
                 }
-                transaction.Commit();
+                return new ResultMessage<bool>(OperationStatus.Success);
             }
-            return new ResultMessage<bool>(OperationStatus.Success);
+            catch (DbUpdateException ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
+            }
         }
 
         /// <summary>
@@ -184,14 +191,14 @@ namespace ServiceLayer.Services
                       .Join(_context.Students,
                              studyMaterial => studyMaterial.StudentId,
                              student => student.StudentId,
-                             (studyMaterial, student) => new { StudyMaterial = studyMaterial, AuthorFullName = string.Format("{0} {1}", student.Name, student.LastName) })
+                             (studyMaterial, student) => new { StudyMaterial = studyMaterial, AuthorFullName = string.Format("{0} {1}", student.Name, student.LastName), student.Deleted })
                       // Get the name of a category
                       .Join(_context.Categories,
                              studyMaterialWithAuthor => studyMaterialWithAuthor.StudyMaterial.CategoryId,
                              category => category.CategoryId,
                              (studyMaterialWithAuthor, category) => new DetailedStudyMaterialDTO(Mapping.Mapper.Map<StudyMaterialDTO>(studyMaterialWithAuthor.StudyMaterial))
                              {
-                                 AuthorFullName = studyMaterialWithAuthor.AuthorFullName,
+                                 AuthorFullName = studyMaterialWithAuthor.Deleted ? DeletedStudentDTO.FullName : studyMaterialWithAuthor.AuthorFullName,
                                  CategoryName = category.Name
                              })
                      // Apply filter by the given lookup word
@@ -222,6 +229,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="studyMaterialId">Unique identifier for the study material</param>
         /// <param name="authorId">Unique identifier for the author</param>
+        /// <param name="studentId">Unique identifier for the student that rates material</param>
         /// <param name="rating">Given rating</param>
         /// <returns></returns>
         public async Task<ResultMessage<bool>> Rate(int studyMaterialId, int studentId, int authorId, int rating)
@@ -266,7 +274,6 @@ namespace ServiceLayer.Services
 
         public async Task<ResultMessage<bool>> Move(int studyMaterialId, int categoryId)
         {
-
             try
             {
                 StudyMaterial studyMaterial = await _context.StudyMaterials.SingleOrDefaultAsync(sm => sm.StudyMaterialId == studyMaterialId);
@@ -277,7 +284,7 @@ namespace ServiceLayer.Services
                 await _context.SaveChangesAsync();
                 return new ResultMessage<bool>(true, OperationStatus.Success);
             }
-            catch(DbUpdateException ex)
+            catch (DbUpdateException ex)
             {
                 OperationStatus status = _errorHandler.Handle(ex);
                 return new ResultMessage<bool>(false, status);

@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer;
 using DatabaseLayer.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using ServiceLayer.DTO;
 using ServiceLayer.ErrorHandling;
@@ -13,9 +14,10 @@ namespace ServiceLayer.Services
     {
         private readonly OrhedgeContext _context;
         private readonly IStudyMaterialService _studyMaterialService;
+        private readonly IErrorHandler _errorHandler;
 
-        public CategoryService(IServicesExecutor<CategoryDTO, Category> servicesExecutor, IStudyMaterialService studyMaterialService, OrhedgeContext context)
-            : base(servicesExecutor) => (_context, _studyMaterialService) = (context, studyMaterialService);
+        public CategoryService(IServicesExecutor<CategoryDTO, Category> servicesExecutor, IStudyMaterialService studyMaterialService, IErrorHandler errorHandler, OrhedgeContext context)
+            : base(servicesExecutor) => (_context, _studyMaterialService, _errorHandler) = (context, studyMaterialService, errorHandler);
 
         public async Task<ResultMessage<CategoryDTO>> Add(CategoryDTO categoryDTO)
             => await _servicesExecutor.Add(categoryDTO, x => x.Name == categoryDTO.Name && x.CourseId == categoryDTO.CourseId && x.Deleted == false);
@@ -28,14 +30,21 @@ namespace ServiceLayer.Services
         /// <returns>True if deleted, false if not.</returns>
         public async Task<ResultMessage<bool>> Delete(int id)
         {
-            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
+            try
             {
-                ResultMessage<bool> resultMessage = await DeleteWithoutTransaction(id);
-                if (!resultMessage.IsSuccess)
-                    return resultMessage;
-                transaction.Commit();
+                using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync())
+                {
+                    ResultMessage<bool> resultMessage = await DeleteWithoutTransaction(id);
+                    if (!resultMessage.IsSuccess)
+                        return resultMessage;
+                    transaction.Commit();
+                }
+                return new ResultMessage<bool>(true, OperationStatus.Success);
             }
-            return new ResultMessage<bool>(true, OperationStatus.Success);
+            catch (DbUpdateException ex)
+            {
+                return new ResultMessage<bool>(false, _errorHandler.Handle(ex));
+            }
         }
 
         /// <summary>

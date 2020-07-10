@@ -1,5 +1,6 @@
 ﻿using DatabaseLayer.Enums;
 using System;
+using System.Linq;
 
 namespace ServiceLayer.DTO
 {
@@ -32,6 +33,8 @@ namespace ServiceLayer.DTO
         public string PasswordHash { get; set; }
 
         public string Salt { get; set; }
+
+        public virtual string Initials { get => string.Format("{0}{1}", Name.First(), LastName.First()); }
 
         public override bool Equals(object obj)
         {

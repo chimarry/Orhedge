@@ -47,7 +47,7 @@ namespace ServiceLayer.Services
         /// </summary>
         /// <param name="registerData">Student information needed for registration process completion</param>
         /// <returns></returns>
-        Task<ResultMessage<RegistrationDTO>> FinishRegistrationProcess(RegisterUserDTO registerData);
+        Task<ResultMessage<bool>> FinishRegistrationProcess(RegisterUserDTO registerData);
 
         /// <summary>
         /// Registers root user.

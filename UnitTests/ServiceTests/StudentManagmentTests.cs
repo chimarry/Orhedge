@@ -67,6 +67,7 @@ namespace UnitTests.ServiceTests
                 .ReturnsAsync(new ResultMessage<RegistrationDTO>());
 
             Mock<IStudentService> studService = new Mock<IStudentService>();
+            Mock<IErrorHandler> handlerMock = new Mock<IErrorHandler>();
 
             // Passing null here beacause GenerateRegistrationEmail does not use StudentService
             IStudentManagmentService studMng = new StudentManagmentService(
@@ -74,7 +75,9 @@ namespace UnitTests.ServiceTests
                 studService.Object,
                 regMock.Object,
                 _sharedConfigMock.Object,
-                _imgMock.Object);
+                _imgMock.Object,
+                handlerMock.Object,
+                _context);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -118,7 +121,7 @@ namespace UnitTests.ServiceTests
                 (new Mock<IEmailSenderService>().Object,
                 studServiceMock.Object,
                 _regMock.Object,
-                _sharedConfigMock.Object, null);
+                _sharedConfigMock.Object, null, _handlerMock.Object, _context);
 
             RegisterFormDTO reg = new RegisterFormDTO
             {
@@ -179,13 +182,16 @@ namespace UnitTests.ServiceTests
             IServicesExecutor<StudentDTO, Student> executor
                 = new ServiceExecutor<StudentDTO, Student>(_context, _handlerMock.Object);
             IStudentService studentService = new StudentService(executor);
+            Mock<IErrorHandler> handlerMock = new Mock<IErrorHandler>();
             IStudentManagmentService studMngService
                 = new StudentManagmentService(
                     _emailMock.Object,
                     studentService,
                     _regMock.Object,
                     _sharedConfigMock.Object,
-                    _imgMock.Object);
+                    _imgMock.Object,
+                    handlerMock.Object,
+                    _context);
 
             Student stud = await _context.Students.FirstOrDefaultAsync();
             string newUsername = "New username";
@@ -224,7 +230,9 @@ namespace UnitTests.ServiceTests
                     studentService,
                     mockReg.Object,
                     _sharedConfigMock.Object,
-                    _imgMock.Object);
+                    _imgMock.Object,
+                    handlerMock.Object,
+                    _context);
 
             Student stud = await _context.Students.FirstOrDefaultAsync(s => s.Username == "light");
             const string studOldPassword = "lightPassword";
