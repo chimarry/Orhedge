@@ -327,59 +327,65 @@
                         </div>
                     </div>
                 </form>
-                </div>
             </div>
         </div>
+    </div>
+
     <!--Move modal-->
-<div id="modalMoveId" class="modal">
-    <form id="moveFormId" class="modal-content animate">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('modalMoveId').style.display='none'" class="close" title="Close Modal">&times;</span>
+    <div id="modalMoveId" class="modal" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="moveFormId" class="modal-content animate modal-design">
+                    <div class="imgcontainer">
+                        <span onclick="document.getElementById('modalMoveId').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    </div>
+                    <div class="container">
+                        <input type="number" hidden="hidden" id="moveStudyMaterialId" name="studyMaterialId" />
+                        <br>
+                        <div class="row">
+                            <b class="col-xl-6">@Localizer["Year"]</b>
+                            <select id="move-year-input" class="form-control form-control-sm col-6" name="categories">
+                                <option selected value="1">@Localizer["FirstYear"]</option>
+                                <option value="2">@Localizer["SecondYear"]</option>
+                                <option value="3">@Localizer["ThirdYear"]</option>
+                                <option value="4">@Localizer["FourthYear"]</option>
+                            </select>
+                        </div><br>
+                        <div class="row">
+                            <label class="col-xl-6"><b>@Localizer["Course"]</b></label>
+                            <input autocomplete="off" class="col-xl-6 form-control" type="text" id="move-course-input" />
+                        </div><br>
+                        <div class="row">
+                            <label class="col-xl-6"><b>@Localizer["Category"]</b></label>
+                            <select type="text" class="col-xl-6 form-control" id="move-category-input">
+                            </select>
+                        </div><br>
+                        <div class="row">
+                            <button type="button" class="btn btn-primary submitbtn" onclick="moveStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
+                            <button type="button" id="moveCancel" class="btn btn-primary cancelbtn">@Localizer["Cancel"]</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="container">
-            <input type="number" hidden="hidden" id="moveStudyMaterialId" name="studyMaterialId" />
-            <div class="row">
-                <b class="col-xl-6">Godina</b>
-                <select id="move-year-input" class="form-control form-control-sm col-6" name="categories">
-                    <option selected value="1">Prva godina</option>
-                    <option value="2">Druga godina</option>
-                    <option value="3">Treća godina</option>
-                    <option value="4">Četvrta godina</option>
-                </select>
-            </div>
-            <div class="row">
-                <label class="col-xl-6">Predmet</label>
-                <input autocomplete="off" type="text" id="move-course-input" />
-            </div>
-            <div class="row">
-                <label class="col-xl-6">Kategorija</label>
-                <select type="text" id="move-category-input">
-                </select>
-            </div>
-            <div class="row">
-                <button type="button" class="col-xl-6" onclick="moveStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
-                <button type="button" class="cancelbtn col-xl-6" onclick="document.getElementById('modalMoveId').style.display='none'">@Localizer["Cancel"]</button>
-            </div>
-        </div>
-    </form>
-</div>
-        @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
-    <div id="modalDeleteId" class="modal" data-backdrop="static" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form id="deleteFormId" class="modal-design">
-                <div class="imgcontainer">
-                    <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
-                </div><br><br>
-                <label><b>@Localizer["ConfirmDelete"]</b></label>
-                <br />
-                <div class="container">
-                    <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
-                    <button type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
-                    <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
+    </div>
+            @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
+            <div id="modalDeleteId" class="modal" data-backdrop="static" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form id="deleteFormId" class="modal-design">
+                            <div class="imgcontainer">
+                                <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+                            </div><br><br>
+                            <label><b>@Localizer["ConfirmDelete"]</b></label>
+                            <br />
+                            <div class="container">
+                                <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
+                                <button type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
+                                <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </div>
-        </div>
-        </div>
+            </div>
 </body>
