@@ -2,6 +2,8 @@
 @{
     Layout = null;
 }
+@inject IStringLocalizer<SharedResource> Localizer
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,22 +17,22 @@
     <script src="~/js/signUp.js"></script>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-          'use strict';
-          window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-              form.addEventListener('submit', function(event) {
-                if (form.checkValidity() === false) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-              }, false);
-            });
-          }, false);
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
         })();
     </script>
 
@@ -39,86 +41,77 @@
     <title>OrhEDGE sign up</title>
 </head>
 <body>
-    <div style="margin-top: 10%;">
-        <p class="header">
-            <span class="logoOne">OrhEDGE</span></br>
-            <span class="logoTwo">Organization&Knowledge</span>
-        </p>
+    <div style="margin-top: 5%;">
+        <img src="~/images/Logo.png" style="max-width:45%; margin-left:auto; margin-right:auto; display:block" />
     </div>
     </br>
     <div class="blur container">
         <form action="" class="needs-validation" novalidate>
             <div class="form-group row">
                 <label for="name" class="col-sm-2 col-form-label">
-                    Ime:*
+                    @Localizer["Name"]:*
                 </label>
                 <div class="col-sm-4">
-                    <input id="name" class="form-control" type="text" required placeholder="Ime">
+                    <input id="name" class="form-control" type="text" required placeholder="@Localizer["Name"]">
                     <div class="invalid-feedback">
-                        Obavezno polje!
+                        @Localizer["Required"]
                     </div>
                 </div>
-                <!-- </div> -->
-                <!-- <div class="form-group row"> -->
                 <label for="lastName" class="col-sm-2 col-form-label">
-                    Prezime:*
+                    @Localizer["LastName"]:*
                 </label>
                 <div class="col-sm-4">
                     <input id="lastName" class="form-control" type="text" required placeholder="Prezime">
                     <div class="invalid-feedback">
-                        Obavezno polje!
+                        @Localizer["Required"]
                     </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="userName" class="col-sm-2 col-form-label">
-                    Korisničko ime:*
+                    @Localizer["Username"]:*
                 </label>
                 <div class="col-sm-4">
                     <input id="userName" class="form-control" type="text" required placeholder="Korisničko Ime">
                     <div class="invalid-feedback">
-                        Obavezno polje!
+                        @Localizer["Required"]
                     </div>
                 </div>
                 <label for="indeks" class="col-sm-2 col-form-label">
-                    Broj indeksa:
+                    @Localizer["Index"]:
                 </label>
                 <div class="col-sm-4">
                     <input id="indeks" class="form-control" type="text" placeholder="01125/16">
                 </div>
-                <!-- </div>
-                <div class="form-group row"> -->
             </div>
             <div class="form-group row">
                 <label for="password" class="col-sm-2 col-form-label">
-                    Lozinka:*
+                    @Localizer["Password"]:*
                 </label>
                 <div class="col-sm-4">
                     <input id="password" class="form-control" type="password" required>
                     <div class="invalid-feedback">
-                        Obavezno polje!
+                        @Localizer["Required"]
                     </div>
                 </div>
-                <!-- </div>
-                <div class="form-group row"> -->
                 <label for="reTypePassword" class="col-sm-2 col-form-label">
-                    Potvrda lozinke:*
+                    @Localizer["ConfirmPassword"]:*
                 </label>
                 <div class="col-sm-4">
                     <input id="reTypePassword" class="form-control" type="password" required>
                     <div class="invalid-feedback">
-                        Obavezno polje!
+                        @Localizer["Required"]
                     </div>
                 </div>
             </div>
             <div class="form-group row">
 
                 <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary">Kreiraj nalog</button>
+                    <button type="submit" class="btn btn-primary">@Localizer["CreateProfile"]</button>
 
                 </div>
                 <div class="col-sm-10">
-                    <p>* Unos polja je obavezan</p>
+                    <p>* @Localizer["RequiredField"]</p>
                 </div>
             </div>
         </form>

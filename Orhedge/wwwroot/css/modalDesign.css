@@ -10,8 +10,14 @@
 .cancelbtn {
     width: auto;
     background-color: #006666;
+    margin:5px;
 }
 
 .submitbtn {
     background-color: #339999;
+    margin:5px;
+}
+.deletebtn {
+    background-color: #6e0612;
+    margin:5px;
 }

@@ -19,5 +19,10 @@ namespace Orhedge.Controllers
             ViewData["returnUrl"] = returnUrl;
             return View();
         }
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
     }
 }

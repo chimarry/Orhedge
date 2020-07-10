@@ -305,7 +305,8 @@ select {
 #nav-admin {
     top: 70px;
     width: 100%;
-    background-image: linear-gradient(to right, #ccffff, #336666);
+    /*background-image: linear-gradient(to right, #ccffff, #336666);*/
+    background-image: linear-gradient(to right, #ccffff, #339999);
 }
 
 .nav-tabs {

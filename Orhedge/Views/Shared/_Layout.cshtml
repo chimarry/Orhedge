@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@inject IStringLocalizer<SharedResource> Localizer
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,13 +30,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">POČETNA</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["HomePage"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">MATERIJALI</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Materials"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="TechnicalSupport" asp-action="Chat">TEHNIČKA PODRŠKA</a>
+                        <a class="nav-link" asp-area="" asp-controller="TechnicalSupport" asp-action="Chat">@Localizer["TechnicalSupport"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">O NAMA</a>

@@ -378,11 +378,8 @@
   <data name="FirstPage" xml:space="preserve">
     <value>Prva</value>
   </data>
-  <data name="InputFileLink" xml:space="preserve">
-    <value>Unesite link materijala...</value>
-  </data>
-  <data name="InputFileName" xml:space="preserve">
-    <value>Unesite ime dokumenta...</value>
+  <data name="CourseName" xml:space="preserve">
+    <value>Ime predmeta...</value>
   </data>
   <data name="LastPage" xml:space="preserve">
     <value>Posljednja</value>
@@ -395,6 +392,87 @@
   </data>
   <data name="Refresh" xml:space="preserve">
     <value>Osvježi</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>O nama</value>
+  </data>
+  <data name="AddCategory" xml:space="preserve">
+    <value>Dodaj kategoriju</value>
+  </data>
+  <data name="AddedCategories" xml:space="preserve">
+    <value>Dodate kategorije</value>
+  </data>
+  <data name="AddingCourses" xml:space="preserve">
+    <value>Dodavanje predmeta</value>
+  </data>
+  <data name="AddingUsers" xml:space="preserve">
+    <value>Dodavanje korisnika</value>
+  </data>
+  <data name="Choose" xml:space="preserve">
+    <value>Izaberite...</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="CreateProfile" xml:space="preserve">
+    <value>Kreiraj nalog</value>
+  </data>
+  <data name="FirstYear" xml:space="preserve">
+    <value>Prva godina</value>
+  </data>
+  <data name="FourthYear" xml:space="preserve">
+    <value>Četvrta godina</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Početna</value>
+  </data>
+  <data name="InputCategoryName" xml:space="preserve">
+    <value>Unesite ime kategorije...</value>
+  </data>
+  <data name="InputCourseName" xml:space="preserve">
+    <value>Unesite naziv predmeta...</value>
+  </data>
+  <data name="ListOfCourses" xml:space="preserve">
+    <value>Lista predmeta</value>
+  </data>
+  <data name="ListOfUsers" xml:space="preserve">
+    <value>Lista korisnika</value>
+  </data>
+  <data name="MaterialName" xml:space="preserve">
+    <value>Naziv materijala</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Obavezno polje!</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Ovo polje je obavezno!</value>
+  </data>
+  <data name="SecondYear" xml:space="preserve">
+    <value>Druga godina</value>
+  </data>
+  <data name="SendMaterial" xml:space="preserve">
+    <value>Pošaljite nam materijal</value>
+  </data>
+  <data name="TechnicalSupport" xml:space="preserve">
+    <value>Tehnička podrška</value>
+  </data>
+  <data name="ThirdYear" xml:space="preserve">
+    <value>Treća godina</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Korisnik</value>
+  </data>
+  <data name="ViewCourseByCategories" xml:space="preserve">
+    <value>Prikaz predmeta po kategorijama</value>
+  </data>
+  <data name="ViewUsersByPrivileges" xml:space="preserve">
+    <value>Prikaz korisnika po privilegijama</value>
+  </data>
+  <data name="ViewUsersByStudyPrograms" xml:space="preserve">
+    <value>Prikaz korisnika po studijskim programima</value>
+  </data>
+  <data name="WelcomeToOurSite" xml:space="preserve">
+    <value>Dobro došli na naš sajt!</value>
   </data>
   <data name="DatabaseError" xml:space="preserve">
     <value>Desila se greška u radu sa bazom.</value>

@@ -32,10 +32,6 @@
                                 <tr>
                                     <td>@Localizer["UserRating"]</td>
                                     <td>
-                                        @*@for(int i = 0; i < (int)Math.Round(Model.Rating); ++i)
-                                        {
-                                        <i class="fa fa-star vd_yellow fa-fw"></i>
-                                        }*@
                                         <label><b>@Model.Rating / 5</b></label>
                                     </td>
                                 </tr>
@@ -54,24 +50,40 @@
                     <div class="row">
                         <div class="col-4">
                             <h5><b>@Localizer["Name"]</b></h5>
-                            <h5><b>@Localizer["LastName"]</b></h5>
-                            <h5><b>@Localizer["Username"]</b></h5>
-                            @if (myProfile)
-                            {
-                            <h5><b>@Localizer["Index"]</b></h5>
-                            <h5><b>@Localizer["Email"]</b></h5>
-                            }
-                            <h5><b>@Localizer["Description"]</b></h5>
                         </div>
                         <div class="col-8">
                             <h5>@Model.Name</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5><b>@Localizer["LastName"]</b></h5>
+                        </div>
+                        <div class="col-8">
                             <h5>@Model.LastName</h5>
+                        </div>
+                        <div class="col-4">
+                            <h5><b>@Localizer["Username"]</b></h5>
+                        </div>
+                        <div class="col-8">
                             <h5>@Model.Username</h5>
+                        </div>
                             @if (myProfile)
                             {
+                        <div class="col-4">
+                            <h5><b>@Localizer["Index"]</b></h5>
+                            <h5><b>@Localizer["Email"]</b></h5>
+                        </div>
+                            }
+                            @if (myProfile)
+                            {
+                        <div class="col-8">
                             <h5>@Model.Index</h5>
                             <h5>@Model.Email</h5>
+                        </div>
                             }
+                        <div class="col-4">
+                            <h5><b>@Localizer["Description"]</b></h5>
+                        </div>
+                        <div class="col-8">
                             <p>@Model.Description</p>
                         </div>
                     </div>

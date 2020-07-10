@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="~/css/styleCourseMaterial.css">
     <link rel="stylesheet" href="~/css/spinner.css">
+    <link rel="stylesheet" href="~/css/modalDesign.css">
     <style>
         .fa {
             font-size: 10px;
@@ -30,304 +31,306 @@
             crossorigin="anonymous"></script>
 
 }
+<body>
+    @if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
+    {
+        <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            @ViewBag.InfoMessage.Message
+        </div>
+    }
 
-@if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
-{
-    <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        @ViewBag.InfoMessage.Message
-    </div>
-}
-
-<div class="spinner-wrapper">
+    <div class="spinner-wrapper">
     <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
 
-<div class="container-fluid main-content" style="background-color:#04001D; color: white;">
-    <div class="row padding">
-        <div class="col-xs-12 col-sm-12 col-md-8">
-            <p style="text-align: center; padding-top:30px;">
-                Kolegijalnost je nešto što karakteriše ovaj dio rada studentske organizacije OrghEDGE.
-                Ako imate digitalni materijal, pošaljite nam kako bi svi bili na jednom mjestu. Ostale kolege ce imati priliku
-                da ocijene vaš materijal. Na taj način sprečavamo zloupotrebu.
-            </p>
-            <p style="text-align: right; margin-right: 15px; font-weight: bold;">Pažljivo popunite formu!</p>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4" style="padding-top: 40px; padding-bottom: 20px;">
-            <form method="post" enctype="multipart/form-data" asp-controller="StudyMaterial" asp-action="UploadFile" asp-route-courseId="@Model.CourseId">
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <p>@Localizer["UploadFileInputMessage"]</p>
-                        <input type="file" accept='.pdf,.doc,.jpeg,.zip' name="files" multiple />
-                    </div>
-                </div>
-                <p>ili</p>
-                <input placeholder="@Localizer["InputFileLink"]" class="form-control form-control-lg" name="course" />
-                <hr>
-                <br>
-                <select class="form-control form-control-lg" name="year" id="year-input" required">
-                    <option value="">Izaberite... </option>
-                    <option value="1">Prva godina</option>
-                    <option value="2">Druga godina</option>
-                    <option value="3">Treća godina</option>
-                    <option value="4">Četvrta godina</option>
-                </select>
-                <br>
-                <input id="course-input" placeholder="@Localizer["InputFileName"]" class="form-control form-control-lg" name="course" required />
-                <br>
-                <select class="form-control form-control-lg" name="category" id="category-input" required">
-                </select>
-                <br>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <input type="submit" class="btn btn-primary btn-outline-light" value="Pošalji nam materijal" />
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="container-fluid padding">
-    <div class="row text-center ">
-        <div class="col-xl-12">
-            <h3 class="display-2" style="color: #006666;">@Localizer["Materials"]</h3>
-        </div>
-
-    </div>
-</div>
-@{
-    string format = "{{itemCount:{0},pageNumber:{1},courseId:{2}}}";
-    string paramsSearchSortFilter = string.Format(format, (ViewBag.AllCategories as List<CategoryViewModel>).Count, @Model.PageInformation.PageNumber, Model.CourseId);
-}
-<div class="row">
-    <!--Populate-->
-    <div class="container-fluid col-xl-9">
-        <div class="container-fluid">
-            <div class="d-flex flex-row justify-content-between  rounded-top" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px;">
-                <!--Sort-->
-                <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@paramsSearchSortFilter)" style="margin-bottom:15px; margin:5px">
-                    @switch (ViewBag.SortingCriteria)
-                    {
-                        case StudyMaterialSortingCriteria.NoSorting:
-                            <option selected>@Localizer["Sort"]</option>
-                            <option value=@StudyMaterialSortingCriteria.NoSorting selected>@Localizer["NoSorting"]</option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                            break;
-                        case StudyMaterialSortingCriteria.UploadDateAsc:
-                            <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateAsc selected>@Localizer["UploadDateAsc"] </option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                            break;
-                        case StudyMaterialSortingCriteria.UploadDateDesc:
-                            <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateDesc selected>@Localizer["UploadDateDesc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                            break;
-                        case StudyMaterialSortingCriteria.RatingAsc:
-                            <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingAsc selected>@Localizer["RatingAsc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
-                            break;
-                        case StudyMaterialSortingCriteria.RatingDesc:
-                            <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
-                            <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
-                            <option value=@StudyMaterialSortingCriteria.RatingDesc selected>@Localizer["RatingDesc"]</option>
-                            break;
-                    }
-                </select>
-                <!--Search-->
-                <div class="d-flex flex-row" style="margin-bottom:15px; margin:5px">
-                    <input class="search" type="text" placeholder=@Localizer["Search"] id="search" name="search" value=@ViewBag.SearchFor>
-                    <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
-                </div>
+    <div class="container-fluid main-content" style="background-color:#04001D; color: white;">
+        <div class="row padding">
+            <div class="col-xs-12 col-sm-12 col-md-8">
+                <p style="text-align: center; padding-top:30px;">
+                    Kolegijalnost je nešto što karakteriše ovaj dio rada studentske organizacije OrghEDGE.
+                    Ako imate digitalni materijal, pošaljite nam kako bi svi bili na jednom mjestu. Ostale kolege ce imati priliku
+                    da ocijene vaš materijal. Na taj način sprečavamo zloupotrebu.
+                </p>
+                <p style="text-align: right; margin-right: 15px; font-weight: bold;">Pažljivo popunite formu!</p>
             </div>
-        </div>
-        <div class="container-fluid">
-            <div style="background-color:white;">
-                <table class="table table-striped table-responsive-lg ">
-                    <thead>
-                        <tr>
-                            <th scope="col">@Localizer["NameObject"]</th>
-                            <th scope="col">@Localizer["Type"]</th>
-                            <th scope="col">@Localizer["Author"]</th>
-                            <th scope="col">@Localizer["UploadDate"]</th>
-                            <th scope="col">@Localizer["Rating"]</th>
-                            <th scope="col"> </th>
-                            <th scope="col"> </th>
-                    </thead>
-                    @{string ratingStarFormat = "{{studentId:{0},studyMaterialId:{1},rating:{2}}}";
-                    }
-                    <tbody>
-                        @foreach (StudyMaterialViewModel st in Model.StudyMaterials)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
-                                </td>
-                                <td><p>@st.CategoryName</p></td>
-                                <td>@st.AuthorFullName</td>
-                                <td>@st.UploadDate</td>
-                                <td>@st.TotalRating</td>
-                                <td>
-                                    @{
-                                        string param = Json.Serialize(st).ToString();
-                                    }
-                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
-                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showMoveModal(@st.StudyMaterialId)">@Localizer["MoveMaterial"]</button>
-                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
-                                </td>
-                                <td>
-                                    @for (int i = 1; i < st.GivenRating + 1; ++i)
-                                    {
-                                        <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:#4facac" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                        </button>
-                                    }
-                                    @for (int i = st.GivenRating + 1; i < 6; ++i)
-                                    {
-                                        <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:transparent" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                        </button>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid col-xl-auto">
-        <div class="d-flex flex-column justify-content-between rounded-top filter" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px; ">
-            <!--Filter-->
-            <p>
-                <b>Prikaz predmeta po kategorijama</b>
-            </p>
-            <div>
-                <div class="categories">
-                    @{
-                        var allCategories = ViewBag.AllCategories as List<CategoryViewModel>;
-                        var selectedCategories = ViewBag.SelectedCategories as int[];
-                    }
-
-                    @for (int i = 0; i < allCategories.Count; ++i)
-                    {
-                        CategoryViewModel cat = allCategories[i];
-                        <div class="form-check filteri">
-                            @Html.CheckBox(cat.CategoryId + "filter", selectedCategories?.Contains(cat.CategoryId), new
-                            {
-                                @id = i + "filter",
-                                @value = cat.CategoryId
-                        })
-                            <label for=@(cat.CategoryId + "filter")>
-                                @Localizer[cat.Name]
-                            </label>
+            <div class="col-xs-12 col-sm-12 col-md-4" style="padding-top: 40px; padding-bottom: 20px;">
+                <form method="post" enctype="multipart/form-data" asp-controller="StudyMaterial" asp-action="UploadFile" asp-route-courseId="@Model.CourseId">
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <p>@Localizer["UploadFileInputMessage"]</p>
+                            <input type="file" accept='.pdf,.doc,.jpeg,.zip' name="files" multiple />
                         </div>
-                    }
+                    </div>
+                   
+                    <br>
+                    <select class="form-control form-control-lg" name="year" id="year-input" required">
+                        <option value="">@Localizer["Choose"]</option>
+                        <option value="1">@Localizer["FirstYear"]</option>
+                        <option value="2">@Localizer["SecondYear"]</option>
+                        <option value="3">@Localizer["ThirdYear"]</option>
+                        <option value="4">@Localizer["FourthYear"]</option>
+                    </select>
+                    <br>
+                    <input id="course-input" placeholder="@Localizer["CourseName"]" class="form-control form-control-lg" name="course" required />
+                    <br>
+                    <select class="form-control form-control-lg" name="category" id="category-input" required">
+                    </select>
+                    <br>
+                    <div class="form-group">
+                        <div class="col-md-10">
+                            <input type="submit" class="btn btn-primary btn-outline-light" value="@Localizer["SendMaterial"]" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid padding">
+        <div class="row text-center ">
+            <div class="col-xl-12">
+                <h3 class="display-2" style="color: #006666;">@Localizer["Materials"]</h3>
+            </div>
+
+        </div>
+    </div>
+    @{
+        string format = "{{itemCount:{0},pageNumber:{1},courseId:{2}}}";
+        string paramsSearchSortFilter = string.Format(format, (ViewBag.AllCategories as List<CategoryViewModel>).Count, @Model.PageInformation.PageNumber, Model.CourseId);
+    }
+    <div class="row">
+        <!--Populate-->
+        <div class="container-fluid col-xl-9">
+            <div class="container-fluid">
+                <div class="d-flex flex-row justify-content-between  rounded-top" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px;">
+                    <!--Sort-->
+                    <select id="sort" name="sort" class="form-control" type="" onchange="searchSortFilter(@paramsSearchSortFilter)" style="margin-bottom:15px; margin:5px">
+                        @switch (ViewBag.SortingCriteria)
+                        {
+                            case StudyMaterialSortingCriteria.NoSorting:
+                                <option selected>@Localizer["Sort"]</option>
+                                <option value=@StudyMaterialSortingCriteria.NoSorting selected>@Localizer["NoSorting"]</option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                break;
+                            case StudyMaterialSortingCriteria.UploadDateAsc:
+                                <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateAsc selected>@Localizer["UploadDateAsc"] </option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                break;
+                            case StudyMaterialSortingCriteria.UploadDateDesc:
+                                <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateDesc selected>@Localizer["UploadDateDesc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                break;
+                            case StudyMaterialSortingCriteria.RatingAsc:
+                                <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingAsc selected>@Localizer["RatingAsc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingDesc>@Localizer["RatingDesc"]</option>
+                                break;
+                            case StudyMaterialSortingCriteria.RatingDesc:
+                                <option value=@StudyMaterialSortingCriteria.NoSorting>@Localizer["NoSorting"]</option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateAsc>@Localizer["UploadDateAsc"] </option>
+                                <option value=@StudyMaterialSortingCriteria.UploadDateDesc>@Localizer["UploadDateDesc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingAsc>@Localizer["RatingAsc"]</option>
+                                <option value=@StudyMaterialSortingCriteria.RatingDesc selected>@Localizer["RatingDesc"]</option>
+                                break;
+                        }
+                    </select>
+                    <!--Search-->
+                    <div class="d-flex flex-row" style="margin-bottom:15px; margin:5px">
+                        <input class="search" type="text" placeholder=@Localizer["Search"] id="search" name="search" value=@ViewBag.SearchFor>
+                        <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-secondary" onclick="searchSortFilter(@paramsSearchSortFilter)">
-                    <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
-                        <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
-                    </svg>
-                    @Localizer["Refresh"]
-                </button>
+            </div>
+            <div class="container-fluid">
+                <div style="background-color:white;">
+                    <table class="table table-striped table-responsive-lg ">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Localizer["NameObject"]</th>
+                                <th scope="col">@Localizer["Type"]</th>
+                                <th scope="col">@Localizer["Author"]</th>
+                                <th scope="col">@Localizer["UploadDate"]</th>
+                                <th scope="col">@Localizer["Rating"]</th>
+                                <th scope="col"> </th>
+                                <th scope="col"> </th>
+                        </thead>
+                        @{string ratingStarFormat = "{{studentId:{0},studyMaterialId:{1},rating:{2}}}";
+                        }
+                        <tbody>
+                            @foreach (StudyMaterialViewModel st in Model.StudyMaterials)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
+                                    </td>
+                                    <td><p>@st.CategoryName</p></td>
+                                    <td>@st.AuthorFullName</td>
+                                    <td>@st.UploadDate</td>
+                                    <td>@st.TotalRating</td>
+                                    <td>
+                                        @{
+                                            string param = Json.Serialize(st).ToString();
+                                        }
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showMoveModal(@st.StudyMaterialId)">@Localizer["MoveMaterial"]</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
+                                    </td>
+                                    <td>
+                                        @for (int i = 1; i < st.GivenRating + 1; ++i)
+                                        {
+                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:#4facac" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </button>
+                                        }
+                                        @for (int i = st.GivenRating + 1; i < 6; ++i)
+                                        {
+                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:transparent" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid col-xl-auto">
+            <div class="d-flex flex-column justify-content-between rounded-top filter" style="background-color: whitesmoke; padding-top: 10px; padding-bottom: 10px; ">
+                <!--Filter-->
+                <p>
+                    <b>@Localizer["ViewCourseByCategories"]</b>
+                </p>
+                <div>
+                    <div class="categories">
+                        @{
+                            var allCategories = ViewBag.AllCategories as List<CategoryViewModel>;
+                            var selectedCategories = ViewBag.SelectedCategories as int[];
+                        }
+
+                        @for (int i = 0; i < allCategories.Count; ++i)
+                        {
+                            CategoryViewModel cat = allCategories[i];
+                            <div class="form-check filteri">
+                                @Html.CheckBox(cat.CategoryId + "filter", selectedCategories?.Contains(cat.CategoryId), new
+                                {
+                                    @id = i + "filter",
+                                    @value = cat.CategoryId
+                            })
+                                <label for=@(cat.CategoryId + "filter")>
+                                    @Localizer[cat.Name]
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-secondary" onclick="searchSortFilter(@paramsSearchSortFilter)">
+                        <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
+                            <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                        @Localizer["Refresh"]
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<nav aria-label="Page navigation example">
-    <div class="container-fluid padding">
-        @{
-            int totalCatCount = (ViewBag.AllCategories as List<CategoryViewModel>).Count;
-        }
-        <ul class="pagination justify-content-center">
-            @if (!Model.PageInformation.IsFirst)
-            {
-                <li class="page-item">
-                    <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.FirstPageNumber, Model.CourseId))">
-                        @Localizer["FirstPage"]
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.PreviousPageNumber, Model.CourseId))">
-                        @Localizer["PreviousPage"]
-                    </a>
-                </li>
+    <nav aria-label="Page navigation example">
+        <div class="container-fluid padding">
+            @{
+                int totalCatCount = (ViewBag.AllCategories as List<CategoryViewModel>).Count;
             }
-            <li class="page-header">
-                Stranica @(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)
-            </li>
-            @if (!Model.PageInformation.IsLast)
-            {
-                <li class="page-item">
-                    <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.NextPageNumber, Model.CourseId))">
-                        @Localizer["NextPage"]
-                    </a>
+            <ul class="pagination justify-content-center">
+                @if (!Model.PageInformation.IsFirst)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.FirstPageNumber, Model.CourseId))">
+                            @Localizer["FirstPage"]
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.PreviousPageNumber, Model.CourseId))">
+                            @Localizer["PreviousPage"]
+                        </a>
+                    </li>
+                }
+                <li class="page-header">
+                    Stranica @(Model.PageInformation.PageNumber + 1) od @(Model.PageInformation.LastPageNumber + 1)
                 </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.LastPageNumber, Model.CourseId))">
-                        @Localizer["LastPage"]
-                    </a>
-                </li>
-            }
-        </ul>
-    </div>
-</nav>
+                @if (!Model.PageInformation.IsLast)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.NextPageNumber, Model.CourseId))">
+                            @Localizer["NextPage"]
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" onclick="searchSortFilter(@string.Format(format, totalCatCount, Model.PageInformation.LastPageNumber, Model.CourseId))">
+                            @Localizer["LastPage"]
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
 
-<footer>
-    <div class="container-fluid padding">
-        <div class="row text-center">
-            <div class="col-12">
-                <h5>Copyright © 2019 ~ Studentska organizacija OrhEDGE </h5>
+    <footer>
+        <div class="container-fluid padding">
+            <div class="row text-center">
+                <div class="col-12">
+                    <h5>Copyright © 2019 ~ Studentska organizacija OrhEDGE </h5>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<div id="modalEditId" class="modal">
-    <form id="editFormId" class="modal-content animate">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('modalEditId').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+    <div id="modalEditId" class="modal" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="editFormId" class="modal-design">
+                    <div class="imgcontainer">
+                        <span onclick="document.getElementById('modalEditId').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    </div><br><br>
+                    <div class="container">
+                        <input type="number" hidden="hidden" id="editStudyMaterialId" name="studyMaterialId" />
+                        <div class="row">
+                            <label for="name" class="col-6"><b>@Localizer["MaterialName"]</b></label>
+                            <input type="text" class="col-6" id="name" name="name" required>
+                        </div> <br>
+                        <div class="row">
+                            <b class="col-xl-6">@Localizer["Category"]</b>
+                            <select class="form-control form-control-sm col-6" name="categories">
+
+                                @foreach (CategoryViewModel category in (ViewBag.AllCategories as List<CategoryViewModel>))
+                                {
+                                    <option id=@category.CategoryId value=@category.CategoryId>@category.Name</option>
+                                }
+                            </select>
+                        </div><br>
+                        <div class="row">
+                            <button type="button" class="btn btn-primary btn-sm submitbtn" onclick="editStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
+                            <button id="editCancel" type="button" class="btn btn-primary btn-sm cancelbtn">@Localizer["Cancel"]</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
         </div>
-        <div class="container">
-            <input type="number" hidden="hidden" id="editStudyMaterialId" name="studyMaterialId" />
-            <div class="row">
-                <label for="name" class="col-6"><b>Naziv</b></label>
-                <input type="text" class="col-6" id="name" name="name" required>
-            </div>
-            <div class="row">
-                <b class="col-xl-6">Kategorija</b>
-                <select class="form-control form-control-sm col-6" name="categories">
-
-                    @foreach (CategoryViewModel category in (ViewBag.AllCategories as List<CategoryViewModel>))
-                    {
-                        <option id=@category.CategoryId value=@category.CategoryId>@category.Name</option>
-                    }
-                </select>
-            </div>
-            <div class="row">
-                <button type="button" class="col-xl-6" onclick="editStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
-                <button type="button" class="cancelbtn col-xl-6" onclick="document.getElementById('modalEditId').style.display='none'">@Localizer["Cancel"]</button>
-            </div>
-        </div>
-    </form>
-</div>
-
-<!--Move modal-->
+    <!--Move modal-->
 <div id="modalMoveId" class="modal">
     <form id="moveFormId" class="modal-content animate">
         <div class="imgcontainer">
@@ -360,19 +363,23 @@
         </div>
     </form>
 </div>
-
-@Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
-<div id="modalDeleteId" class="modal">
-    <form id="deleteFormId" class="modal-content animate">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+        @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
+    <div id="modalDeleteId" class="modal" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="deleteFormId" class="modal-design">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div><br><br>
+                <label><b>@Localizer["ConfirmDelete"]</b></label>
+                <br />
+                <div class="container">
+                    <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
+                    <button type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
+                    <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
+                </div>
+            </form>
         </div>
-        <label><b>@Localizer["ConfirmDelete"]</b></label>
-        <br />
-        <div class="container">
-            <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
-            <button type="button" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
-            <button type="button" onclick="document.getElementById('modalDeleteId').style.display='none'" class="cancelbtn">@Localizer["Cancel"]</button>
         </div>
-    </form>
-</div>
+        </div>
+</body>

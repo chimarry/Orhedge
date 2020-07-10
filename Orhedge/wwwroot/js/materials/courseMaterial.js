@@ -1,11 +1,12 @@
 function showEditModal(studyMaterialParam) {
     document.getElementById('editStudyMaterialId').value = studyMaterialParam.studyMaterialId;
     document.getElementById('name').value = studyMaterialParam.name;
-    document.getElementById('modalEditId').style.display = 'block';
+    //document.getElementById('modalEditId').style.display = 'block';
+    $('#modalEditId').modal();
 }
 
 function showDeleteModal(studyMaterialId) {
-    document.getElementById('modalDeleteId').style.display = 'block';
+    $('#modalEditId').modal();
     document.getElementById('deleteStudyMaterialId').value = studyMaterialId;
 }
 
@@ -13,6 +14,9 @@ function showMoveModal(studyMaterialId) {
     document.getElementById('modalMoveId').style.display = 'block';
     document.getElementById('moveStudyMaterialId').value = studyMaterialId;
 }
+
+$("#editCancel").click(() => $("#modalEditId").modal("hide"));
+$("#deleteCancel").click(() => $("#modalDeleteId").modal("hide"));
 
 function searchSortFilter(paramsArray) {
     var numberOfElements = paramsArray.itemCount;

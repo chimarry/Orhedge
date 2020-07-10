@@ -35,11 +35,11 @@
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" tabindex="0"
-               aria-controls="nav-users" aria-selected="true">Lista korisnika</a>
+               aria-controls="nav-users" aria-selected="true">@Localizer["ListOfUsers"]</a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1"
-               aria-controls="nav-addUser" aria-selected="false">Dodavanje korisnika</a>
+               aria-controls="nav-addUser" aria-selected="false">@Localizer["AddingUsers"]</a>
         </li>
     </ul>
 </section>
@@ -56,11 +56,11 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>KORISNIK</th>
-                                <th>PRIVILEGIJE</th>
-                                <th>OCJENA</th>
+                                <th>@Localizer["User"]</th>
+                                <th>@Localizer["Privileges"]</th>
+                                <th>@Localizer["Rating"]</th>
                                 <th>
-                                    <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
+                                    <input class="search" type="text" placeholder="@Localizer["Search"]." id="search" name="search" value=@ViewBag.SearchFor>
                                     <button type="submit" onclick="searchSortFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
                                 </th>
                                 <th>
@@ -68,7 +68,7 @@
                                         @switch (ViewBag.SortingCriteria)
                                         {
                                             case @StudentSortingCriteria.NoSorting:
-                                                <option selected>SORTIRAJ</option>
+                                                <option selected>@Localizer["Sort"]</option>
                                                 <option value=@StudentSortingCriteria.NameAsc>@Localizer["NameAsc"]</option>
                                                 <option value=@StudentSortingCriteria.NameDesc>@Localizer["NameDesc"]</option>
                                                 <option value=@StudentSortingCriteria.PrivilegeAsc>@Localizer["PrivilegeAsc"] </option>
@@ -198,7 +198,7 @@
             <div class="col-xl-auto">
                 <div class="filter listaKorisnika">
                     <p>
-                        <b>Prikaz korisnika po privilegijama</b>
+                        <b>@Localizer["ViewUsersByPrivileges"]</b>
                     </p>
                     <div>
                         @{var filters = ViewBag.PrivilegeFilters as StudentPrivilege[];}
@@ -234,7 +234,7 @@
 
                 <div class="col-lg-6">
                     <div id="form-ui">
-                        <h2 class="text-center">Dodavanje korisnika:</h2>
+                        <h2 class="text-center">@Localizer["AddingUsers"]:</h2>
                         <form id="regForm">
                             <label for="regFirstName">@Localizer["Name"]</label>
                             <input class="form-control" id="regFirstName" name="firstname" type="text" placeholder="@Localizer["EnterFirstName"]" required /><br>

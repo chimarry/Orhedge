@@ -39,11 +39,11 @@
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link nav-item active" id="nav-courses-tab" data-toggle="tab" href="#nav-courses" role="tab" tabindex="0"
-               aria-controls="nav-courses" aria-selected="true">Lista predmeta</a>
+               aria-controls="nav-courses" aria-selected="true">@Localizer["ListOfCourses"]</a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-item" id="nav-addCourse-tab" data-toggle="tab" href="#nav-addCourse" role="tab" tabindex="-1"
-               aria-controls="nav-addCourse" aria-selected="false">Dodavanje predmeta</a>
+               aria-controls="nav-addCourse" aria-selected="false">@Localizer["AddingCourses"]</a>
         </li>
     </ul>
 </section>
@@ -64,7 +64,7 @@
                                 <th>@Localizer["StudyMaterialsCount"]</th>
                                 <th></th>
                                 <th>
-                                    <input class="search" type="text" placeholder="Pretraži.." id="search" name="search" value=@ViewBag.SearchFor>
+                                    <input class="search" type="text" placeholder="@Localizer["Search"]" id="search" name="search" value=@ViewBag.SearchFor>
                                     <button type="button" onclick="searchFilter(@paramsSearchSortFilter)" class="buttonSearch"><i class="fa fa-search"></i></button>
                                 </th>
                             </tr>
@@ -89,11 +89,11 @@
                                     <td>
                                         @{
                                             object param = Json.Serialize(course);
-                                            @Html.ActionLink(Localizer["Details"], "Details", "CourseCategory", new { courseId = course.CourseId }, new { @class = "btn btn-secondary btn-sm", @style = "background:#3b8080" })
+                                            @Html.ActionLink(Localizer["Details"], "Details", "CourseCategory", new { courseId = course.CourseId }, new { @class = "btn btn-secondary btn-sm" })
                                         }
                                     </td>
                                     <td>
-                                        <button class="btn btn-secondary btn-sm" onclick="showDeleteModal(@course.CourseId)" style="background:#3b8080">@Localizer["Delete"]</button>
+                                        <button class="btn btn-secondary btn-sm" onclick="showDeleteModal(@course.CourseId)">@Localizer["Delete"]</button>
                                     </td>
                                 </tr>
                             }
@@ -142,7 +142,7 @@
             <div class="col-xl-auto">
                 <div class="filter listaKorisnika">
                     <p>
-                        <b>Prikaz predmeta po studijskim programima</b>
+                        <b>@Localizer["ViewUsersByStudyPrograms"]</b>
                     </p>
                     <div>
                         @{var filters = ViewBag.StudyPrograms as StudyProgram[];}
@@ -157,13 +157,13 @@
                             </div>
                         }
                         <br><br>
-                        <button type="button" class="btn btn-secondary" onclick="searchFilter(@paramsSearchSortFilter)">
-                            <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
-                                <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
-                            </svg>
-                            Osvježi
-                        </button>
+                            <button type="button" class="btn btn-secondary" onclick="searchFilter(@paramsSearchSortFilter)">
+                                <svg class="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z" />
+                                    <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                                @Localizer["Refresh"]
+                            </button>
                     </div>
                     <hr>
                 </div>
@@ -180,22 +180,22 @@
                         <h2 class="text-center">@Localizer["AddCourse"]</h2>
                         <form id="addForm">
                             <div class="row">
-                                <div class="col-6">
-                                    <label for="name">@Localizer["NameCourse"]</label>
-                                    <input class="form-control" style="max-width:200px" id="regNameId" name="firstname" type="text" required /><br>
+                                <div class="col-xl-12">
+                                    <label for="name">@Localizer["NameCourse"]</label><br>
+                                    <input class="form-control" style="max-width:500px" id="regNameId" name="firstname" placeholder="@Localizer["InputCourseName"]" type="text" required /><br>
                                 </div>
                             </div>
                             <hr />
-                            <h3 class="text-center" style="color:white">@Localizer["Categories"]</h3>
+                            <h3 class="text-center" style="color:white">@Localizer["AddCategory"]:</h3>
                             <br />
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-xl-6">
                                     <label for="category">@Localizer["NameObject"]</label>
-                                    <input class="form-control" style="max-width:200px" id="regCategoryId" type="text" /><br>
+                                    <input class="form-control" @*style="max-width:200px"*@ id="regCategoryId" placeholder="@Localizer["InputCategoryName"]" type="text" /><br>
                                     <button type="button" class="btn btn-primary btn-sm btn-block" style="max-width:200px;background:white;color:#339999" id="addCategoryBtn" onclick="appendCategory()">@Localizer["Add"]</button>
                                 </div>
-                                <div class="col-6">
-                                    <label style="color:white;font-size:16px">Dodane kategorije: </label>
+                                <div class="col-xl-auto">
+                                    <label style="color:white;font-size:16px">@Localizer["AddedCategories"]: </label>
                                     <br />
                                     <label id="addedCategoriesId" for="categories" style="color:white;font-size:16px"></label>
                                 </div>
@@ -203,20 +203,20 @@
                             <!--Specify study program-->
                             <hr />
                             <div class="row flex-row">
-                                <b class="col-6">
+                                <b class="col-xl-6">
                                     @Localizer["Semester"]
                                 </b>
-                                <select class="form-control form-control-sm col-6" name="semesterName">
+                                <select class="form-control form-control col-xl-auto" name="semesterName" style="min-width:200px;margin:5px">
 
                                     @foreach (string semester in Enum.GetNames(typeof(Semester)))
                                     {
                                         <option id=@semester value="@semester">@Localizer[semester]</option>
                                     }
                                 </select>
-                                <b class="col-6">
+                                <b class="col-xl-6">
                                     @Localizer["StudyProgram"]
                                 </b>
-                                <select class="form-control form-control-sm col-6" name="studyProgramName">
+                                <select class="form-control form-control col-xl-auto" name="studyProgramName" style="max-width:200px; margin:5px">
 
                                     @foreach (string studyProgram in Enum.GetNames(typeof(StudyProgram)))
                                     {

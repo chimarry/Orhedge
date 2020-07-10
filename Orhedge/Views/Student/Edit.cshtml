@@ -21,7 +21,7 @@
                     <form asp-action="Edit" enctype="multipart/form-data">
                         <div class="profile-userpic">
                             <label asp-for="Photo">@Localizer["ProfilePicture"]</label><br>
-                            <a href="https://placeholder.com"><img src="@profileImageUrl"></a><br><br>
+                            <img src="@profileImageUrl" /><br><br>
                             <input asp-for="Photo" /><br><br>
                         </div>
                         <label asp-for="Username">@Localizer["Username"]</label>
@@ -30,7 +30,6 @@
                         <div class="form-group">
                             <label asp-for="Description">@Localizer["Description"]</label>
                             <textarea class="form-control" rows="5" asp-for="Description" value="@Model.Description"></textarea>
-                            @*<input class="form-control" asp-for="Description" value="@Model.Description" />*@
                             <br>
                         </div>
                         <span asp-validation-for="Username"></span>
@@ -48,7 +47,6 @@
                                         <h4 class="modal-title">@Localizer["ChangePassword"]</h4> <br>
                                         <div class="form-group">
                                             <input id="oldpass" name="oldpass" type="password" placeholder="@Localizer["OldPassword"]" class="form-control" required /><br>
-                                            <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
                                         </div>
                                         <div class="form-group">
                                             <input id="newpass" name="newpass" type="password" placeholder="@Localizer["NewPassword"]" class="form-control" required /><br>
@@ -64,21 +62,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-                            @*<form id="passform">
-                    <label for="oldpass">@Localizer["OldPassword"]</label>
-                    <input id="oldpass" name="oldpass" type="password" required /><br>
-                    <!--<span class="error-field old-pass-error" id="oldpasserror">@Localizer["InvalidOldPass"]</span>-->
-                    <label for="newpass">@Localizer["NewPassword"]</label>
-                    <input id="newpass" name="newpass" type="password" required /><br>
-                    <label for="confirmpass">@Localizer["ConfirmPassword"]</label>
-                    <input id="confirmpass" name="confirmpass" type="password" required /><br>
-
-                    <button type="reset" id="cancel" formnovalidate>Cancel</button>
-                    <button id="save">@Localizer["Save"]</button>
-                </form>*@
 
                 </div>
             </div>
