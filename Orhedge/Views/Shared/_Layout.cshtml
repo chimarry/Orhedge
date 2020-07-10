@@ -35,22 +35,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["HomePage"].ToString().ToUpper()</a>
+                        <a class="nav-link text-uppercase" asp-controller="StudyMaterial" asp-action="Index">@Localizer["Materials"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Materials"].ToString().ToUpper()</a>
+                        <a class="nav-link text-uppercase" asp-controller="TechnicalSupport" asp-action="Index">@Localizer["TechnicalSupport"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="TechnicalSupport" asp-action="Index">@Localizer["TechnicalSupport"].ToString().ToUpper()</a>
+                        <a class="nav-link text-uppercase" asp-controller="About" asp-action="Index">@Localizer["About"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">@Localizer["About"].ToString().ToUpper()</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"].ToString().ToUpper()</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <!-- TODO: Remove check for authentication-->
+                        <a class="nav-link" asp-controller="Student" asp-action="Index" asp-route-id="@(User.IsUserAuthenticated() ? User.GetUserId() : 1)">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.468 12.37C12.758 11.226 11.195 10 8 10s-4.757 1.225-5.468 2.37A6.987 6.987 0 0 0 8 15a6.987 6.987 0 0 0 5.468-2.63z" />
                                 <path fill-rule="evenodd" d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
