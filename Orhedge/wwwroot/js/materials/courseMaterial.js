@@ -1,16 +1,16 @@
 function showEditModal(studyMaterialParam) {
     document.getElementById('editStudyMaterialId').value = studyMaterialParam.studyMaterialId;
     document.getElementById('name').value = studyMaterialParam.name;
-    $('#modalEditId').modal();
+    $('#modalEditId').modal("show");
 }
 
 function showDeleteModal(studyMaterialId) {
-    $('#modalEditId').modal();
+    $('#modalEditId').modal("show");
     document.getElementById('deleteStudyMaterialId').value = studyMaterialId;
 }
 
 function showMoveModal(studyMaterialId) {
-    $('#modalMoveId').modal();
+    $('#modalMoveId').modal("show");
     document.getElementById('moveStudyMaterialId').value = studyMaterialId;
 }
 
@@ -35,6 +35,7 @@ function searchSortFilter(paramsArray) {
     location.href = url;
 }
 function editStudyMaterial(courseId) {
+    $("#editSubmit").prop("disabled", true);
     var formData = $("#editFormId").serializeArray();
     var model = JSON.stringify({
         'StudyMaterialId': formData[0].value,
@@ -58,6 +59,7 @@ function editStudyMaterial(courseId) {
     })
 }
 function deleteStudyMaterial(courseId) {
+    $("#deleteSubmit").prop("disabled", true);
     var formData = $("#deleteFormId").serializeArray();
     var model = JSON.stringify({
         'StudyMaterialId': formData[0].value,
@@ -80,6 +82,8 @@ function deleteStudyMaterial(courseId) {
 }
 
 function moveStudyMaterial(courseId) {
+    $("#moveSubmit").prop("disabled", true);
+
     let model = {
         "StudyMaterialId": parseInt($("#moveStudyMaterialId").val()),
         "CourseId": courseId,

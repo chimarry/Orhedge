@@ -322,7 +322,7 @@
                             </select>
                         </div><br>
                         <div class="row">
-                            <button type="button" class="btn btn-primary btn-sm submitbtn" onclick="editStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
+                            <button id="editSubmit" type="button" class="btn btn-primary btn-sm submitbtn" onclick="editStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
                             <button id="editCancel" type="button" class="btn btn-primary btn-sm cancelbtn">@Localizer["Cancel"]</button>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
                             </select>
                         </div><br>
                         <div class="row">
-                            <button type="button" class="btn btn-primary submitbtn" onclick="moveStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
+                            <button type="button" id="moveSubmit" class="btn btn-primary submitbtn" onclick="moveStudyMaterial(@Model.CourseId)">@Localizer["Save"]</button>
                             <button type="button" id="moveCancel" class="btn btn-primary cancelbtn">@Localizer["Cancel"]</button>
                         </div>
                     </div>
@@ -381,7 +381,7 @@
                             <br />
                             <div class="container">
                                 <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
-                                <button type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
+                                <button id="deleteSubmit" type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
                                 <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
                             </div>
                         </form>
