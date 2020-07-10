@@ -516,4 +516,10 @@
   <data name="MoveMaterial" xml:space="preserve">
     <value>Move</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>

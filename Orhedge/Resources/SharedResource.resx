@@ -516,4 +516,10 @@
   <data name="Year" xml:space="preserve">
     <value>Godina</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Odjava</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
 </root>
