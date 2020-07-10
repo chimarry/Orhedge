@@ -139,7 +139,7 @@
                             @foreach (StudentViewModel student in Model.Students)
                             {
                                 <tr class="align-items-center">
-                                    <td><a href=""><img src="images/avatarlogin.png" alt=" " style="max-width: 20px; max-height: 20px;">  &nbsp;@student.Name @student.LastName</a></td>
+                                    <td><a href="@Url.Action("Index", "Student", new { id = student.StudentId})" ><img src="@(student.PhotoVersion.HasValue ? Url.Action("Profile", "Photo", new { id = student.StudentId, version = student.PhotoVersion, width = 20, height = 20 }) : "/images/profile-placeholder-small.jpg")" alt=" " style="max-width: 20px; max-height: 20px;">  &nbsp;@student.Name @student.LastName</a></td>
                                     <td>@Localizer[student.Privilege.ToString()]</td>
                                     <td>@student.Rating</td>
                                     <td>

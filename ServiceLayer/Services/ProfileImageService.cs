@@ -31,9 +31,11 @@ namespace ServiceLayer.Services
         /// <summary>
         /// Returns profile image bytes that belong to specific student.
         /// </summary>
-        /// <param name="studentId">Unique identifier for the student</param>
+        /// <param name="studentId">Unique identifier for the student</param>'
+        /// <param name="height">Height of resized image</param>
+        /// <param name="width">Width of resized image</param>
         /// <returns>Array of bytes wrapped with file name</returns>
-        public async Task<ResultMessage<BasicFileInfo>> GetStudentProfileImage(int studentId)
+        public async Task<ResultMessage<BasicFileInfo>> GetStudentProfileImage(int studentId, int? width, int? height)
         {
             ResultMessage<StudentDTO> result = await _studentService.GetSingleOrDefault(s => s.StudentId == studentId && !s.Deleted);
             if (result.IsSuccess)
@@ -41,8 +43,22 @@ namespace ServiceLayer.Services
                 string photoPath = result.Result.Photo;
                 if (photoPath == null)
                     return new ResultMessage<BasicFileInfo>(OperationStatus.NotFound);
+                
+                ResultMessage<BasicFileInfo> downloadRes = await _docService.DownloadFromStorage(photoPath);
 
-                return await _docService.DownloadFromStorage(photoPath);
+                if (!downloadRes.IsSuccess)
+                    return new ResultMessage<BasicFileInfo>(OperationStatus.UnknownError);
+
+                BasicFileInfo image = downloadRes.Result;
+
+                int widthRequest = width.GetValueOrDefault(_resizeWidth);
+                int heightRequest = width.GetValueOrDefault(_resizeHeight);
+
+                byte[] resizedImgData = ResizeImage(image.FileData, widthRequest, heightRequest);
+
+                BasicFileInfo resizedImg = new BasicFileInfo(image.FileName, resizedImgData);
+
+                return new ResultMessage<BasicFileInfo>(resizedImg);
             }
             else
                 return new ResultMessage<BasicFileInfo>(OperationStatus.NotFound);
@@ -71,8 +87,17 @@ namespace ServiceLayer.Services
                 return new ResultMessage<string>(OperationStatus.FileSystemError);
         }
 
+        private byte[] ResizeImage(byte[] imageData, int width, int height)
+        {
+            using (MagickImage img = new MagickImage(imageData))
+            {
+                img.Resize(width, height);
+                return img.ToByteArray();
+            }
+        }
+
         /// <summary>
-        /// Image gets resized.
+        /// Preprocess image after it is uploaded
         /// </summary>
         private byte[] PreprocessImage(Stream imgStream)
         {

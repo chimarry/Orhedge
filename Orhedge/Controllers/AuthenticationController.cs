@@ -42,8 +42,7 @@ namespace Orhedge.Controllers
                             IsPersistent = login.RememberMe
                         });
 
-                    // TODO: Redirect to main page
-                    return Redirect(Url.IsLocalUrl(returnUrl) ? returnUrl : Url.Action("Index", "Home"));
+                    return Redirect(Url.IsLocalUrl(returnUrl) ? returnUrl : Url.Action("Index", "StudyMaterial"));
                 }
             }
             else

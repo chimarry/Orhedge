@@ -8,21 +8,16 @@ namespace Orhedge.Controllers
     {
         public IActionResult Index()
         {
-            // TODO: If user is authenticated redirect to materials main page
+            if (this.IsUserAuthenticated())
+                return RedirectToAction("Index", "StudyMaterial");
             return View();
         }
 
         public IActionResult Login(string returnUrl = "")
         {
-            // TODO: Redirect to materials main page
             if (this.IsUserAuthenticated())
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "StudyMaterial");
             ViewData["returnUrl"] = returnUrl;
-            return View();
-        }
-
-        public IActionResult SignUp()
-        {
             return View();
         }
     }
