@@ -118,399 +118,402 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmPassword" xml:space="preserve">
-    <value>Potvrdi lozinku</value>
+    <value>Confirm password</value>
   </data>
   <data name="ConfirmPasswordRequired" xml:space="preserve">
-    <value>Nova lozinka je obavezna</value>
+    <value>New password is mandatory</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Opis</value>
+    <value>Description</value>
   </data>
   <data name="DescriptionRequired" xml:space="preserve">
-    <value>Opis je prazan</value>
+    <value>Description is mandatory</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Odustani</value>
+    <value>Cancel</value>
   </data>
   <data name="ConfirmDelete" xml:space="preserve">
-    <value>Da li želite da nastavite sa brisanjem?</value>
+    <value>Do you want to proceede with deletion?</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Obriši</value>
+    <value>Delete</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Izmijeni</value>
+    <value>Edit</value>
   </data>
   <data name="Index" xml:space="preserve">
-    <value>Broj indeksa</value>
+    <value>Index</value>
   </data>
   <data name="InvalidCredentials" xml:space="preserve">
-    <value>Uneseno korisničko ime ili lozinka nisu validni</value>
+    <value>Entered username or password is not correct</value>
   </data>
   <data name="JuniorAdmin" xml:space="preserve">
-    <value>Niži administrator</value>
+    <value>Junior administrator</value>
   </data>
   <data name="LastName" xml:space="preserve">
-    <value>Prezime</value>
+    <value>Last name</value>
   </data>
   <data name="InvalidOldPass" xml:space="preserve">
-    <value>Pogrešna lozinka</value>
+    <value>Wrong password</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Prijava</value>
+    <value>Login</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>Nova lozinka</value>
+    <value>New password</value>
   </data>
   <data name="NewPasswordRequired" xml:space="preserve">
-    <value>Nova lozinka je obavezna</value>
+    <value>New password is mandatory</value>
   </data>
   <data name="OldPassword" xml:space="preserve">
-    <value>Stara lozinka</value>
+    <value>Old password</value>
   </data>
   <data name="OldPasswordRequired" xml:space="preserve">
-    <value>Stara lozinka je obavezna</value>
+    <value>Old password is mandatory</value>
   </data>
   <data name="PassNoMatch" xml:space="preserve">
-    <value>Lozinke nisu iste</value>
+    <value>Passwords do not match</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Ime</value>
+    <value>Name</value>
   </data>
   <data name="NameAsc" xml:space="preserve">
-    <value>Ime [A-Z]</value>
+    <value>Name [A-Z]</value>
   </data>
   <data name="NameDesc" xml:space="preserve">
-    <value>Ime [Z-A]</value>
+    <value>Name[Z-A]</value>
   </data>
   <data name="Normal" xml:space="preserve">
-    <value>Standardni korisnik</value>
+    <value>Standard user</value>
   </data>
   <data name="NoSorting" xml:space="preserve">
-    <value>Bez sortiranja</value>
+    <value>No sorting</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Lozinka</value>
+    <value>Password</value>
   </data>
   <data name="PrivilegeAsc" xml:space="preserve">
-    <value>Rastuće po ulozi</value>
+    <value>Privilege Asc</value>
   </data>
   <data name="PrivilegeDesc" xml:space="preserve">
-    <value>Opadajuće po ulozi</value>
+    <value>Privilege Desc</value>
   </data>
   <data name="Privileges" xml:space="preserve">
-    <value>Privilegije</value>
+    <value>Privileges</value>
   </data>
   <data name="RatingAsc" xml:space="preserve">
-    <value>Rastuće po ocjeni</value>
+    <value>Rating Asc</value>
   </data>
   <data name="RatingDesc" xml:space="preserve">
-    <value>Opadajuće po ocjeni</value>
+    <value>Rating Desc</value>
   </data>
   <data name="Reduced" xml:space="preserve">
-    <value>Oduzete privilegije</value>
+    <value>Reduced privileges</value>
   </data>
   <data name="ProfilePicture" xml:space="preserve">
-    <value>Profilna slika</value>
+    <value>Profile image</value>
   </data>
   <data name="RememberMe" xml:space="preserve">
-    <value>Zapamti me</value>
+    <value>Remember me</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Sačuvaj</value>
+    <value>Save</value>
   </data>
   <data name="SeniorAdmin" xml:space="preserve">
-    <value>Viši administrator</value>
+    <value>Senior admin</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Korisničko ime</value>
+    <value>Username</value>
   </data>
   <data name="UsernameRequired" xml:space="preserve">
-    <value>Korisničko ime je prazno</value>
+    <value>Username is mandatory</value>
   </data>
   <data name="CommonYear" xml:space="preserve">
-    <value>Zajednička godina</value>
+    <value>Common year</value>
   </data>
   <data name="ComputerEngineeringAndInformatics" xml:space="preserve">
-    <value>Računarstvo i informatika</value>
+    <value>Computer engineering and informatics</value>
   </data>
   <data name="Eighth" xml:space="preserve">
-    <value>Osmi semestar</value>
+    <value>Eighth semester</value>
   </data>
   <data name="ElectronicsAndTelecommunications" xml:space="preserve">
-    <value>Elektronika i telekomunikacije</value>
+    <value>Electronics and telecomunications</value>
   </data>
   <data name="Fifth" xml:space="preserve">
-    <value>Peti semestar</value>
+    <value>Fifth semester</value>
   </data>
   <data name="First" xml:space="preserve">
-    <value>Prvi semestar</value>
+    <value>First semester</value>
   </data>
   <data name="Forth" xml:space="preserve">
-    <value>Četvrti semestar</value>
+    <value>Forth semester</value>
   </data>
   <data name="PowerEngineeringAndIndustrialSystems" xml:space="preserve">
-    <value>Energetika i automatika</value>
+    <value>Power engineering and industry systems</value>
   </data>
   <data name="Second" xml:space="preserve">
-    <value>Drugi semestar</value>
+    <value>Second semester</value>
   </data>
   <data name="Seventh" xml:space="preserve">
-    <value>Sedmi semstar</value>
+    <value>Seventh semester</value>
   </data>
   <data name="Sixth" xml:space="preserve">
-    <value>Šesti semestar</value>
+    <value>Sixth semester</value>
   </data>
   <data name="Third" xml:space="preserve">
-    <value>Treći semestar</value>
+    <value>Third semester</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="UserPrivilege" xml:space="preserve">
-    <value>Nivo korisnika</value>
+    <value>User's privilege</value>
   </data>
   <data name="SendRegisterEmail" xml:space="preserve">
-    <value>Pošalji registracioni email</value>
+    <value>Send registration email</value>
   </data>
   <data name="EnterEmail" xml:space="preserve">
-    <value>Unesite email korisnika..</value>
+    <value>Enter user's email...</value>
   </data>
   <data name="EnterFirstName" xml:space="preserve">
-    <value>Unesite ime korisnika..</value>
+    <value>Enter user's first name...</value>
   </data>
   <data name="EnterIndex" xml:space="preserve">
-    <value>Unesite broj indeksa korisnika..</value>
+    <value>Enter user's index...</value>
   </data>
   <data name="EnterLastName" xml:space="preserve">
-    <value>Unesite prezime korisnika..</value>
+    <value>Enter user's lastname...</value>
   </data>
   <data name="InvalidImageFile" xml:space="preserve">
-    <value>Format slike nije jpg</value>
+    <value>Image format is not jpeg</value>
   </data>
   <data name="NoResults" xml:space="preserve">
-    <value>Nema rezultata</value>
+    <value>No results</value>
   </data>
   <data name="Materials" xml:space="preserve">
-    <value>Materijali</value>
+    <value>Materials</value>
   </data>
   <data name="NameObject" xml:space="preserve">
-    <value>Naziv</value>
+    <value>Name</value>
   </data>
   <data name="Rating" xml:space="preserve">
-    <value>Ocjena</value>
+    <value>Rating</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Kategorija</value>
+    <value>Category</value>
   </data>
   <data name="Author" xml:space="preserve">
-    <value>Autor</value>
+    <value>Author</value>
   </data>
   <data name="UploadDate" xml:space="preserve">
-    <value>Datum postavljanja</value>
+    <value>Upload date</value>
   </data>
   <data name="FilterBy" xml:space="preserve">
-    <value>Filtriraj po...</value>
+    <value>Filter by...</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Pretraži...</value>
+    <value>Search...</value>
   </data>
   <data name="Sort" xml:space="preserve">
-    <value>Sortiraj</value>
+    <value>Sort</value>
   </data>
   <data name="UploadDateAsc" xml:space="preserve">
-    <value>Po datumu rastuće</value>
+    <value>Date Asc</value>
   </data>
   <data name="UploadDateDesc" xml:space="preserve">
-    <value>Po datumu opadajuće</value>
+    <value>Date Desc</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>Izmijeni lozinku</value>
+    <value>Change password</value>
   </data>
   <data name="ChangeUserProfile" xml:space="preserve">
-    <value>Izmjena profila</value>
+    <value>Change user's profile</value>
   </data>
   <data name="CreateAccount" xml:space="preserve">
-    <value>Kreiraj nalog</value>
+    <value>Create account</value>
   </data>
   <data name="Registration" xml:space="preserve">
-    <value>Registracija</value>
+    <value>Registration</value>
   </data>
   <data name="UpdateProfile" xml:space="preserve">
-    <value>Izmijeni profil</value>
+    <value>Update profile</value>
   </data>
   <data name="UserDetails" xml:space="preserve">
-    <value>Informacije o korisniku</value>
+    <value>Information about the user</value>
   </data>
   <data name="UserRating" xml:space="preserve">
-    <value>Ocjena</value>
+    <value>Rating</value>
   </data>
   <data name="UploadFileInputMessage" xml:space="preserve">
-    <value>Odaberite fajl(ove):</value>
+    <value>Choose file(s):</value>
   </data>
   <data name="Categories" xml:space="preserve">
-    <value>Kategorije</value>
+    <value>Categories</value>
   </data>
   <data name="StudyMaterialsCount" xml:space="preserve">
-    <value>Broj materijala</value>
+    <value>Number of study materials</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value>Detalji</value>
+    <value>Details</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Dodaj</value>
+    <value>Add</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Kategorija</value>
+    <value>Category</value>
   </data>
   <data name="Semester" xml:space="preserve">
-    <value>Semestar</value>
+    <value>Semester</value>
   </data>
   <data name="StudyProgram" xml:space="preserve">
-    <value>Studijski program</value>
+    <value>Study program</value>
   </data>
   <data name="AddCourse" xml:space="preserve">
-    <value>Dodavanje predmeta</value>
+    <value>Add course</value>
   </data>
   <data name="NameCourse" xml:space="preserve">
-    <value>Naziv predmeta</value>
+    <value>Name</value>
   </data>
   <data name="FirstPage" xml:space="preserve">
-    <value>Prva</value>
+    <value>First</value>
   </data>
-  <data name="CourseName" xml:space="preserve">
-    <value>Ime predmeta...</value>
+  <data name="InputFileLink" xml:space="preserve">
+    <value>Enter material's link</value>
+  </data>
+  <data name="InputFileName" xml:space="preserve">
+    <value>Enter name of a file</value>
   </data>
   <data name="LastPage" xml:space="preserve">
-    <value>Posljednja</value>
+    <value>Last</value>
   </data>
   <data name="NextPage" xml:space="preserve">
-    <value>Sljedeća</value>
+    <value>Next</value>
   </data>
   <data name="PreviousPage" xml:space="preserve">
-    <value>Prethodna</value>
+    <value>Previous</value>
   </data>
   <data name="Refresh" xml:space="preserve">
-    <value>Osvježi</value>
+    <value>Refresh</value>
   </data>
   <data name="About" xml:space="preserve">
-    <value>O nama</value>
+    <value>About us</value>
   </data>
   <data name="AddCategory" xml:space="preserve">
-    <value>Dodaj kategoriju</value>
+    <value>Add category</value>
   </data>
   <data name="AddedCategories" xml:space="preserve">
-    <value>Dodate kategorije</value>
+    <value>Added categories</value>
   </data>
   <data name="AddingCourses" xml:space="preserve">
-    <value>Dodavanje predmeta</value>
+    <value>Add course</value>
   </data>
   <data name="AddingUsers" xml:space="preserve">
-    <value>Dodavanje korisnika</value>
+    <value>Add user</value>
   </data>
   <data name="Choose" xml:space="preserve">
-    <value>Izaberite...</value>
+    <value>Choose...</value>
   </data>
   <data name="Contact" xml:space="preserve">
-    <value>Kontakt</value>
+    <value>Contact</value>
   </data>
   <data name="CreateProfile" xml:space="preserve">
-    <value>Kreiraj nalog</value>
+    <value>Create account</value>
   </data>
   <data name="FirstYear" xml:space="preserve">
-    <value>Prva godina</value>
+    <value>First year</value>
   </data>
   <data name="FourthYear" xml:space="preserve">
-    <value>Četvrta godina</value>
+    <value>Fourth year</value>
   </data>
   <data name="HomePage" xml:space="preserve">
-    <value>Početna</value>
+    <value>Home</value>
   </data>
   <data name="InputCategoryName" xml:space="preserve">
-    <value>Unesite ime kategorije...</value>
+    <value>Enter category name</value>
   </data>
   <data name="InputCourseName" xml:space="preserve">
-    <value>Unesite naziv predmeta...</value>
+    <value>Enter course name</value>
   </data>
   <data name="ListOfCourses" xml:space="preserve">
-    <value>Lista predmeta</value>
+    <value>Lisf of courses</value>
   </data>
   <data name="ListOfUsers" xml:space="preserve">
-    <value>Lista korisnika</value>
+    <value>List of users</value>
   </data>
   <data name="MaterialName" xml:space="preserve">
-    <value>Naziv materijala</value>
+    <value>Name</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Obavezno polje!</value>
+    <value>Mandatory field!</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
-    <value>Ovo polje je obavezno!</value>
+    <value>Mandatory field!</value>
   </data>
   <data name="SecondYear" xml:space="preserve">
-    <value>Druga godina</value>
+    <value>Second year</value>
   </data>
   <data name="SendMaterial" xml:space="preserve">
-    <value>Pošaljite nam materijal</value>
+    <value>Send us material</value>
   </data>
   <data name="TechnicalSupport" xml:space="preserve">
-    <value>Tehnička podrška</value>
+    <value>Technical support</value>
   </data>
   <data name="ThirdYear" xml:space="preserve">
-    <value>Treća godina</value>
+    <value>Third year</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>Korisnik</value>
+    <value>User</value>
   </data>
   <data name="ViewCourseByCategories" xml:space="preserve">
-    <value>Prikaz predmeta po kategorijama</value>
+    <value>Show courses by categories</value>
   </data>
   <data name="ViewUsersByPrivileges" xml:space="preserve">
-    <value>Prikaz korisnika po privilegijama</value>
+    <value>Show users by privileges</value>
   </data>
   <data name="ViewUsersByStudyPrograms" xml:space="preserve">
-    <value>Prikaz korisnika po studijskim programima</value>
+    <value>Show users by study programs</value>
   </data>
   <data name="WelcomeToOurSite" xml:space="preserve">
-    <value>Dobro došli na naš sajt!</value>
+    <value>Welcome to our site!</value>
   </data>
   <data name="DatabaseError" xml:space="preserve">
-    <value>Desila se greška u radu sa bazom.</value>
+    <value>An error happend while working with database.</value>
   </data>
   <data name="Exists" xml:space="preserve">
-    <value>Podatak već postoji u bazi.</value>
+    <value>Data already exists..</value>
   </data>
   <data name="FileSystemError" xml:space="preserve">
-    <value>Desila se greška u radu sa našim fajlsistemom.</value>
+    <value>An error happend while working with our filesystem..</value>
   </data>
   <data name="InvalidData" xml:space="preserve">
-    <value>Desila se greška jer podaci koje ste unijeli nisu validni.</value>
+    <value>An error happend because data you provided is invalid.</value>
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Podatak nije pronađen.</value>
   </data>
   <data name="NotSupported" xml:space="preserve">
-    <value>Operacija nije podržana za Vas u ovom trenutku.</value>
+    <value>Operation is not supported for you right now.</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Operacija je uspješno izvršena.</value>
   </data>
   <data name="UnknowError" xml:space="preserve">
-    <value>Desila se greška. Molimo Vas da se obratite našoj tehničkoj podršci.</value>
+    <value>An error happend. Please contact our technical support.</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>Engleski</value>
+    <value>English</value>
   </data>
   <data name="Serbian" xml:space="preserve">
-    <value>Srpski</value>
+    <value>Serbian</value>
   </data>
   <data name="Send" xml:space="preserve">
-    <value>Pošalji</value>
+    <value>Send</value>
   </data>
   <data name="FillForm" xml:space="preserve">
-    <value>Pažljivo popunite formu!</value>
+    <value>Fill out this form carefully!</value>
   </data>
   <data name="MoveMaterial" xml:space="preserve">
-    <value>Premjesti</value>
+    <value>Move</value>
   </data>
 </root>

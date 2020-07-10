@@ -28,7 +28,7 @@ namespace Orhedge.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Chat()
+        public async Task<IActionResult> Index()
         {
             // TODO: Get user information
             int totalNumberOfItems = await _chatMessageService.Count(x => !x.Deleted);
@@ -59,7 +59,7 @@ namespace Orhedge.Controllers
                 (await _chatMessageService.GetWithDetails(pageNumber * WebConstants.MAX_NUMBER_OF_CHAT_MESSAGES_PER_PAGE, WebConstants.MAX_NUMBER_OF_CHAT_MESSAGES_PER_PAGE))
             };
             ViewBag.InfoMessage = new InfoMessage(_stringLocalizer, statusCode);
-            return View("Chat", technicalSupportViewModel);
+            return View("Index", technicalSupportViewModel);
         }
     }
 }

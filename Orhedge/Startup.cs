@@ -13,6 +13,7 @@ using Orhedge.IoC;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Orhedge
@@ -84,7 +85,6 @@ namespace Orhedge
                 opts =>
                 opts.DataAnnotationLocalizerProvider =
                 (type, factory) => factory.Create(typeof(SharedResource)));
-
             services.AddSignalR();
             return DependencyInjectionConfiguration.Configure(services);
         }
@@ -104,15 +104,18 @@ namespace Orhedge
 
             List<CultureInfo> supportedCultures = new List<CultureInfo>
             {
-                new CultureInfo("sr")
+                new CultureInfo("sr"),
+                new CultureInfo("en")
             };
 
             app.UseRequestLocalization(opts =>
-            {
-                opts.DefaultRequestCulture = new RequestCulture("sr", "sr");
-                opts.SupportedCultures = supportedCultures;
-                opts.SupportedUICultures = supportedCultures;
-            });
+                {
+                    opts.DefaultRequestCulture = new RequestCulture("sr", "sr");
+                    opts.SupportedCultures = supportedCultures;
+                    opts.SupportedUICultures = supportedCultures;
+                    opts.RequestCultureProviders.Clear();
+                    opts.RequestCultureProviders.Add(new CookieRequestCultureProvider());
+                });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

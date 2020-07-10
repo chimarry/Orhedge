@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/css/avatar.css">
     <link rel="stylesheet" href="~/css/chat.css">
 }
-
+@inject IStringLocalizer<SharedResource> Localizer
 @if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
 {
     <div class="alert @ViewBag.InfoMessage.CssClass alert-dismissible" role="alert">
@@ -20,9 +20,9 @@
 <div class="container" style="margin-left:10px">
     <div class="row">&nbsp;</div>
     <div class="row" style="align-items:center">
-        <input type="text" hidden="hidden" id="userInput" placeholder="Korisničko ime" />
+        <input type="text" hidden="hidden" id="userInput" placeholder=@Localizer["Username"] />
         <textarea type="text" id="messageInput" placeholder="Poruka" style="width:70%"></textarea>
-        <input class="btn btn-primary" style="max-height:30px;font-size:1em,; align-content:center" type="button" id="sendButton" value="Pošalji" />
+        <input class="btn btn-primary" style="max-height:30px;font-size:1em,; align-content:center" type="button" id="sendButton" value=@Localizer["Send"] />
     </div>
 </div>
 <div class="row">
@@ -62,10 +62,10 @@
                                     @if (!Model.PageInformation.IsFirst)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.FirstPageNumber)">Prva</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.FirstPageNumber)">@Localizer["First"]</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.PreviousPageNumber)">Prethodna</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.PreviousPageNumber)">@Localizer["Previous"]</a>
                                         </li>
                                     }
                                     <li class="page-header">
@@ -74,10 +74,10 @@
                                     @if (!Model.PageInformation.IsLast)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.NextPageNumber)">Sljedeća</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.NextPageNumber)">@Localizer["Next"]</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.LastPageNumber)">Posljednja</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.LastPageNumber)">@Localizer["Last"]</a>
                                         </li>
                                     }
                                 </ul>

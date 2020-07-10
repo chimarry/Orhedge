@@ -47,7 +47,7 @@
                 Ako imate digitalni materijal, pošaljite nam kako bi svi bili na jednom mjestu. Ostale kolege ce imati priliku
                 da ocijene vaš materijal. Na taj način sprečavamo zloupotrebu.
             </p>
-            <p style="text-align: right; margin-right: 15px; font-weight: bold;">Pažljivo popunite formu!</p>
+            <p style="text-align: right; margin-right: 15px; font-weight: bold;">@Localizer["FillForm"]</p>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4" style="padding-top: 40px; padding-bottom: 20px;">
             <form method="post" enctype="multipart/form-data" asp-controller="StudyMaterial" asp-action="UploadFile">
@@ -73,7 +73,7 @@
                 <br>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input type="submit" class="btn btn-primary btn-outline-light" value="Pošalji nam materijal" />
+                        <input type="submit" class="btn btn-primary btn-outline-light" value=@Localizer["Send"] />
                     </div>
                 </div>
             </form>

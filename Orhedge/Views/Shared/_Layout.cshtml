@@ -1,6 +1,4 @@
 ﻿@inject IStringLocalizer<SharedResource> Localizer
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +16,15 @@
 <body>
     <section id="nav-bar">
         <div id="language">
-            <a href="#">Srpski</a>
-            <a href="#">English</a>
+            @{
+                string controller = ViewContext.RouteData.Values["Controller"].ToString();
+            }
+            <a asp-controller="Localization" asp-action="SwitchToSerbian" asp-route-redirectController="@controller">
+                @Localizer["Serbian"]
+            </a>
+            <a asp-controller="Localization" asp-action="SwitchToEnglish" asp-route-redirectController="@controller">
+                @Localizer["English"]
+            </a>
         </div>
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/Logo.png"></a>
@@ -36,10 +41,13 @@
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Materials"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="TechnicalSupport" asp-action="Chat">@Localizer["TechnicalSupport"].ToString().ToUpper()</a>
+                        <a class="nav-link" asp-area="" asp-controller="TechnicalSupport" asp-action="Index">@Localizer["TechnicalSupport"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">O NAMA</a>
+                        <a class="nav-link" asp-area="" asp-controller="About" asp-action="Index">@Localizer["About"].ToString().ToUpper()</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">@Localizer["Contact"].ToString().ToUpper()</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
