@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Services.Interfaces;
@@ -7,6 +8,7 @@ using ServiceLayer.Students.Shared;
 
 namespace Orhedge.Controllers
 {
+    [Authorize]
     public class PhotoController : Controller
     {
         private readonly IProfileImageService _profImgService;

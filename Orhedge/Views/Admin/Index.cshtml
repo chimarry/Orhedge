@@ -3,10 +3,14 @@
 @using DatabaseLayer.Enums;
 @using Orhedge.Enums;
 @inject IStringLocalizer<SharedResource> Localizer
+@{ 
+    bool isSeniorAdmin = StudentPrivilege.SeniorAdmin == User.GetPrivilege();
+}
 
 @section Title
 {
-    AdminTitle
+    @Localizer["AdminPageTitle"]
+ 
 }
 
 @section Stylesheet
@@ -37,10 +41,13 @@
             <a class="nav-link nav-item active" id="nav-users-tab" data-toggle="tab" href="#nav-users" role="tab" tabindex="0"
                aria-controls="nav-users" aria-selected="true">@Localizer["ListOfUsers"]</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1"
-               aria-controls="nav-addUser" aria-selected="false">@Localizer["AddingUsers"]</a>
-        </li>
+        @if (isSeniorAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link nav-item" id="nav-addUser-tab" data-toggle="tab" href="#nav-addUser" role="tab" tabindex="-1"
+                   aria-controls="nav-addUser" aria-selected="false">@Localizer["AddingUsers"]</a>
+            </li>
+        }
     </ul>
 </section>
 
@@ -145,11 +152,11 @@
                                     <td>
                                         @{
                                             string param = Json.Serialize(student).ToString();
-                                            <button class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
-                                        }
+                                            <button @(!isSeniorAdmin ? "disabled" : string.Empty ) class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>                                
+                                         }
                                     </td>
                                     <td>
-                                        <button class="btn btn-secondary btn-sm" onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>
+                                        <button @(!isSeniorAdmin ? "disabled" : string.Empty ) class="btn btn-secondary btn-sm" onclick="showDeleteModal(@student.StudentId)">@Localizer["Delete"]</button>                                     
                                     </td>
                                 </tr>
                             }
@@ -227,6 +234,9 @@
 
         </div>
     </div>
+
+    @if (isSeniorAdmin)
+    {
     <div class="tab-pane fade" id="nav-addUser" role="tabpanel" aria-labelledby="nav-addUser-tab">
         <div class="container">
             <div class="row">
@@ -259,6 +269,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 <div id="modalEditId" class="modal">
     <form id="editFormId" class="modal-content animate modal-design">

@@ -2,6 +2,7 @@
 using DatabaseLayer.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Orhedge.Attributes;
 using Orhedge.Enums;
 using Orhedge.Helpers;
 using Orhedge.ViewModels.Admin;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
+    [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
     public class AdminController : Controller
     {
         private readonly IStudentService _studentService;

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using DatabaseLayer.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Orhedge.Attributes;
 using Orhedge.Enums;
 using Orhedge.ViewModels;
 using Orhedge.ViewModels.Admin;
@@ -12,9 +14,9 @@ using System.Threading.Tasks;
 namespace Orhedge.Controllers
 {
 
-    // TODO: Add authorization attributes
     [Route("api/AdminApi")]
     [ApiController]
+    [AuthorizePrivilege(StudentPrivilege.SeniorAdmin)]
     public class AdminApiController : ControllerBase
     {
         private readonly IStudentService _studentService;

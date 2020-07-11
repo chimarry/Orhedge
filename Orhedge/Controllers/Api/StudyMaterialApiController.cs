@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using DatabaseLayer.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Orhedge.Attributes;
 using Orhedge.Enums;
+using Orhedge.Helpers;
 using Orhedge.ViewModels.StudyMaterial;
 using ServiceLayer.DTO;
 using ServiceLayer.DTO.Materials;
@@ -13,9 +17,10 @@ using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
-    // TODO: Add authorization attibutes
+
     [Route("api/StudyMaterialApi")]
     [ApiController]
+    [Authorize]
     public class StudyMaterialApiController : ControllerBase
     {
         private readonly IStudyMaterialManagementService _studyMaterialManagementService;
@@ -49,6 +54,7 @@ namespace Orhedge.Controllers
         /// <param name="model">Information about study material</param>
         /// <returns></returns>
         [HttpPut]
+        [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         public async Task<ActionResult> Edit([FromBody] EditStudyMaterialViewModel model)
         {
             ResultMessage<StudyMaterialDTO> updated = await _studyMaterialService.Update(_mapper.Map<StudyMaterialDTO>(model));
@@ -61,6 +67,7 @@ namespace Orhedge.Controllers
         /// <param name="model">Information about study material</param>
         /// <returns></returns>
         [HttpPut("delete")]
+        [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         public async Task<ActionResult> Delete([FromBody] DeleteStudyMaterialViewModel model)
         {
             ResultMessage<bool> isDeleted = await _studyMaterialService.Delete(model.StudyMaterialId);
@@ -68,14 +75,16 @@ namespace Orhedge.Controllers
         }
 
         [HttpPut("rate")]
+        [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin, StudentPrivilege.Normal)]
         public async Task<IActionResult> Rate([FromBody] RateStudyMaterialViewModel rateStudyMaterial)
         {
-            int logginStudentId = 1;
+            int logginStudentId = this.GetUserId();
             ResultMessage<bool> ratingResult = await _studyMaterialManagementService.Rate(rateStudyMaterial.StudyMaterialId, logginStudentId, rateStudyMaterial.AuthorId, rateStudyMaterial.Rating);
             return Ok(JsonConvert.SerializeObject(ratingResult));
         }
 
         [HttpPut("move")]
+        [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         public async Task<IActionResult> Move([FromBody] MoveStudyMaterialViewModel moveVm)
         {
             ResultMessage<bool> result = await _studyMaterialManagementService.Move(moveVm.StudyMaterialId, moveVm.CategoryId);

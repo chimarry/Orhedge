@@ -124,7 +124,6 @@ namespace ServiceLayer.Services.Student
                         Constants.PASSWORD_HASH_SIZE);
                     student.PasswordHash = hash;
                     student.Salt = saltBase64;
-                    student.Privilege = StudentPrivilege.Normal;
                     student.Rating = 0;
                     registration.Used = true;
 

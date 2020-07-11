@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -22,5 +23,21 @@ namespace Orhedge.Helpers
 
         public static bool IsUserAuthenticated(this ClaimsPrincipal user)
             => user.Identity.IsAuthenticated;
+
+        public static StudentPrivilege GetPrivilege(this ClaimsPrincipal user)
+        {
+            string privilege = user.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value;
+
+            if (privilege == null)
+                throw new InvalidOperationException("Unable to get user privilege, user is not authenticated");
+
+            return Enum.Parse<StudentPrivilege>(privilege);
+        }
+
+        public static bool IsAdministrator(this ClaimsPrincipal user)
+        {
+            StudentPrivilege privilege = user.GetPrivilege();
+            return privilege == StudentPrivilege.JuniorAdmin || privilege == StudentPrivilege.SeniorAdmin;
+        }
     }
 }

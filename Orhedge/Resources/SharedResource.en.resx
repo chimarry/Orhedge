@@ -528,6 +528,9 @@
   <data name="Year" xml:space="preserve">
     <value>Study year</value>
   </data>
+  <data name="AdminPageTitle" xml:space="preserve">
+    <value>Admin panel</value>
+  </data>
   <data name="AccessDeniedMessage" xml:space="preserve">
     <value>You do not have permission to access this page!</value>
   </data>

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace Orhedge.Controllers
 {
+    [Authorize]
     public class LocalizationController : Controller
     {
         public IActionResult SwitchToSerbian(string redirectController)

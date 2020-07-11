@@ -5,7 +5,7 @@ function showEditModal(studyMaterialParam) {
 }
 
 function showDeleteModal(studyMaterialId) {
-    $('#modalEditId').modal("show");
+    $('#modalDeleteId').modal("show");
     document.getElementById('deleteStudyMaterialId').value = studyMaterialId;
 }
 

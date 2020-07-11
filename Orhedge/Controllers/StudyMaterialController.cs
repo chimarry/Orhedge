@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using DatabaseLayer.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Orhedge.Attributes;
 using Orhedge.Enums;
 using Orhedge.Helpers;
 using Orhedge.ViewModels.StudyMaterial;
@@ -17,6 +20,7 @@ using System.Threading.Tasks;
 
 namespace Orhedge.Controllers
 {
+    [Authorize]
     public class StudyMaterialController : Controller
     {
         private readonly IStudyMaterialManagementService _studyMaterialManagementService;
@@ -50,13 +54,14 @@ namespace Orhedge.Controllers
             return View(indexModel);
         }
 
+        [AuthorizePrivilege(StudentPrivilege.Normal, StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         [HttpPost]
         public async Task<IActionResult> UploadFile(List<IFormFile> files, int category, int? courseId)
         {
             List<BasicFileInfo> basicFileInfos = new List<BasicFileInfo>();
             foreach (IFormFile file in files)
                 basicFileInfos.Add(_mapper.Map<BasicFileInfo>(file));
-            ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveStudyMaterials(category, 1, basicFileInfos);
+            ResultMessage<bool> isSavedResult = await _studyMaterialManagementService.SaveStudyMaterials(category, this.GetUserId(), basicFileInfos);
 
             HttpReponseStatusCode statusCode = isSavedResult.Status.Map();
 
@@ -116,6 +121,7 @@ namespace Orhedge.Controllers
         /// </summary>
         /// <param name="studyMaterialId">Unique identifier for the study material</param>
         /// <returns></returns>
+        [AuthorizePrivilege(StudentPrivilege.Normal, StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         public async Task<IActionResult> DownloadStudyMaterial(int studyMaterialId)
         {
             ResultMessage<BasicFileInfo> basicFileInformation = await _studyMaterialManagementService.DownloadStudyMaterial(studyMaterialId);

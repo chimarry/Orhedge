@@ -1,6 +1,9 @@
 ﻿@model Orhedge.ViewModels.StudyMaterial.CourseStudyMaterialsViewModel
+@using DatabaseLayer.Enums;
 @{
     ViewData["Title"] = "Course";
+    bool isAdmin = User.IsAdministrator();
+    bool isReduced = User.GetPrivilege() == StudentPrivilege.Reduced;
 }
 @inject IStringLocalizer<SharedResource> Localizer
 @using Orhedge.ViewModels.StudyMaterial;
@@ -41,10 +44,10 @@
     }
 
     <div class="spinner-wrapper">
-    <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-</div>
 
     <div class="container-fluid main-content" style="background-color:#04001D; color: white;">
         <div class="row padding">
@@ -64,7 +67,7 @@
                             <input type="file" accept='.pdf,.doc,.jpeg,.zip' name="files" multiple />
                         </div>
                     </div>
-                   
+
                     <br>
                     <select class="form-control form-control-lg" name="year" id="year-input" required">
                         <option value="">@Localizer["Choose"]</option>
@@ -81,7 +84,7 @@
                     <br>
                     <div class="form-group">
                         <div class="col-md-10">
-                            <input type="submit" class="btn btn-primary btn-outline-light" value="@Localizer["SendMaterial"]" />
+                            <input @(User.GetPrivilege() == StudentPrivilege.Reduced ? "disabled" : string.Empty) type="submit" class="btn btn-primary btn-outline-light" value="@Localizer["SendMaterial"]" />
                         </div>
                     </div>
                 </form>
@@ -174,7 +177,14 @@
                             {
                                 <tr>
                                     <td>
-                                        @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
+                                        @if (isReduced)
+                                        {
+                                            @st.Name
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink(st.Name, "DownloadStudyMaterial", "StudyMaterial", new { @studyMaterialId = st.StudyMaterialId })
+                                        }
                                     </td>
                                     <td><p>@st.CategoryName</p></td>
                                     <td>@st.AuthorFullName</td>
@@ -184,22 +194,26 @@
                                         @{
                                             string param = Json.Serialize(st).ToString();
                                         }
-                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showMoveModal(@st.StudyMaterialId)">@Localizer["MoveMaterial"]</button>
-                                        <button type="button" class="btn btn-secondary btn-sm" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
+
+                                        @if (isAdmin)
+                                        {
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="showEditModal(@param)">@Localizer["Edit"]</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="showMoveModal(@st.StudyMaterialId)">@Localizer["MoveMaterial"]</button>
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="showDeleteModal(@st.StudyMaterialId)">@Localizer["Delete"]</button>
+                                        }
                                     </td>
                                     <td>
                                         @for (int i = 1; i < st.GivenRating + 1; ++i)
                                         {
-                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:#4facac" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:#4facac; @(isReduced ? "pointer-events: none" : string.Empty)" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                             </button>
                                         }
                                         @for (int i = st.GivenRating + 1; i < 6; ++i)
                                         {
-                                            <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:transparent" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            </button>
+                                    <button type="button" id=@(st.StudyMaterialId + i.ToString()) class="btn" style="margin:0px 0px 0px 0px;background:transparent; @(isReduced ? "pointer-events: none" : string.Empty)" onclick="rate(@string.Format(ratingStarFormat, st.StudentId, st.StudyMaterialId, i))">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </button>
                                         }
                                     </td>
                                 </tr>
@@ -369,23 +383,23 @@
             </div>
         </div>
     </div>
-            @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
-            <div id="modalDeleteId" class="modal" data-backdrop="static" tabindex="-1">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form id="deleteFormId" class="modal-design">
-                            <div class="imgcontainer">
-                                <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
-                            </div><br><br>
-                            <label><b>@Localizer["ConfirmDelete"]</b></label>
-                            <br />
-                            <div class="container">
-                                <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
-                                <button id="deleteSubmit" type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
-                                <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
-                            </div>
-                        </form>
+    @Html.Hidden("SearchSortFilterRedirect", Url.Action("SearchSortFilter", "StudyMaterial"))
+    <div id="modalDeleteId" class="modal" data-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form id="deleteFormId" class="modal-design">
+                    <div class="imgcontainer">
+                        <span onclick="document.getElementById('modalDeleteId').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    </div><br><br>
+                    <label><b>@Localizer["ConfirmDelete"]</b></label>
+                    <br />
+                    <div class="container">
+                        <input type="number" hidden="hidden" id="deleteStudyMaterialId" name="studyMaterialId" />
+                        <button id="deleteSubmit" type="button" class="deletebtn btn btn-primary btn-sm" onclick="deleteStudyMaterial(@Model.CourseId)">@Localizer["Delete"]</button>
+                        <button id="deleteCancel" type="button" class="cancelbtn btn btn-primary btn-sm" class="cancelbtn">@Localizer["Cancel"]</button>
                     </div>
-                </div>
+                </form>
             </div>
+        </div>
+    </div>
 </body>

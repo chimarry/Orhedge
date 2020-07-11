@@ -4,6 +4,7 @@
 @using DatabaseLayer.Enums;
 @{
     ViewData["Title"] = "Index";
+    StudentPrivilege privilege = User.GetPrivilege();
 }
 @inject IStringLocalizer<SharedResource> Localizer
 
@@ -73,7 +74,7 @@
                 <br>
                 <div class="form-group">
                     <div class="col-md-10">
-                        <input type="submit" class="btn btn-primary btn-outline-light" value=@Localizer["Send"] />
+                        <input @(User.GetPrivilege() == StudentPrivilege.Reduced ? "disabled" : string.Empty) type="submit" class="btn btn-primary btn-outline-light" value=@Localizer["Send"] />
                     </div>
                 </div>
             </form>

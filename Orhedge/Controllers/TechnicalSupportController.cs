@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using DatabaseLayer.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Localization;
+using Orhedge.Attributes;
 using Orhedge.Enums;
 using Orhedge.Helpers;
 using Orhedge.ViewModels.TechnicalSupport;
@@ -15,6 +18,7 @@ using ServiceLayer.Services;
 
 namespace Orhedge.Controllers
 {
+    [Authorize]
     public class TechnicalSupportController : Controller
     {
         private readonly IChatMessageService _chatMessageService;
@@ -43,6 +47,7 @@ namespace Orhedge.Controllers
         public async Task<IActionResult> Page(int pageNumber)
             => await RedirectToChat(pageNumber);
 
+        [AuthorizePrivilege(StudentPrivilege.JuniorAdmin, StudentPrivilege.SeniorAdmin)]
         public async Task<IActionResult> DeleteMessage(int chatMessageId)
         {
             ResultMessage<bool> deleted = await _chatMessageService.Delete(chatMessageId);
