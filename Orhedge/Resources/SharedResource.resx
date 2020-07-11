@@ -522,4 +522,7 @@
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="AccessDeniedMessage" xml:space="preserve">
+    <value>Nemate dozvolu da pristupite ovoj stranici!</value>
+  </data>
 </root>

@@ -20,5 +20,10 @@ namespace Orhedge.Controllers
             ViewData["returnUrl"] = returnUrl;
             return View();
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

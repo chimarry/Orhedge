@@ -1,0 +1,41 @@
+﻿@inject IStringLocalizer<SharedResource> Localizer
+
+@{
+    ViewData["Title"] = "AccessDenied";
+}
+
+@section Stylesheet {
+    <link href="https://fonts.googleapis.com/css?family=McLaren&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/accessDeniedStyle.css">
+}
+
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+
+}
+
+
+<div class="container">
+    <br><br>
+    <div class="row">
+        <div class="col-xl-4 imageAD">
+            <img src="~/images/access_denied.png" />
+        </div>
+        <div class="col-xl-auto">
+            <p><b>@Localizer["AccessDeniedMessage"]</b></p>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid padding footer">
+    <div class="row text-center">
+        <div class="col-12">
+            <h5>Copyright © 2019 ~ Studenstka organizacija OrhEDGE</h5>
+        </div>
+    </div>
+</div>

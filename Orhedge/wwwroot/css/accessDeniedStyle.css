@@ -1,0 +1,29 @@
+﻿body {
+    background-color: #DFF1EF;
+}
+
+.imageAD{
+    margin: 20px;
+}
+
+    .imageAD img {
+        max-width: 400px;
+    }
+
+p {
+    margin: 30px;
+    margin-top: 70px;
+    font-size: 30px;
+    color:black;
+}
+
+.footer {
+    background-color: #3f3f3f;
+    color: white;
+    padding-top: 2rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
