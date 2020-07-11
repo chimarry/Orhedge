@@ -121,11 +121,11 @@ namespace Orhedge
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
             app.UseSignalR(routes =>
             {
                 routes.MapHub<TechnicalSupportHub>("/chathub");
             });
-            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

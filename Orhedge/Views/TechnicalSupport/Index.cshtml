@@ -3,9 +3,11 @@
     ViewData["Title"] = "Chat";
 }
 @using Orhedge.ViewModels.TechnicalSupport;
+@using DatabaseLayer.Enums;
 @section Stylesheet{
     <link rel="stylesheet" href="~/css/avatar.css">
     <link rel="stylesheet" href="~/css/chat.css">
+    <link rel="stylesheet" href="~/css/modalDesign.css" />
 }
 @inject IStringLocalizer<SharedResource> Localizer
 @if (ViewBag.InfoMessage != null && ViewBag.InfoMessage.IsSet)
@@ -20,9 +22,8 @@
 <div class="container" style="margin-left:10px">
     <div class="row">&nbsp;</div>
     <div class="row" style="align-items:center">
-        <input type="text" hidden="hidden" id="userInput" placeholder=@Localizer["Username"] />
-        <textarea type="text" id="messageInput" placeholder="Poruka" style="width:70%"></textarea>
-        <input class="btn btn-primary" style="max-height:30px;font-size:1em,; align-content:center" type="button" id="sendButton" value=@Localizer["Send"] />
+        <textarea type="text" id="messageInput" placeholder=@Localizer["Message"] style="width:70%"></textarea>
+        <button class="submitbtn btn btn-primary button button4" style="max-height:40px;font-size:1em;margin-left:30px; align-content:center" type="button" id="sendButton"> <i class="fa fa-envelope" aria-hidden="true"></i></button>
     </div>
 </div>
 <div class="row">
@@ -40,18 +41,46 @@
                         <ul class="chat-list" id="messagesList">
                             @foreach (ChatMessageViewModel message in Model.ChatMessages)
                             {
-                                <li class="in">
-                                    <div class="chat-img">
-                                        <div class="avatar-circle"><span class="initials">@message.StudentInitials</span></div>
-                                    </div>
-                                    <div class="chat-body">
-                                        <div class="chat-message">
-                                            <h5>@message.Username</h5>
-                                            <p>@message.Message</p>
+                                if (message.Privilege == StudentPrivilege.JuniorAdmin || message.Privilege == StudentPrivilege.SeniorAdmin)
+                                {
+                                    <li class="out" style="overflow:hidden">
+                                        <div class="chat-img">
+                                            <div class="avatar-circle">
+                                                <span class="initials">@message.StudentInitials</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span class="close" onclick="deleteMessage(@message.ChatMessageId)">x</span>
-                                </li>
+                                        <div class="chat-body">
+                                            <div class="chat-message">
+                                                <h5>@message.Username</h5>
+                                                <p>@message.Message</p>
+                                            </div>
+                                        </div>
+                                        @if (User.IsAdministrator())
+                                        {
+                                            <span class="close" onclick="deleteMessage(@message.ChatMessageId)">x</span>
+                                        }
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="in" style="overflow:hidden">
+                                        <div class="chat-img">
+                                            <div class="avatar-circle">
+                                                <span class="initials">@message.StudentInitials</span>
+                                            </div>
+                                        </div>
+                                        <div class="chat-body">
+                                            <div class="chat-message">
+                                                <h5>@message.Username</h5>
+                                                <p>@message.Message</p>
+                                            </div>
+                                        </div>
+                                        @if (User.IsAdministrator())
+                                        {
+                                            <span class="close" onclick="deleteMessage(@message.ChatMessageId)">x</span>
+                                        }
+                                    </li>
+                                }
                             }
                         </ul>
                     </div>
@@ -62,10 +91,10 @@
                                     @if (!Model.PageInformation.IsFirst)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.FirstPageNumber)">@Localizer["First"]</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.FirstPageNumber)">@Localizer["FirstPage"]</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.PreviousPageNumber)">@Localizer["Previous"]</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.PreviousPageNumber)">@Localizer["PreviousPage"]</a>
                                         </li>
                                     }
                                     <li class="page-header">
@@ -74,10 +103,10 @@
                                     @if (!Model.PageInformation.IsLast)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.NextPageNumber)">@Localizer["Next"]</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.NextPageNumber)">@Localizer["NextPage"]</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.LastPageNumber)">@Localizer["Last"]</a>
+                                            <a class="page-link" href="#" onclick="page(@Model.PageInformation.LastPageNumber)">@Localizer["LastPage"]</a>
                                         </li>
                                     }
                                 </ul>

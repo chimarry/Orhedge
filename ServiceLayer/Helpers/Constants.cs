@@ -24,6 +24,6 @@ namespace ServiceLayer.Helpers
         /// <summary>
         /// Maximum number of messages that student can send technical service per day
         /// </summary>
-        public const int MAX_NUMBER_OF_MESSAGES_PER_DAY = 10;
+        public const int MAX_NUMBER_OF_MESSAGES_PER_DAY = 20;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -11,6 +12,8 @@ namespace ServiceLayer.DTO
         public string Message { get; set; }
 
         public int StudentId { get; set; }
+
+        public StudentPrivilege Privilege { get; set; }
 
         public string Username { get; set; }
 

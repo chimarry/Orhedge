@@ -1,36 +1,39 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
+using Orhedge.Helpers;
 using ServiceLayer.DTO;
-using ServiceLayer.ErrorHandling;
 using ServiceLayer.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Orhedge.Hubs
 {
+    [Authorize]
     public class TechnicalSupportHub : Hub
     {
         private readonly IChatMessageService _chatMessageService;
+        private readonly IStudentService _studentService;
 
-        public TechnicalSupportHub(IChatMessageService chatMessageService)
+        public TechnicalSupportHub(IChatMessageService chatMessageService, IStudentService studentService)
         {
             _chatMessageService = chatMessageService;
+            _studentService = studentService;
         }
 
-        public async Task SendMessage(string user, string message)
+        public async Task SendMessage(string message)
         {
-            int studentId = 1;
+            int studentId = Context.User.GetUserId();
             ChatMessageDTO chatMessage = new ChatMessageDTO()
             {
                 Message = message,
                 SentOn = DateTime.Now,
                 StudentId = studentId
             };
+            StudentDTO student = await _studentService.GetStudentById(studentId);
 
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            await Clients.All.SendAsync("ReceiveMessage", student.Initials, student.Username, message, Context.User.IsAdministrator());
 
-            ResultMessage<ChatMessageDTO> addedResult = await _chatMessageService.Add(chatMessage);
+            await _chatMessageService.Add(chatMessage);
         }
 
         public async Task JoinGroup(string groupName)

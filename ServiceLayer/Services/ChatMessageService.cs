@@ -38,6 +38,8 @@ namespace ServiceLayer.Services
                 if (student.Deleted)
                     student = new DeletedStudentDTO(student);
                 message.StudentInitials = student.Initials;
+                message.Username = student.Username;
+                message.Privilege = student.Privilege;
             }
             return messages;
         }
@@ -47,7 +49,7 @@ namespace ServiceLayer.Services
             int numberOfMessagePerDay = _context.ChatMessages.Count(x => x.StudentId == dto.StudentId && x.SentOn.Date == dto.SentOn.Date);
             if (numberOfMessagePerDay >= Constants.MAX_NUMBER_OF_MESSAGES_PER_DAY)
                 return new ResultMessage<ChatMessageDTO>(OperationStatus.NotSupported);
-            return await _servicesExecutor.Add(dto, x => x.StudentId != dto.StudentId && x.Message != dto.Message && x.SentOn != dto.SentOn);
+            return await _servicesExecutor.Add(dto, x => x.StudentId == dto.StudentId && x.Message == dto.Message && x.SentOn == dto.SentOn);
         }
 
         public async Task<ResultMessage<bool>> Delete(int id)

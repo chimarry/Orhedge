@@ -534,4 +534,7 @@
   <data name="UsersTab" xml:space="preserve">
     <value>Korisnici</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Poruka</value>
+  </data>
 </root>

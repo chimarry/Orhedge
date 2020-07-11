@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatabaseLayer.Enums;
+using System;
 
 namespace Orhedge.ViewModels.TechnicalSupport
 {
@@ -9,6 +10,8 @@ namespace Orhedge.ViewModels.TechnicalSupport
         public DateTime SentOn { get; set; }
 
         public int StudentId { get; set; }
+
+        public StudentPrivilege Privilege { get; set; }
 
         public string Message { get; set; }
 

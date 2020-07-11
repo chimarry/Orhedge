@@ -1,4 +1,5 @@
 ﻿using ServiceLayer.DTO;
+using ServiceLayer.DTO.Student;
 using ServiceLayer.ErrorHandling;
 using ServiceLayer.Helpers;
 using System;
@@ -31,6 +32,16 @@ namespace ServiceLayer.Services
                 return new ResultMessage<bool>(false, OperationStatus.NotFound);
             student.Rating = rating;
             return await _servicesExecutor.SaveChanges();
+        }
+
+        public async Task<ResultMessage<StudentDTO>> GetStudentById(int studentId)
+        {
+            StudentDTO student = await GetSingleOrDefault(x => x.StudentId == studentId);
+            if (student == null)
+                return new ResultMessage<StudentDTO>(OperationStatus.NotFound);
+            if (student.Deleted)
+                student = new DeletedStudentDTO(student);
+            return new ResultMessage<StudentDTO>(student);
         }
     }
 }

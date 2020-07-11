@@ -540,4 +540,7 @@
   <data name="UsersTab" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
 </root>
