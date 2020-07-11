@@ -50,6 +50,7 @@ namespace Orhedge
                 {
                     opts.Cookie.IsEssential = true;
                     opts.LoginPath = "/Home/Login";
+                    opts.AccessDeniedPath = "/Home/AccessDenied";
                     opts.SlidingExpiration = true;
                     opts.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     opts.Events.OnRedirectToLogin = async ctx =>
