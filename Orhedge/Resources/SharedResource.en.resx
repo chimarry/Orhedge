@@ -534,4 +534,10 @@
   <data name="AccessDeniedMessage" xml:space="preserve">
     <value>You do not have permission to access this page!</value>
   </data>
+  <data name="CourseCategoryTab" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="UsersTab" xml:space="preserve">
+    <value>Users</value>
+  </data>
 </root>

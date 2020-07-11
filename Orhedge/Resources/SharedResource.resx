@@ -528,4 +528,10 @@
   <data name="AdminPageTitle" xml:space="preserve">
     <value>Admin sekcija</value>
   </data>
+  <data name="CourseCategoryTab" xml:space="preserve">
+    <value>Predmeti</value>
+  </data>
+  <data name="UsersTab" xml:space="preserve">
+    <value>Korisnici</value>
+  </data>
 </root>
