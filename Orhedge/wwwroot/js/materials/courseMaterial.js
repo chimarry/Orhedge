@@ -17,6 +17,9 @@ function showMoveModal(studyMaterialId) {
 $("#editCancel").click(() => $("#modalEditId").modal("hide"));
 $("#deleteCancel").click(() => $("#modalDeleteId").modal("hide"));
 $("#moveCancel").click(() => $("#modalMoveId").modal("hide"));
+$("#modalEditId .close").click(() => $("#modalEditId").modal("hide"));
+$("#modalMoveId .close").click(() => $("#modalMoveId").modal("hide"));
+$("#modalDeleteId .close").click(() => $("#modalDeleteId").modal("hide"));
 
 function searchSortFilter(paramsArray) {
     var numberOfElements = paramsArray.itemCount;
