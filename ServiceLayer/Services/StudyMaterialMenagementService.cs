@@ -220,7 +220,11 @@ namespace ServiceLayer.Services
                                                       (x => x.StudyMaterialId == studyMaterialId && !x.Deleted);
             if (!studyMaterialDTO.IsSuccess)
                 return new ResultMessage<BasicFileInfo>(studyMaterialDTO.Status, studyMaterialDTO.Message);
-            return await _documentService.DownloadFromStorage(studyMaterialDTO.Result.Uri);
+            ResultMessage<BasicFileInfo> result = await _documentService.DownloadFromStorage(studyMaterialDTO.Result.Uri);
+            if(result.IsSuccess)
+                result.Result.FileName = studyMaterialDTO.Result.Name;
+
+            return result;
         }
 
         /// <summary>

@@ -125,7 +125,6 @@ namespace Orhedge.Controllers
         public async Task<IActionResult> DownloadStudyMaterial(int studyMaterialId)
         {
             ResultMessage<BasicFileInfo> basicFileInformation = await _studyMaterialManagementService.DownloadStudyMaterial(studyMaterialId);
-            HttpContext.Response.Headers.Add("Content-Disposition", $"attachment; filename=\"{basicFileInformation.Result.FileName}\"");
             return new FileContentResult(basicFileInformation.Result.FileData, System.Net.Mime.MediaTypeNames.Application.Octet)
             {
                 FileDownloadName = basicFileInformation.Result.FileName
