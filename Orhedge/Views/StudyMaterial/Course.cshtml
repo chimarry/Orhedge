@@ -187,7 +187,7 @@
                                         }
                                     </td>
                                     <td><p>@st.CategoryName</p></td>
-                                    <td>@st.AuthorFullName</td>
+                                    <td><a asp-controller="Student" asp-action="Index" asp-route-id="@st.StudentId">@st.AuthorFullName</a></td>
                                     <td>@st.UploadDate</td>
                                     <td>@st.TotalRating</td>
                                     <td>
