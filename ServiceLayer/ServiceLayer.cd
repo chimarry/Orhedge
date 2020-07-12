@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="ServiceLayer.DTO.RegisterFormDTO" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAACAAAAAAAAAAAAAAAAAEAAAAAAAg=</HashCode>
+      <FileName>DTO\Registration\RegisterFormDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.RegisterRootDTO" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAQAAAAAAAAAAAAACAAEAAAAAAAg=</HashCode>
+      <FileName>DTO\Registration\RegisterRootDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.RegisterUserDTO" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\Registration\RegisterUserDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.RegistrationDTO" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAACAAAIAACAACAAAAAAAAAAAAAAEAAAAAAEg=</HashCode>
+      <FileName>DTO\Registration\RegistrationDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.StudentDTO" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAACAgACAAiQCAEAQAAAAAAIEAAAEAAAACAAk=</HashCode>
+      <FileName>DTO\Student\StudentDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.CategoryDTO" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAgAAgAAAEAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\CategoryDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.CourseDTO" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAgAAAEAQAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\CourseDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.DetailedStudyMaterialDTO" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAACAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\DetailedStudyMaterialDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.StudyMaterialDTO" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAgAAAAAAAgAAgAAAEAQAAACAAIAACAAAAAACAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\StudyMaterialDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.StudyMaterialRatingDTO" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAgAAAAAAAAAAAAIEAABAAAAACAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\StudyMaterialRatingDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.ChatMessageDTO" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAgAAAAAAAACQAAEAAAAAAAAAAAAAABIAACAAA=</HashCode>
+      <FileName>DTO\ChatMessageDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.DetailedCourseCategoryDTO" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\DetailedCourseCategoryDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.DetailedSemesterDTO" Collapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAoAAAAAAAAAAAAIAAAAAAABAAAIA=</HashCode>
+      <FileName>DTO\DetailedSemesterDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.Student.DeletedStudentDTO" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\Student\DeletedStudentDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.Student.ProfileUpdateDTO" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgACAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\Student\ProfileUpdateDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.Student.UpdatePasswordDTO" Collapsed="true">
+    <Position X="11.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>DTO\Student\UpdatePasswordDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.DTO.Materials.CourseCategoryDTO" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgIAAAAAAAAAAEIAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\StudyMaterials\CourseCategoryDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SemesterExtensionMethods" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DTO\DetailedSemesterDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.ErrorHandling.CouldNotRegisterRootUserException" Collapsed="true">
+    <Position X="3" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\CouldNotRegisterRootUserException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.ErrorHandling.ErrorHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAACAAAAAAAAAAAAAgAIAgAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\ErrorHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.ErrorHandling.ResultMessage&lt;T&gt;" Collapsed="true">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAEAAAAAAAAAAAAAAQAAAAgAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>ErrorHandling\ResultMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.ErrorHandling.Exceptions.DatabaseErrorException" Collapsed="true">
+    <Position X="4.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\DatabaseErrorException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.ErrorHandling.Exceptions.EmailSenderException" Collapsed="true">
+    <Position X="6.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\EmailSenderException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Services.AuthenticationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Services\AuthenticationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.BaseService&lt;TDto, TEntity&gt;" Collapsed="true">
+    <Position X="8.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAQAAAAAAAAAAggAAAAAAAA=</HashCode>
+      <FileName>Services\BaseService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.CategoryService" Collapsed="true">
+    <Position X="8.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAAABAAAAAAAFAAAAAAAAAAEEAAAA=</HashCode>
+      <FileName>Services\CategoryService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.ChatMessageService" Collapsed="true">
+    <Position X="11" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAAAAAAAEAAAFAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Services\ChatMessageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.CourseCategoryManagementService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAIAAAQAAAAABAAAQAIAAAAAAAAAAQIAFEBAA=</HashCode>
+      <FileName>Services\CourseCategoryManagementService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.CourseService" Collapsed="true">
+    <Position X="4.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\CourseService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.LocalDocumentService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Services\LocalDocumentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.ProfileImageService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAIAAAQABAAAEAAAIAAAAAAAAAAgEAAAQ=</HashCode>
+      <FileName>Services\ProfileImageService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.RegistrationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAEAAAAAFAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\RegistrationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.StudentService" Collapsed="true">
+    <Position X="13.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAEAAAAAAAAAAAFAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Services\StudentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.StudyMaterialMenagementService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAQEAAIAAMAARBAAAABAAAUQIAAgAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Services\StudyMaterialMenagementService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Services.StudyMaterialService" Collapsed="true">
+    <Position X="6.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAEAAAAEAAAAAAFAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\StudyMaterialService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ServiceLayer.Services.Student.StudentManagmentService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEABAgABAABACIAAAQgQFAAMCgAAAAAAEAAMEAAAQ=</HashCode>
+      <FileName>Services\Student\StudentManagmentService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Common.Services.EmailSenderService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\EmailSenderService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ServiceLayer.Models.LoginRequest" Collapsed="true">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LoginRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Models.LoginResponse" Collapsed="true">
+    <Position X="2.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\LoginResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Models.TemplateEmail" Collapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAgIAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TemplateEmail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.AutoMapper.Mapping" Collapsed="true">
+    <Position X="5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>AutoMapper\Mapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.AutoMapper.MappingProfile" Collapsed="true">
+    <Position X="6.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AutoMapper\MappingProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Students.Shared.BasicFileInfo" Collapsed="true">
+    <Position X="8.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Shared\BasicFileInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Shared.PathBuilder" Collapsed="true">
+    <Position X="10.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAgAAAAAAAADCAAAABCEABAA=</HashCode>
+      <FileName>Shared\PathBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Helpers.Constants" Collapsed="true">
+    <Position X="15.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAQAAAAQAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Helpers\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Helpers.NoSorting" Collapsed="true">
+    <Position X="17" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\NoSorting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Helpers.Security" Collapsed="true">
+    <Position X="18.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAggAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\Security.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Helpers.SemesterExtensionMethods" Collapsed="true">
+    <Position X="15.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Helpers\SemesterExtensionMethods.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServiceLayer.Helpers.ServiceExecutor&lt;TDto, TEntity&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYAAAAAAAAABAAAAAAAAAQAAAFAQAAAAggAAAEAAAA=</HashCode>
+      <FileName>Helpers\ServiceExecutor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="ServiceLayer.ErrorHandling.IErrorHandler" Collapsed="true">
+    <Position X="3" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>ErrorHandling\IErrorHandler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IAuthenticationService" Collapsed="true">
+    <Position X="20.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IAuthenticationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.ICategoryService" Collapsed="true">
+    <Position X="15.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>Services\Interfaces\ICategoryService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IChatMessageService" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IChatMessageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.ICourseCategoryManagementService" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAAQIABEBAA=</HashCode>
+      <FileName>Services\Interfaces\ICourseCategoryManagementService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.ICourseService" Collapsed="true">
+    <Position X="12.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\ICourseService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.ICRUDServiceTemplate&lt;T&gt;" Collapsed="true">
+    <Position X="15.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\ICRUDServiceTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IDocumentService" Collapsed="true">
+    <Position X="24" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Services\Interfaces\IDocumentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IRegistrationService" Collapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IRegistrationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.ISelectableServiceTemplate&lt;TDto&gt;" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAggAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\ISelectableServiceTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IStudentManagmentService" Collapsed="true">
+    <Position X="24" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgABAAAACIAAAQAAAAAICAAAAAAAAAAMAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IStudentManagmentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IStudentService" Collapsed="true">
+    <Position X="18" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IStudentService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IStudyMaterialManagementService" Collapsed="true">
+    <Position X="20.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAEAAAAAMAAABAAAAAAAAQQIAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IStudyMaterialManagementService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.IStudyMaterialService" Collapsed="true">
+    <Position X="15.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IStudyMaterialService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Common.Interfaces.IEmailSenderService" Collapsed="true">
+    <Position X="20.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IEmailSenderService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Services.Interfaces.IProfileImageService" Collapsed="true">
+    <Position X="22.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Services\Interfaces\IProfileImageService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Helpers.IServicesExecutor&lt;TDto, TEntity&gt;" Collapsed="true">
+    <Position X="15.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYAAAAAAAAAAAAAAAAAAAQAAAFAAAAAAggAAAAAAAA=</HashCode>
+      <FileName>Helpers\IServicesExecutor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ServiceLayer.Helpers.IUploadedFile" Collapsed="true">
+    <Position X="17" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAgAAAAAAAAAAAAAAQAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Helpers\IUploadedFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ServiceLayer.ErrorHandling.OperationStatus" Collapsed="true">
+    <Position X="3" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAIAAAAAICBAgAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>ErrorHandling\OperationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ServiceLayer.Services.PassChangeStatus" Collapsed="true">
+    <Position X="20.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAgAAAIAAAAAAAAAAIAA=</HashCode>
+      <FileName>Services\Interfaces\IStudentManagmentService.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

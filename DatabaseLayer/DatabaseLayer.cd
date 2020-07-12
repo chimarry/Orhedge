@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DatabaseLayer.Entity.Category">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAIAAAAgAAAIAAEAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.ChatMessage">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgQAAAAAAAAAAAEAAAAAAAAAAAAAABIAACAAA=</HashCode>
+      <FileName>Entity\ChatMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.Course">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAEAAEAQAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\Course.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.CourseStudyProgram">
+    <Position X="1" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAMIABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entity\CourseStudyProgram.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.Registration">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAACAAAIAACAACAAAAAAAAAAAAAAEAAAAAAEg=</HashCode>
+      <FileName>Entity\Registration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.Student">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAICAgACAACQAAEEQAAAAAAAEAAAEAAAACAAk=</HashCode>
+      <FileName>Entity\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.StudyMaterial">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAgAAQAAAAgIAAAAAEAQAAACAAAAACAAAAAACCAA=</HashCode>
+      <FileName>Entity\StudyMaterial.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseLayer.Entity.StudyMaterialRating">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAAQAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAAA=</HashCode>
+      <FileName>Entity\StudyMaterialRating.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,447 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Orhedge.ViewModels.Admin.AdminIndexViewModel" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\Admin\AdminIndexViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.Admin.DeleteStudentViewModel" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>ViewModels\Admin\DeleteStudentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.Admin.EditStudentViewModel" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAQAAAAAAAAAAAEAAAACAAg=</HashCode>
+      <FileName>ViewModels\Admin\EditStudentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.Admin.StudentViewModel" Collapsed="true">
+    <Position X="13.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAgAAAACQAAAAQAAAAAAAEAAAEAAAACAAk=</HashCode>
+      <FileName>ViewModels\Admin\StudentViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.AddCategoryViewModel" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\AddCategoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.AddInStudyProgramViewModel" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAIAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\AddInStudyProgramViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.CourseCategoryIndexViewModel" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\CourseCategoryIndexViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.DeleteCategoryViewModel" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\DeleteCategoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.DeleteFromStudyProgramViewModel" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAIAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\DeleteFromStudyProgramViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.DetailedCourseViewModel" Collapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\DetailedCourseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.DetailsViewModel" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\DetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.CourseCategory.SaveCourseViewModel" Collapsed="true">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAABAAQAAQAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CourseCategory\SaveCourseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.Student.ChangePasswordViewModel" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>ViewModels\Student\ChangePasswordViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.Student.EditProfileViewModel" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgACAAAQAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>ViewModels\Student\EditProfileViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.CategoryViewModel" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\CategoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.CourseCategoryViewModel" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAQAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\CourseCategoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.CourseStudyMaterialsViewModel" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\CourseStudyMaterialsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.CreateStudyMaterialViewModel" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAQAAACAAAAACAAAAEACAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\CreateStudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.DeleteStudyMaterialViewModel" Collapsed="true">
+    <Position X="16.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\DeleteStudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.EditStudyMaterialViewModel" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAAAAAAAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\EditStudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.IndexCourseViewModel" Collapsed="true">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\IndexCourseViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.IndexViewModel" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\IndexViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.MoveStudyMaterialViewModel" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\MoveStudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.RateStudyMaterialViewModel" Collapsed="true">
+    <Position X="13.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAEAABAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\RateStudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.SemesterViewModel" Collapsed="true">
+    <Position X="11.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAoAAAAAAAAAAAAIAAAAAAABAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\SemesterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.StudyMaterial.StudyMaterialViewModel" Collapsed="true">
+    <Position X="15" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAgAAACAAAgAAAAAAAAQAACCAAAAACAABAAACAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\StudyMaterialViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SemesterExtensionMethods" Collapsed="true">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\StudyMaterial\SemesterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.TechnicalSupport.ChatMessageViewModel" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAgAAAAAAAACQAAAAAAAAAAAAAAAAABIAACAAA=</HashCode>
+      <FileName>ViewModels\TechnicalSupport\ChatMessageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.TechnicalSupport.TechnicalSupportViewModel" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\TechnicalSupport\TechnicalSupportViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.LoginViewModel" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAgAAA=</HashCode>
+      <FileName>ViewModels\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.PageableViewModel" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PageableViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.RegisterFormViewModel" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAACAAAAAAAAAAAAAAAAAAgAAAAAAg=</HashCode>
+      <FileName>ViewModels\RegisterFormViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.ViewModels.RegisterViewModel" Collapsed="true">
+    <Position X="16.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAIAA=</HashCode>
+      <FileName>ViewModels\RegisterViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.AdminApiController" Collapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABBAMEAAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Api\AdminApiController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.CourseCategoryApiController" Collapsed="true">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAJYAQAAAAAAABAAAIAAAAAAAAAAAIABAAAA=</HashCode>
+      <FileName>Controllers\Api\CourseCategoryApiController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.StudyMaterialApiController" Collapsed="true">
+    <Position X="2.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIAAAAAAAABBAAAQAAEAAAACAAAAAACAAAA=</HashCode>
+      <FileName>Controllers\Api\StudyMaterialApiController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.AboutController" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\AboutController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.AdminController" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAABAAEgAIAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\AdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.AuthenticationController" Collapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABACIgAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AuthenticationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.CourseCategoryController" Collapsed="true">
+    <Position X="2.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAABABQAAAAAABAAAQAIAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\CourseCategoryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.HomeController" Collapsed="true">
+    <Position X="4" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.LocalizationController" Collapsed="true">
+    <Position X="5.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACCAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\LocalizationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.PhotoController" Collapsed="true">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABABAAAAAAA=</HashCode>
+      <FileName>Controllers\PhotoController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.RegisterController" Collapsed="true">
+    <Position X="4" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABACEAAAAgAAAIABAAAAAAAAA=</HashCode>
+      <FileName>Controllers\RegisterController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.StudentController" Collapsed="true">
+    <Position X="0.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAIAAAAAAAQCAAEAEAAAAAA=</HashCode>
+      <FileName>Controllers\StudentController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.StudyMaterialController" Collapsed="true">
+    <Position X="4" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAAAQAAAAIBBAAAwAIAgAAACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\StudyMaterialController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.TechnicalSupportController" Collapsed="true">
+    <Position X="5.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAQAAAAAAABAAAAAIAAAAIAAAEAAACAAAA=</HashCode>
+      <FileName>Controllers\TechnicalSupportController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.Api.RegisterApiController" Collapsed="true">
+    <Position X="2.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\Api\RegisterApiController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Controllers.Api.StudentApiController" Collapsed="true">
+    <Position X="5.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAIgAAAIAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Controllers\Api\StudentApiController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.AuthenticationHelpers" Collapsed="true">
+    <Position X="7.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\AuthenticationHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.ClaimsPrincipalExtensions" Collapsed="true">
+    <Position X="9.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAACAIAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\ClaimsPrincipalExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.ControllerHelpers" Collapsed="true">
+    <Position X="11.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\ControllerHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.FormFile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAYAAAgAAAAAAAAAAAAAAQAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Helpers\FormFile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Orhedge.Helpers.InfoMessage" Collapsed="true">
+    <Position X="9.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAACCAAIAAAAAA=</HashCode>
+      <FileName>Helpers\InfoMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.PageInformation" Collapsed="true">
+    <Position X="11.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAQAAAAAAACAAAAAAAAQAAAAgYBEAAAAAAAA=</HashCode>
+      <FileName>Helpers\PageInformation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Helpers.WebConstants" Collapsed="true">
+    <Position X="7.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAQAAAABCAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\WebConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Attributes.AuthorizePrivilegeAttribute" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Attributes\AuthorizePrivilegeAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Attributes.PhotoFileAttribute" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAgAAAgAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Attributes\PhotoFileAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.AutoMapper.FormFileToBasicFileInfoConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AutoMapper\FormFileToBasicFileInfoConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Orhedge.AutoMapper.MappingConfiguration" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>AutoMapper\MappingConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.AutoMapper.MappingProfile" Collapsed="true">
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAAAAAAAABAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>AutoMapper\MappingProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.Hubs.TechnicalSupportHub" Collapsed="true">
+    <Position X="15" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAEACAAAAEAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Hubs\TechnicalSupportHub.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Orhedge.IoC.DependencyInjectionConfiguration" Collapsed="true">
+    <Position X="15" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IoC\DependencyInjectionConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
