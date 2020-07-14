@@ -110,12 +110,12 @@
                                     <a class="btn  dropdown-toggle linkpredmeta" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @Localizer[sp.ToString()]
                                     </a>
-                                    @foreach (IndexCourseViewModel indexCourse in semester.Courses[sp])
-                                    {
-                                        <div class="dropdown-menu linkpredmeta" aria-labelledby="dropdownMenuLink">
+                                    <div class="dropdown-menu linkpredmeta" aria-labelledby="dropdownMenuLink">
+                                        @foreach (IndexCourseViewModel indexCourse in semester.Courses[sp])
+                                        {
                                             @Html.ActionLink(indexCourse.Name, "Course", "StudyMaterial", new { @courseId = indexCourse.CourseId }, new { @class = "dropdown-item" })
-                                        </div>
-                                    }
+                                        }
+                                    </div>
                                 </div>
                             }
                         }
