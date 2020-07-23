@@ -145,7 +145,7 @@ namespace Orhedge.Controllers
                 case StudyMaterialSortingCriteria.UploadDateAsc: studyMaterials = await _studyMaterialManagementService.GetDetailedStudyMaterials(courseId, offset, itemsCount, searchFor, categories, x => x.UploadDate); break;
                 case StudyMaterialSortingCriteria.UploadDateDesc: studyMaterials = await _studyMaterialManagementService.GetDetailedStudyMaterials(courseId, offset, itemsCount, searchFor, categories, x => x.UploadDate, false); break;
             }
-            studyMaterials = await _studyMaterialManagementService.AppendRating(1, studyMaterials);
+            studyMaterials = await _studyMaterialManagementService.AppendRating(this.GetUserId(), studyMaterials);
             return _mapper.Map<List<DetailedStudyMaterialDTO>, List<StudyMaterialViewModel>>(studyMaterials);
         }
 
